@@ -1,8 +1,8 @@
 // Export components
-export { Button } from './components/Button';
+export { Button } from "./components/button/Button";
 
 // Export types
-export type { ButtonProps } from './components/Button';
+export type { ButtonProps } from "./components/button/Button";
 
 // Export utilities
-export { cn } from './lib/utils';
+export { cn } from "./lib/utils";
