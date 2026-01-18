@@ -2,12 +2,12 @@ import { cloneElement } from "react";
 import type { Showcase } from "../showcase";
 
 interface PreviewProps {
-  demo: Showcase | null;
+  showcase: Showcase | null;
   controlValues: Record<string, any>;
 }
 
-export function Preview({ demo, controlValues }: PreviewProps) {
-  if (!demo) {
+export function Preview({ showcase, controlValues }: PreviewProps) {
+  if (!showcase) {
     return (
       <div className="flex-1 flex items-center justify-center bg-white">
         <p className="text-gray-500">Select a demo to preview</p>
@@ -17,10 +17,10 @@ export function Preview({ demo, controlValues }: PreviewProps) {
 
   // Render the demo component
   const renderDemo = () => {
-    const element = demo.component();
+    const element = showcase.component();
 
     // If this demo has controls, we need to inject the control values
-    if (demo.controls && Object.keys(controlValues).length > 0) {
+    if (showcase.controls && Object.keys(controlValues).length > 0) {
       // Clone the element and merge control values as props
       return cloneElement(element, controlValues);
     }

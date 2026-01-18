@@ -1,14 +1,14 @@
 import type { Showcase } from "../showcase";
 
 interface SidebarProps {
-  demoGroups: Record<string, Showcase[]>;
-  selectedDemo: Showcase | null;
-  onShowcaseSelect: (demo: Showcase) => void;
+  showcaseGroups: Record<string, Showcase[]>;
+  selectedShowcase: Showcase | null;
+  onShowcaseSelect: (showcase: Showcase) => void;
 }
 
 export function Sidebar({
-  demoGroups,
-  selectedDemo,
+  showcaseGroups,
+  selectedShowcase,
   onShowcaseSelect,
 }: SidebarProps) {
   return (
@@ -18,26 +18,26 @@ export function Sidebar({
           Components
         </h2>
         <nav className="space-y-1">
-          {Object.entries(demoGroups).map(([group, demos]) => (
+          {Object.entries(showcaseGroups).map(([group, showcases]) => (
             <div key={group} className="mb-4">
               <h3 className="text-sm font-semibold text-gray-700 mb-2">
                 {group}
               </h3>
               <ul className="space-y-1 ml-2">
-                {demos.map((demo) => {
-                  const isSelected = selectedDemo?.id === demo.id;
+                {showcases.map((showcase) => {
+                  const isSelected = selectedShowcase?.id === showcase.id;
 
                   return (
-                    <li key={demo.id}>
+                    <li key={showcase.id}>
                       <button
-                        onClick={() => onShowcaseSelect(demo)}
+                        onClick={() => onShowcaseSelect(showcase)}
                         className={`w-full text-left px-3 py-2 rounded-md text-sm transition-colors ${
                           isSelected
                             ? "bg-blue-50 text-blue-700 font-medium"
                             : "text-gray-700 hover:bg-gray-50"
                         }`}
                       >
-                        {demo.name}
+                        {showcase.name}
                       </button>
                     </li>
                   );

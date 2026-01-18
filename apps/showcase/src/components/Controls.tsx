@@ -2,23 +2,23 @@ import { useState } from "react";
 import type { Showcase, ControlConfig } from "../showcase";
 
 interface ControlsProps {
-  demo: Showcase | null;
+  showcase: Showcase | null;
   controlValues: Record<string, any>;
   onControlChange: (key: string, value: any) => void;
 }
 
 export function Controls({
-  demo,
+  showcase,
   controlValues,
   onControlChange,
 }: ControlsProps) {
   const [isOpen, setIsOpen] = useState(true);
 
-  if (!demo || !demo.controls) {
+  if (!showcase || !showcase.controls) {
     return null;
   }
 
-  const controls = demo.controls;
+  const controls = showcase.controls;
   const controlKeys = Object.keys(controls);
 
   if (controlKeys.length === 0) {

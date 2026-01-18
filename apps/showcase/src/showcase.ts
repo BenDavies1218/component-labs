@@ -54,13 +54,11 @@ function parseShowcase(module: ShowcaseModule): Showcase[] {
   return demos;
 }
 
-// Auto-discover all demos
-export const allDemos: Showcase[] = [
+export const allShowcases: Showcase[] = [
   ...parseShowcase(ButtonShowcase as ShowcaseModule),
 ];
 
-// Group demos by component
-export const demoGroups = allDemos.reduce(
+export const showcaseGroups = allShowcases.reduce(
   (groups, demo) => {
     const [component] = demo.title.split(" / ");
     if (!groups[component]) {

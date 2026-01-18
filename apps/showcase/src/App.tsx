@@ -1,21 +1,21 @@
 import { useState } from "react";
-import { demoGroups, type Showcase } from "./showcase";
+import { showcaseGroups, type Showcase } from "./showcase";
 import { Sidebar } from "./components/Sidebar";
 import { Preview } from "./components/Preview";
 import { Controls } from "./components/Controls";
 
 export default function App() {
-  const firstDemo = Object.values(demoGroups)[0]?.[0];
-  const [selectedDemo, setSelectedDemo] = useState<Showcase | null>(
-    firstDemo || null,
+  const firstShowcase = Object.values(showcaseGroups)[0]?.[0];
+  const [selectedShowcase, setSelectedShowcase] = useState<Showcase | null>(
+    firstShowcase || null,
   );
   const [controlValues, setControlValues] = useState<Record<string, any>>({});
 
-  const handleShowcaseSelect = (demo: Showcase) => {
-    setSelectedDemo(demo);
+  const handleShowcaseSelect = (showcase: Showcase) => {
+    setSelectedShowcase(showcase);
     const initialValues: Record<string, any> = {};
-    if (demo.controls) {
-      Object.entries(demo.controls).forEach(([key, config]) => {
+    if (showcase.controls) {
+      Object.entries(showcase.controls).forEach(([key, config]) => {
         initialValues[key] = config.default;
       });
     }
@@ -29,21 +29,23 @@ export default function App() {
   return (
     <div className="flex h-screen bg-gray-50">
       <Sidebar
-        demoGroups={demoGroups}
-        selectedDemo={selectedDemo}
+        showcaseGroups={showcaseGroups}
+        selectedShowcase={selectedShowcase}
         onShowcaseSelect={handleShowcaseSelect}
       />
       <div className="flex-1 flex flex-col overflow-hidden">
         <header className="bg-white border-b border-gray-200 px-6 py-4">
           <h1 className="text-2xl font-bold text-gray-900">Component Labs</h1>
-          {selectedDemo && (
-            <p className="text-sm text-gray-600 mt-1">{selectedDemo.title}</p>
+          {selectedShowcase && (
+            <p className="text-sm text-gray-600 mt-1">
+              {selectedShowcase.title}
+            </p>
           )}
         </header>
         <div className="flex-1 flex overflow-hidden">
-          <Preview demo={selectedDemo} controlValues={controlValues} />
+          <Preview showcase={selectedShowcase} controlValues={controlValues} />
           <Controls
-            demo={selectedDemo}
+            showcase={selectedShowcase}
             controlValues={controlValues}
             onControlChange={handleControlChange}
           />
