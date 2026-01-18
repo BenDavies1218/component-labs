@@ -92,17 +92,12 @@ const buttonVariants = cva(
   },
 );
 
-type data = {
-  [key: string]: string;
-};
-
 export interface ButtonProps
   extends
     Omit<AccessibleButtonProps, "disabled">,
     VariantProps<typeof buttonVariants> {
   loading?: boolean;
   fullWidth?: boolean;
-  data?: data[];
 }
 
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
@@ -110,7 +105,6 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     {
       variant,
       size,
-      data,
       disabled,
       loading,
       fullWidth = false,
@@ -120,17 +114,6 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     },
     ref,
   ) => {
-    // Convert data array to data-* attributes
-    const dataAttributes = data?.reduce(
-      (acc, item) => {
-        Object.entries(item).forEach(([key, value]) => {
-          acc[`data-${key}`] = value;
-        });
-        return acc;
-      },
-      {} as Record<string, string>,
-    );
-
     return (
       <AccessibleButton
         ref={ref}
@@ -144,10 +127,8 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
             className,
           }),
         )}
-        {...dataAttributes}
         {...props}
       >
-        {Object.values(dataAttributes || {}).toString()}
         {loading ? "Loading..." : children}
       </AccessibleButton>
     );

@@ -11,6 +11,38 @@ export function Default() {
   return <Button>Button</Button>;
 }
 
+Default.props = {
+  variant: {
+    type: "select",
+    options: [
+      "default",
+      "primary",
+      "secondary",
+      "outline",
+      "ghost",
+      "destructive",
+      "link",
+    ],
+    default: "default",
+  },
+  data: {
+    type: "array",
+    default: [
+      {
+        name: "button-1",
+        number: 1,
+        wallets: {
+          address: "0x123",
+          balance: {
+            eth: 2.5,
+            usd: 4500,
+          },
+        },
+      },
+    ],
+  },
+};
+
 export function Primary() {
   return <Button variant="primary">Primary</Button>;
 }
@@ -33,27 +65,6 @@ export function Destructive() {
 
 export function Link() {
   return <Button variant="link">Link</Button>;
-}
-
-export function Sizes() {
-  return (
-    <div className="flex items-center gap-4">
-      <Button size="sm">Small</Button>
-      <Button size="md">Medium</Button>
-      <Button size="lg">Large</Button>
-      <Button size="icon">→</Button>
-    </div>
-  );
-}
-
-export function States() {
-  return (
-    <div className="flex gap-4">
-      <Button>Normal</Button>
-      <Button disabled>Disabled</Button>
-      <Button loading>Loading</Button>
-    </div>
-  );
 }
 
 export function FullWidth() {
