@@ -2,8 +2,8 @@
 import { showcaseModules } from "virtual:showcase-files";
 
 /**
- * A Showcase is a React component function that renders an example
- * Much simpler than Storybook's story format!
+ * A Showcase is a React component function that renders a demo of a UI component,
+ * along with optional control configurations for interactive props.
  */
 export interface Showcase {
   id: string;

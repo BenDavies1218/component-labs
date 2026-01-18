@@ -1,10 +1,14 @@
 import { createServer } from "vite";
 import react from "@vitejs/plugin-react";
 import tailwindcss from "@tailwindcss/vite";
-import { resolve } from "path";
+import { resolve, dirname } from "path";
+import { fileURLToPath } from "url";
 import pc from "picocolors";
 import { loadConfig } from "../../config/loader.js";
 import { showcasePlugin } from "../plugins/showcase-plugin.js";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 interface DevOptions {
   port?: string;
@@ -24,6 +28,7 @@ export async function devCommand(options: DevOptions = {}) {
 
     // Create Vite server with our plugin
     const server = await createServer({
+      configFile: false, // Don't load vite.config.ts to avoid duplicate plugins
       root: resolve(__dirname, "../../../"), // Point to showcase app root
       server: {
         port,
@@ -33,6 +38,7 @@ export async function devCommand(options: DevOptions = {}) {
       resolve: {
         alias: {
           "@showcase-app": resolve(__dirname, "../../../src"),
+          "@": resolve(cwd, "src"), // User's project src directory
         },
       },
     });

@@ -4,6 +4,11 @@ import { Button } from "./Button";
 export default {
   title: "Button",
   component: Button,
+  params: {
+    id: String,
+    isOpen: Boolean,
+    setOpen: () => {},
+  },
 };
 
 // Showcase Variants
@@ -12,27 +17,27 @@ export function Default() {
 }
 
 export function Primary() {
-  return <Button variant="primary">Primary Button</Button>;
+  return <Button variant="primary">Primary</Button>;
 }
 
 export function Secondary() {
-  return <Button variant="secondary">Secondary Button</Button>;
+  return <Button variant="secondary">Secondary</Button>;
 }
 
 export function Outline() {
-  return <Button variant="outline">Outline Button</Button>;
+  return <Button variant="outline">Outline</Button>;
 }
 
 export function Ghost() {
-  return <Button variant="ghost">Ghost Button</Button>;
+  return <Button variant="ghost">Ghost</Button>;
 }
 
 export function Destructive() {
-  return <Button variant="destructive">Delete</Button>;
+  return <Button variant="destructive">Destructive</Button>;
 }
 
 export function Link() {
-  return <Button variant="link">Learn more</Button>;
+  return <Button variant="link">Link</Button>;
 }
 
 export function Sizes() {

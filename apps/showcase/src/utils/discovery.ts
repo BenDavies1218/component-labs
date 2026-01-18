@@ -23,6 +23,7 @@ export async function discoverShowcaseFiles(
 
   for (const pattern of config.showcasePaths) {
     const matches = await glob(pattern, {
+      cwd,
       ignore: config.exclude || [],
       absolute: true,
       nodir: true,
@@ -66,13 +67,5 @@ ${imports.join('\n')}
 export const showcaseModules = [
   ${modules.join(',\n  ')}
 ];
-
-export interface ShowcaseModule {
-  default: {
-    title: string;
-    component?: React.ComponentType<any>;
-  };
-  [key: string]: any;
-}
 `;
 }

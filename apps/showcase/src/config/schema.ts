@@ -22,7 +22,7 @@ export const ShowcaseConfigSchema = z.object({
   outDir: z.string().default("./showcase-dist"),
 
   // Base path for deployment
-  base: z.string().default("/"),
+  base: z.string().default("/").optional(),
 
   // Path to Tailwind config file
   tailwindConfig: z.string().optional(),
@@ -47,7 +47,7 @@ export type ShowcaseConfig = z.infer<typeof ShowcaseConfigSchema>;
  */
 export const defaultConfig: Partial<ShowcaseConfig> = {
   title: "Component Labs",
-  port: 3000,
+  port: 6060,
   outDir: "./showcase-dist",
   base: "/",
   exclude: ["**/node_modules/**", "**/.git/**"],

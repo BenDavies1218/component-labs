@@ -1,0 +1,102 @@
+"use client";
+
+import React from "react";
+import { Sun, Moon, Monitor, Code } from "lucide-react";
+
+import type { Showcase } from "../showcase";
+
+type Theme = "light" | "dark" | "system";
+
+interface HeaderProps {
+  showcase: Showcase | null;
+  theme: Theme;
+  onThemeChange: (theme: Theme) => void;
+}
+
+export function Header({ showcase, theme, onThemeChange }: HeaderProps) {
+  const themes: { value: Theme; icon: React.ReactNode; label: string }[] = [
+    { value: "light", icon: <Sun size={18} />, label: "Light" },
+    { value: "dark", icon: <Moon size={18} />, label: "Dark" },
+    { value: "system", icon: <Monitor size={18} />, label: "System" },
+  ];
+
+  // Extract group from title (format: "Component / VariantName")
+  const getGroup = (showcase: Showcase) => {
+    const [group] = showcase.title.split(" / ");
+    return group;
+  };
+
+  return (
+    <header
+      className="flex items-center justify-between px-4 py-3 border-b"
+      style={{
+        backgroundColor: "var(--background)",
+        borderColor: "var(--border)",
+      }}
+    >
+      <div className="flex items-center gap-4">
+        {/* Current component info */}
+        {showcase ? (
+          <div className="flex items-center gap-3">
+            <div
+              className="flex items-center justify-center w-8 h-8 rounded-lg"
+              style={{ backgroundColor: "var(--background-tertiary)" }}
+            >
+              <Code
+                size={18}
+                style={{ color: "var(--color-primary)" } as React.CSSProperties}
+              />
+            </div>
+            <div>
+              <h2
+                className="text-sm font-semibold"
+                style={{ color: "var(--foreground)" }}
+              >
+                {showcase.title}
+              </h2>
+              <p
+                className="text-xs"
+                style={{ color: "var(--foreground-muted)" }}
+              >
+                {getGroup(showcase)} / {showcase.name}
+              </p>
+            </div>
+          </div>
+        ) : (
+          <div className="text-sm" style={{ color: "var(--foreground-muted)" }}>
+            No component selected
+          </div>
+        )}
+      </div>
+
+      <div className="flex items-center gap-3">
+        {/* Theme switcher */}
+        <div
+          className="flex items-center rounded-lg p-1 gap-0.5"
+          style={{ backgroundColor: "var(--background-tertiary)" }}
+        >
+          {themes.map((t) => (
+            <button
+              key={t.value}
+              onClick={() => onThemeChange(t.value)}
+              className="p-1.5 rounded-md transition-all"
+              style={{
+                backgroundColor:
+                  theme === t.value ? "var(--background)" : "transparent",
+                color:
+                  theme === t.value
+                    ? "var(--foreground)"
+                    : "var(--foreground-muted)",
+                boxShadow:
+                  theme === t.value ? "0 1px 2px rgba(0,0,0,0.1)" : "none",
+              }}
+              title={t.label}
+            >
+              {t.icon}
+            </button>
+          ))}
+        </div>
+      </div>
+    </header>
+  );
+}
