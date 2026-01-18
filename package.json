@@ -1,0 +1,37 @@
+{
+  "name": "component-labs",
+  "version": "0.0.0",
+  "private": true,
+  "description": "A modern React UI component library built with TypeScript, Tailwind CSS, and Ariakit",
+  "scripts": {
+    "dev": "pnpm --filter @component-labs/showcase dev",
+    "build": "pnpm --filter @component-labs/ui build",
+    "build:all": "pnpm -r build",
+    "test": "pnpm --filter @component-labs/testing test",
+    "test:watch": "pnpm --filter @component-labs/testing test:watch",
+    "showcase": "pnpm --filter @component-labs/showcase dev",
+    "build-showcase": "pnpm --filter @component-labs/showcase build",
+    "storybook": "pnpm --filter storybook dev",
+    "build-storybook": "pnpm --filter storybook build",
+    "lint": "pnpm -r lint",
+    "typecheck": "pnpm -r typecheck"
+  },
+  "keywords": [
+    "react",
+    "components",
+    "ui",
+    "typescript",
+    "tailwind",
+    "ariakit"
+  ],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^20.11.5",
+    "typescript": "^5.3.3"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "pnpm": ">=8.0.0"
+  }
+}
