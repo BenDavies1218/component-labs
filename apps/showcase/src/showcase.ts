@@ -1,14 +1,14 @@
-// Import all showcase files
-import * as ButtonShowcase from "../../../packages/ui/src/components/Button.showcase";
+// Import showcase files dynamically from virtual module
+import { showcaseModules } from "virtual:showcase-files";
 
 /**
- * A Demo is just a React component function that renders an example
+ * A Showcase is a React component function that renders an example
  * Much simpler than Storybook's story format!
  */
 export interface Showcase {
   id: string;
   name: string;
-  title: string; // Full title like "Button / Primary"
+  title: string;
   component: () => React.ReactElement;
   controls?: Record<string, ControlConfig>;
 }
@@ -32,7 +32,7 @@ export interface ShowcaseModule {
  * Each named export becomes a demo
  */
 function parseShowcase(module: ShowcaseModule): Showcase[] {
-  const demos: Showcase[] = [];
+  const showcases: Showcase[] = [];
   const meta = module.default;
   const componentTitle = meta.title;
 
@@ -41,7 +41,7 @@ function parseShowcase(module: ShowcaseModule): Showcase[] {
 
     // Each export should be a function component
     if (typeof value === "function") {
-      demos.push({
+      showcases.push({
         id: `${componentTitle}-${key}`,
         name: key,
         title: `${componentTitle} / ${key}`,
@@ -51,20 +51,21 @@ function parseShowcase(module: ShowcaseModule): Showcase[] {
     }
   }
 
-  return demos;
+  return showcases;
 }
 
-export const allShowcases: Showcase[] = [
-  ...parseShowcase(ButtonShowcase as ShowcaseModule),
-];
+// Parse all dynamically loaded showcase modules
+export const allShowcases: Showcase[] = showcaseModules.flatMap((module) =>
+  parseShowcase(module as ShowcaseModule),
+);
 
 export const showcaseGroups = allShowcases.reduce(
-  (groups, demo) => {
-    const [component] = demo.title.split(" / ");
+  (groups, showcase) => {
+    const [component] = showcase.title.split(" / ");
     if (!groups[component]) {
       groups[component] = [];
     }
-    groups[component].push(demo);
+    groups[component].push(showcase);
     return groups;
   },
   {} as Record<string, Showcase[]>,
