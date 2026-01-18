@@ -77,8 +77,8 @@ export default function App() {
   const handleShowcaseSelect = (showcase: Showcase) => {
     setSelectedShowcase(showcase);
     const initialValues: Record<string, any> = {};
-    if (showcase.controls) {
-      Object.entries(showcase.controls).forEach(([key, config]) => {
+    if (showcase.props) {
+      Object.entries(showcase.props).forEach(([key, config]) => {
         initialValues[key] = config.default;
       });
     }
@@ -90,8 +90,7 @@ export default function App() {
   };
 
   const hasControls =
-    selectedShowcase?.controls &&
-    Object.keys(selectedShowcase.controls).length > 0;
+    selectedShowcase?.props && Object.keys(selectedShowcase.props).length > 0;
 
   return (
     <div

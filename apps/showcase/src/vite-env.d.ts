@@ -9,3 +9,10 @@ declare module 'virtual:showcase-files' {
     [key: string]: any;
   }>;
 }
+
+declare module 'virtual:global-provider' {
+  import { ReactNode } from 'react';
+
+  export const GlobalProvider: React.ComponentType<{ children: ReactNode }>;
+  export const hasGlobalProvider: boolean;
+}

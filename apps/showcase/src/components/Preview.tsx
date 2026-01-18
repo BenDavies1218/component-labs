@@ -11,6 +11,7 @@ import {
   EyeOff,
 } from "lucide-react";
 import type { Showcase } from "../showcase";
+import { GlobalProvider } from "virtual:global-provider";
 
 interface PreviewProps {
   showcase: Showcase | null;
@@ -61,10 +62,11 @@ export function Preview({ showcase, controlValues }: PreviewProps) {
 
   const renderDemo = () => {
     const element = showcase.component();
-    if (showcase.controls && Object.keys(controlValues).length > 0) {
-      return cloneElement(element, controlValues);
-    }
-    return element;
+    const componentWithProps =
+      showcase.props && Object.keys(controlValues).length > 0
+        ? cloneElement(element, controlValues as any)
+        : element;
+    return <GlobalProvider>{componentWithProps}</GlobalProvider>;
   };
 
   return (

@@ -10,13 +10,14 @@ export interface Showcase {
   name: string;
   title: string;
   component: () => React.ReactElement;
-  controls?: Record<string, ControlConfig>;
+  props?: Record<string, PropConfig>;
 }
 
-export interface ControlConfig {
-  type: "text" | "boolean" | "select" | "number";
-  default?: any;
-  options?: string[];
+export interface PropConfig {
+  type: "text" | "boolean" | "select" | "number" | "object" | "array"; // Data type of the prop
+  label?: string; // Optional label for the control
+  default?: any; // Default value for the control
+  options?: string[]; // For 'select' type, the available options
 }
 
 export interface ShowcaseModule {
@@ -27,10 +28,6 @@ export interface ShowcaseModule {
   [key: string]: any;
 }
 
-/**
- * Parse a showcase module into demos
- * Each named export becomes a demo
- */
 function parseShowcase(module: ShowcaseModule): Showcase[] {
   const showcases: Showcase[] = [];
   const meta = module.default;
@@ -38,15 +35,13 @@ function parseShowcase(module: ShowcaseModule): Showcase[] {
 
   for (const [key, value] of Object.entries(module)) {
     if (key === "default") continue;
-
-    // Each export should be a function component
     if (typeof value === "function") {
       showcases.push({
         id: `${componentTitle}-${key}`,
         name: key,
         title: `${componentTitle} / ${key}`,
         component: value as () => React.ReactElement,
-        controls: (value as any).controls,
+        props: (value as any).props || {},
       });
     }
   }
@@ -54,7 +49,6 @@ function parseShowcase(module: ShowcaseModule): Showcase[] {
   return showcases;
 }
 
-// Parse all dynamically loaded showcase modules
 export const allShowcases: Showcase[] = showcaseModules.flatMap((module) =>
   parseShowcase(module as ShowcaseModule),
 );

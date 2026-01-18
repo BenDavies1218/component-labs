@@ -30,6 +30,9 @@ export const ShowcaseConfigSchema = z.object({
   // Exclude patterns (files to ignore)
   exclude: z.array(z.string()).optional(),
 
+  // Path to global provider component file
+  globalProvider: z.string().optional(),
+
   // Custom theme colors
   theme: z
     .object({

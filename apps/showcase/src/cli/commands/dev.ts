@@ -48,7 +48,6 @@ export async function devCommand(options: DevOptions = {}) {
     console.log("");
     server.printUrls();
     console.log("");
-    console.log(pc.dim(`  Config: ${config?.title}`));
     console.log(
       pc.dim(`  Watching: ${config.showcasePaths?.length} pattern(s)`),
     );

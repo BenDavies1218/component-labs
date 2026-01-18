@@ -14,15 +14,6 @@ const config: ShowcaseConfig = {
   // Optional: Path to global CSS file
   globalCss: "./src/styles/global.css",
 
-  // Optional: Custom app title
-  title: "Component Showcase",
-
-  // Optional: Dev server port
-  port: 3000,
-
-  // Optional: Output directory for build
-  outDir: "./showcase-dist",
-
   // Optional: Exclude patterns
   exclude: ["**/node_modules/**", "**/.git/**", "**/*.test.*"],
 };
@@ -61,7 +52,7 @@ export async function initCommand(options: InitOptions = {}) {
     console.log("");
     console.log(pc.dim("Next steps:"));
     console.log(
-      pc.dim("  1. Update showcasePaths to match your project structure"),
+      pc.dim("  1. Update the config file to match your project needs"),
     );
     console.log(pc.dim("  2. Create .showcase.tsx files for your components"));
     console.log(pc.dim("  3. Run: npx component-showcase dev"));

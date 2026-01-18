@@ -1,9 +1,14 @@
 "use client";
 
 import React from "react";
-import { useState } from "react";
-import { ChevronDown, SlidersHorizontal, PanelBottom, PanelRight } from "lucide-react";
-import type { Showcase, ControlConfig } from "../showcase";
+import { useState, useEffect } from "react";
+import {
+  ChevronDown,
+  SlidersHorizontal,
+  PanelBottom,
+  PanelRight,
+} from "lucide-react";
+import type { Showcase, PropConfig } from "../showcase";
 
 type ControlsPosition = "bottom" | "right";
 
@@ -24,11 +29,11 @@ export function Controls({
 }: ControlsProps) {
   const [isOpen, setIsOpen] = useState(true);
 
-  if (!showcase || !showcase.controls) {
+  if (!showcase || !showcase.props) {
     return null;
   }
 
-  const controls = showcase.controls;
+  const controls = showcase.props;
   const controlKeys = Object.keys(controls);
 
   if (controlKeys.length === 0) {
@@ -46,8 +51,8 @@ export function Controls({
       style={{
         backgroundColor: "var(--controls-bg)",
         borderColor: "var(--border)",
-        maxHeight: isBottom ? (isOpen ? "280px" : "48px") : "100%",
-        minHeight: isBottom ? "48px" : "auto",
+        maxHeight: isBottom ? (isOpen ? "400px" : "48px") : "100%",
+        minHeight: isBottom ? "250px" : "auto",
       }}
     >
       {/* Header */}
@@ -132,6 +137,7 @@ export function Controls({
             className={`${isBottom ? "grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4" : "space-y-4"}`}
           >
             {controlKeys.map((key) => {
+              const label = controls[key].label || key;
               const config = controls[key];
               const value = controlValues[key] ?? config.default;
 
@@ -141,7 +147,7 @@ export function Controls({
                     className="text-xs font-medium uppercase tracking-wide"
                     style={{ color: "var(--foreground-muted)" }}
                   >
-                    {key}
+                    {label}
                   </label>
                   {renderControl(key, config, value, onControlChange)}
                 </div>
@@ -156,7 +162,7 @@ export function Controls({
 
 function renderControl(
   key: string,
-  config: ControlConfig,
+  config: PropConfig,
   value: any,
   onChange: (key: string, value: any) => void,
 ) {
@@ -235,12 +241,120 @@ function renderControl(
     );
   }
 
+  if (config.type === "object" || config.type === "array") {
+    return (
+      <JsonEditor
+        value={value}
+        defaultValue={config.default}
+        isArray={config.type === "array"}
+        onChange={(newValue) => onChange(key, newValue)}
+        inputStyles={inputStyles}
+      />
+    );
+  }
+
   return (
     <div
       className="text-xs italic"
       style={{ color: "var(--foreground-muted)" }}
     >
       Unsupported control type
+    </div>
+  );
+}
+
+interface JsonEditorProps {
+  value: any;
+  defaultValue: any;
+  isArray: boolean;
+  onChange: (value: any) => void;
+  inputStyles: React.CSSProperties;
+}
+
+function JsonEditor({
+  value,
+  defaultValue,
+  isArray,
+  onChange,
+  inputStyles,
+}: JsonEditorProps) {
+  const [editingValue, setEditingValue] = useState("");
+  const [isValid, setIsValid] = useState(true);
+
+  // Initialize and sync with external value changes
+  useEffect(() => {
+    const stringValue = JSON.stringify(
+      value ?? defaultValue ?? (isArray ? [] : {}),
+      null,
+      2,
+    );
+    setEditingValue(stringValue);
+    setIsValid(true);
+  }, [value, defaultValue, isArray]);
+
+  const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const newValue = e.target.value;
+    setEditingValue(newValue);
+
+    try {
+      const parsed = JSON.parse(newValue);
+      setIsValid(true);
+      onChange(parsed);
+    } catch {
+      setIsValid(false);
+      // Don't update the parent while invalid
+    }
+  };
+
+  const handleBlur = () => {
+    if (!isValid) {
+      // Reset to last valid value
+      const stringValue = JSON.stringify(
+        value ?? defaultValue ?? (isArray ? [] : {}),
+        null,
+        2,
+      );
+      setEditingValue(stringValue);
+      setIsValid(true);
+    } else {
+      // Reformat for pretty printing
+      try {
+        const parsed = JSON.parse(editingValue);
+        setEditingValue(JSON.stringify(parsed, null, 2));
+      } catch {
+        // Should not happen since isValid is true
+      }
+    }
+  };
+
+  return (
+    <div className="relative">
+      <textarea
+        value={editingValue}
+        onChange={handleChange}
+        onBlur={handleBlur}
+        className={`w-full min-h-52 px-3 py-2 text-sm rounded-lg outline-none transition-all focus:ring-2 font-mono ${
+          !isValid ? "ring-2 ring-red-500" : ""
+        }`}
+        style={{
+          ...inputStyles,
+          ["--tw-ring-color" as string]: isValid
+            ? "var(--ring)"
+            : "rgb(239 68 68)",
+        }}
+        placeholder={isArray ? "[]" : "{}"}
+      />
+      {!isValid && (
+        <div
+          className="absolute bottom-2 right-2 text-xs px-2 py-1 rounded"
+          style={{
+            backgroundColor: "rgb(239 68 68)",
+            color: "white",
+          }}
+        >
+          Invalid JSON
+        </div>
+      )}
     </div>
   );
 }

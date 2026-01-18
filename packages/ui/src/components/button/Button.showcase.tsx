@@ -4,11 +4,6 @@ import { Button } from "./Button";
 export default {
   title: "Button",
   component: Button,
-  params: {
-    id: String,
-    isOpen: Boolean,
-    setOpen: () => {},
-  },
 };
 
 // Showcase Variants
@@ -117,8 +112,7 @@ export function Playground() {
   return <Button>Click me</Button>;
 }
 
-// Optional: Configure which props can be controlled in the playground
-Playground.controls = {
+Playground.props = {
   variant: {
     type: "select",
     options: [
@@ -150,7 +144,21 @@ Playground.controls = {
     default: false,
   },
   children: {
+    label: "Text",
     type: "text",
     default: "Click me",
+  },
+  data: {
+    type: "array",
+    default: [
+      {
+        name: "button-1",
+        number: 1,
+        wallets: {
+          wallet1: "0x123",
+          wallet2: "0x456",
+        },
+      },
+    ],
   },
 };
