@@ -1,4 +1,4 @@
-import { Button } from "./Button";
+import { Button, ButtonProps } from "./Button";
 
 // Showcase Configuration
 export default {
@@ -43,9 +43,25 @@ Default.props = {
   },
 };
 
-export function Primary() {
-  return <Button variant="primary">Primary</Button>;
+export function Primary(props: { variant?: ButtonProps["variant"] }) {
+  return <Button variant={props.variant}>Primary</Button>;
 }
+
+Primary.props = {
+  variant: {
+    type: "select",
+    options: [
+      "default",
+      "primary",
+      "secondary",
+      "outline",
+      "ghost",
+      "destructive",
+      "link",
+    ],
+    default: "primary",
+  },
+};
 
 export function Secondary() {
   return <Button variant="secondary">Secondary</Button>;
