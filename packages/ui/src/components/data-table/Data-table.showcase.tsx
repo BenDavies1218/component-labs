@@ -1,9 +1,12 @@
-import { useState } from "react";
+import { CompositeItem } from "@ariakit/react/composite";
 import { DataTable } from "./data-table";
+import { Dialog, DialogDismiss, DialogHeading } from "@ariakit/react/dialog";
+import { useState } from "react";
+import { Checkbox } from "@ariakit/react";
 
 // Showcase Configuration
 export default {
-  title: "Table (Component Props)",
+  title: "Table",
   component: DataTable,
 };
 
@@ -17,14 +20,6 @@ interface User {
   email: string;
   role: string;
   status: "active" | "inactive";
-}
-
-interface Product {
-  id: number;
-  name: string;
-  price: number;
-  category: string;
-  stock: number;
 }
 
 // ============================================================================
@@ -69,75 +64,130 @@ const mockUsers: User[] = [
   },
 ];
 
-const mockProducts: Product[] = [
-  { id: 1, name: "Laptop", price: 999, category: "Electronics", stock: 15 },
-  { id: 2, name: "Mouse", price: 25, category: "Electronics", stock: 50 },
-  { id: 3, name: "Keyboard", price: 75, category: "Electronics", stock: 30 },
-  { id: 4, name: "Monitor", price: 299, category: "Electronics", stock: 20 },
-  { id: 5, name: "Webcam", price: 89, category: "Electronics", stock: 12 },
-];
-
 // ============================================================================
 // Reusable Table Components
 // ============================================================================
 
+const userTableHeaderClassName =
+  "px-4 py-3 font-semibold text-left text-black/70";
+
 // User Table Components
 function UserTableHeader() {
   return (
-    <tr>
-      <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-black/60">
-        Name
-      </th>
-      <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-black/60">
-        Email
-      </th>
-      <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-black/60">
-        Role
-      </th>
-      <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-black/60">
-        Status
-      </th>
-    </tr>
+    <div role="row" className="bg-black/5 grid grid-cols-4 gap-4">
+      <div className={userTableHeaderClassName}>Name</div>
+      <div className={userTableHeaderClassName}>Email</div>
+      <div className={userTableHeaderClassName}>Role</div>
+      <div className={userTableHeaderClassName}>Status</div>
+    </div>
   );
 }
 
-function UserTableRow({ user }: { user: User }) {
+function UserDetailsDialog({
+  user,
+  open,
+  setOpen,
+}: {
+  user: User;
+  open: boolean;
+  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+}) {
   return (
-    <tr className="border-b border-black/10 last:border-0">
-      <td className="px-4 py-3 text-sm text-black/80">{user.name}</td>
-      <td className="px-4 py-3 text-sm text-black/80">{user.email}</td>
-      <td className="px-4 py-3 text-sm text-black/80">{user.role}</td>
-      <td className="px-4 py-3 text-sm text-black/80">
-        <span
-          className={`inline-block rounded-full px-2 py-1 text-xs ${
-            user.status === "active"
-              ? "bg-green-500/20 text-green-400"
-              : "bg-red-500/20 text-red-400"
-          }`}
-        >
-          {user.status}
-        </span>
-      </td>
-    </tr>
+    <Dialog
+      open={open}
+      onClose={() => setOpen(false)}
+      backdrop={<div className="fixed inset-0 bg-black/50" />}
+      className="fixed left-1/2 top-1/2 z-50 w-96 -translate-x-1/2 -translate-y-1/2 rounded-lg bg-white p-6 shadow-xl"
+    >
+      <DialogHeading className="text-lg font-semibold mb-4">
+        User Details
+      </DialogHeading>
+      <div className="space-y-2 mb-4">
+        <p>
+          <strong>Name:</strong> {user.name}
+        </p>
+        <p>
+          <strong>Email:</strong> {user.email}
+        </p>
+        <p>
+          <strong>Role:</strong> {user.role}
+        </p>
+        <p>
+          <strong>Status:</strong> {user.status}
+        </p>
+      </div>
+      <DialogDismiss className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
+        Close
+      </DialogDismiss>
+    </Dialog>
+  );
+}
+
+function UserRowTwo({
+  user,
+  selectedRows,
+  setSelectedRows,
+}: {
+  user: User;
+  selectedRows: Set<number>;
+  setSelectedRows: React.Dispatch<React.SetStateAction<Set<number>>>;
+}) {
+  const [open, setOpen] = useState(false);
+
+  const handleRowClick = () => {
+    setOpen(true);
+    setSelectedRows((prev) => {
+      const newSet = new Set(prev);
+      if (newSet.has(user.id)) {
+        newSet.delete(user.id);
+      } else {
+        newSet.add(user.id);
+      }
+      return newSet;
+    });
+  };
+
+  return (
+    <>
+      <CompositeItem
+        render={
+          <div
+            role="row"
+            className="border-b border-black/10 last:border-0 grid grid-cols-2 md:grid-cols-4 gap-4 data-active-item:bg-black/5 cursor-pointer"
+          />
+        }
+        onClick={() => handleRowClick()}
+      >
+        <Checkbox
+          checked={selectedRows.has(user.id)}
+          onChange={() => handleRowClick()}
+        />
+        <div className="px-4 py-3">{user.name}</div>
+        <div className="px-4 py-3">{user.email}</div>
+        <div className="px-4 py-3 hidden md:block">{user.role}</div>
+        <div className="px-4 py-3 hidden md:block">{user.status}</div>
+      </CompositeItem>
+      {open && <UserDetailsDialog user={user} open={open} setOpen={setOpen} />}
+    </>
   );
 }
 
 function UserSkeletonRow() {
   return (
-    <tr className="border-b border-black/10">
-      <td className="px-4 py-3">
+    <div role="row" className="border-b border-black/10 last:border-0">
+      <div role="cell" className="px-4 py-3">
         <div className="h-4 w-32 animate-pulse rounded bg-black/10" />
-      </td>
-      <td className="px-4 py-3">
+      </div>
+      <div role="cell" className="px-4 py-3">
         <div className="h-4 w-48 animate-pulse rounded bg-black/10" />
-      </td>
-      <td className="px-4 py-3">
+      </div>
+      <div role="cell" className="px-4 py-3">
         <div className="h-4 w-20 animate-pulse rounded bg-black/10" />
-      </td>
-      <td className="px-4 py-3">
+      </div>
+      <div role="cell" className="px-4 py-3">
         <div className="h-4 w-16 animate-pulse rounded bg-black/10" />
-      </td>
-    </tr>
+      </div>
+    </div>
   );
 }
 
@@ -153,418 +203,38 @@ function UserEmptyState() {
   );
 }
 
-function ProductTableRow({ product }: { product: Product }) {
-  return (
-    <tr className="border-b border-black/10 last:border-0">
-      <td className="px-4 py-3 text-sm text-black/80">{product.name}</td>
-      <td className="px-4 py-3 text-sm text-black/80">${product.price}</td>
-      <td className="px-4 py-3 text-sm text-black/80">{product.category}</td>
-      <td className="px-4 py-3 text-sm text-black/80">{product.stock}</td>
-    </tr>
-  );
-}
-
-function ProductSkeletonRow() {
-  return (
-    <tr className="border-b border-white/10">
-      <td className="px-4 py-3">
-        <div className="h-4 w-24 animate-pulse rounded bg-white/10" />
-      </td>
-      <td className="px-4 py-3">
-        <div className="h-4 w-16 animate-pulse rounded bg-white/10" />
-      </td>
-      <td className="px-4 py-3">
-        <div className="h-4 w-20 animate-pulse rounded bg-white/10" />
-      </td>
-      <td className="px-4 py-3">
-        <div className="h-4 w-12 animate-pulse rounded bg-white/10" />
-      </td>
-    </tr>
-  );
-}
-
-// ============================================================================
-// Basic Table Example
-// ============================================================================
-
-export function BasicTable() {
-  return (
-    <DataTable<User>
-      data={mockUsers}
-      label="User list"
-      description="A list of all users in the system"
-      tableHeader={<UserTableHeader />}
-      tableRow={(user) => <UserTableRow key={user.id} user={user} />}
-      loadingRow={<UserSkeletonRow />}
-      emptyRow={<UserEmptyState />}
-    />
-  );
-}
-
-// ============================================================================
-// Empty State Example
-// ============================================================================
-
-export function EmptyTable() {
-  return (
-    <DataTable<User>
-      data={[]}
-      label="Empty user list"
-      tableHeader={<UserTableHeader />}
-      tableRow={(user) => <UserTableRow key={user.id} user={user} />}
-      emptyRow={<UserEmptyState />}
-    />
-  );
-}
-
-// ============================================================================
-// Loading State Example
-// ============================================================================
-
-export function LoadingTable() {
-  return (
-    <DataTable<User>
-      data={[]}
-      label="Loading users"
-      isLoading
-      pageLimit={5}
-      tableHeader={<UserTableHeader />}
-      tableRow={(user) => <UserTableRow key={user.id} user={user} />}
-      loadingRow={<UserSkeletonRow />}
-      emptyRow={<UserEmptyState />}
-    />
-  );
-}
-
-// ============================================================================
-// Interactive Rows Example
-// ============================================================================
-
-function InteractiveUserRow({
-  user,
-  onClick,
-}: {
-  user: User;
-  onClick: () => void;
+export function BasicTable(props: {
+  data: User[];
+  label: string;
+  description: string;
 }) {
-  return (
-    <tr
-      className="cursor-pointer border-b border-black/10 last:border-0 hover:bg-black/5 focus-within:bg-black/5"
-      onClick={onClick}
-      onKeyDown={(e) => {
-        if (e.key === "Enter" || e.key === " ") {
-          e.preventDefault();
-          onClick();
-        }
-      }}
-      tabIndex={0}
-      role="button"
-    >
-      <td className="px-4 py-3 text-sm text-black/80">{user.name}</td>
-      <td className="px-4 py-3 text-sm text-black/80">{user.email}</td>
-      <td className="px-4 py-3 text-sm text-black/80">{user.role}</td>
-    </tr>
-  );
-}
-
-export function InteractiveTable() {
-  const [selectedUser, setSelectedUser] = useState<User | null>(null);
+  const [selectedRows, setSelectedRows] = useState<Set<number>>(new Set());
 
   return (
-    <div className="space-y-4">
-      <DataTable<User>
-        data={mockUsers}
-        label="Interactive user list"
-        className="w-128"
-        tableHeader={
-          <tr>
-            <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-black/60">
-              Name
-            </th>
-            <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-black/60">
-              Email
-            </th>
-            <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-black/60">
-              Role
-            </th>
-          </tr>
-        }
-        tableRow={(user) => (
-          <InteractiveUserRow
-            key={user.id}
-            user={user}
-            onClick={() => setSelectedUser(user)}
-          />
-        )}
-        loadingRow={<UserSkeletonRow />}
-        emptyRow={<UserEmptyState />}
-      />
-
-      {selectedUser && (
-        <div className="rounded-lg border border-black/10 bg-black/5 p-4">
-          <h3 className="mb-2 font-semibold text-black">Selected User:</h3>
-          <p className="text-sm text-black/80">
-            {selectedUser.name} ({selectedUser.email})
-          </p>
-        </div>
-      )}
-    </div>
-  );
-}
-
-// ============================================================================
-// Sortable Table Example
-// ============================================================================
-
-type SortField = keyof Product;
-type SortDirection = "asc" | "desc" | "none";
-
-function SortableProductHeader({
-  sortField,
-  sortDirection,
-  onSort,
-}: {
-  sortField: SortField;
-  sortDirection: SortDirection;
-  onSort: (field: SortField) => void;
-}) {
-  const HeaderCell = ({
-    field,
-    children,
-  }: {
-    field: SortField;
-    children: string;
-  }) => {
-    const isSortable = true;
-    const isActive = sortField === field;
-    const direction = isActive ? sortDirection : "none";
-
-    return (
-      <th
-        className={`px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-black/60 ${
-          isSortable ? "cursor-pointer select-none hover:text-black/80" : ""
-        }`}
-        onClick={() => onSort(field)}
-        onKeyDown={(e) => {
-          if (e.key === "Enter" || e.key === " ") {
-            e.preventDefault();
-            onSort(field);
-          }
-        }}
-        tabIndex={0}
-        role="columnheader"
-        aria-sort={
-          direction === "asc"
-            ? "ascending"
-            : direction === "desc"
-              ? "descending"
-              : undefined
-        }
-      >
-        <div className="flex items-center gap-2">
-          {children}
-          {direction !== "none" && (
-            <span aria-hidden="true">{direction === "asc" ? "�" : "�"}</span>
-          )}
-        </div>
-      </th>
-    );
-  };
-
-  return (
-    <tr>
-      <HeaderCell field="name">Product</HeaderCell>
-      <HeaderCell field="price">Price</HeaderCell>
-      <HeaderCell field="category">Category</HeaderCell>
-      <HeaderCell field="stock">Stock</HeaderCell>
-    </tr>
-  );
-}
-
-export function SortableTable() {
-  const [sortField, setSortField] = useState<SortField>("name");
-  const [sortDirection, setSortDirection] = useState<SortDirection>("asc");
-
-  const sortedProducts = [...mockProducts].sort((a, b) => {
-    if (sortDirection === "none") return 0;
-
-    const aValue = a[sortField];
-    const bValue = b[sortField];
-
-    if (typeof aValue === "string" && typeof bValue === "string") {
-      return sortDirection === "asc"
-        ? aValue.localeCompare(bValue)
-        : bValue.localeCompare(aValue);
-    }
-
-    if (typeof aValue === "number" && typeof bValue === "number") {
-      return sortDirection === "asc" ? aValue - bValue : bValue - aValue;
-    }
-
-    return 0;
-  });
-
-  const handleSort = (field: SortField) => {
-    if (sortField === field) {
-      setSortDirection((prev) =>
-        prev === "asc" ? "desc" : prev === "desc" ? "none" : "asc",
-      );
-    } else {
-      setSortField(field);
-      setSortDirection("asc");
-    }
-  };
-
-  return (
-    <DataTable<Product>
-      data={sortedProducts}
-      label="Sortable product list"
-      tableHeader={
-        <SortableProductHeader
-          sortField={sortField}
-          sortDirection={sortDirection}
-          onSort={handleSort}
+    <DataTable<User>
+      data={props.data}
+      label={props.label}
+      description={props.description}
+      tableHeader={<UserTableHeader />}
+      tableRow={(user) => (
+        <UserRowTwo
+          key={user.id}
+          user={user}
+          selectedRows={selectedRows}
+          setSelectedRows={setSelectedRows}
         />
-      }
-      tableRow={(product) => (
-        <ProductTableRow key={product.id} product={product} />
       )}
-      loadingRow={<ProductSkeletonRow />}
-      emptyRow={
-        <div className="py-8 text-center text-black/60">No products found</div>
-      }
+      loadingRow={<UserSkeletonRow />}
+      emptyRow={<UserEmptyState />}
     />
   );
 }
 
-// ============================================================================
-// With Footer Example
-// ============================================================================
-
-export function TableWithFooter() {
-  const totalStock = mockProducts.reduce(
-    (sum, product) => sum + product.stock,
-    0,
-  );
-  const averagePrice =
-    mockProducts.reduce((sum, product) => sum + product.price, 0) /
-    mockProducts.length;
-
-  return (
-    <DataTable<Product>
-      data={mockProducts}
-      label="Products with summary"
-      tableHeader={
-        <tr>
-          <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-white/60">
-            Product
-          </th>
-          <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-white/60">
-            Price
-          </th>
-          <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-white/60">
-            Stock
-          </th>
-        </tr>
-      }
-      tableRow={(product) => (
-        <tr key={product.id} className="border-b border-white/10 last:border-0">
-          <td className="px-4 py-3 text-sm text-white/80">{product.name}</td>
-          <td className="px-4 py-3 text-sm text-white/80">${product.price}</td>
-          <td className="px-4 py-3 text-sm text-white/80">{product.stock}</td>
-        </tr>
-      )}
-      tableFooter={
-        <tr>
-          <td className="px-4 py-3 text-sm font-semibold text-white/80">
-            Summary
-          </td>
-          <td className="px-4 py-3 text-sm font-semibold text-white/80">
-            Avg: ${averagePrice.toFixed(2)}
-          </td>
-          <td className="px-4 py-3 text-sm font-semibold text-white/80">
-            Total: {totalStock}
-          </td>
-        </tr>
-      }
-      loadingRow={<ProductSkeletonRow />}
-      emptyRow={
-        <div className="py-8 text-center text-white/60">No products found</div>
-      }
-    />
-  );
-}
-
-// ============================================================================
-// Simulated Infinite Scroll Example
-// ============================================================================
-
-export function InfiniteScrollTable() {
-  const [page, setPage] = useState(1);
-  const itemsPerPage = 3;
-
-  // Simulate paginated data
-  const allItems: User[] = Array.from({ length: 15 }, (_, i) => ({
-    id: i + 1,
-    name: `User ${i + 1}`,
-    email: `user${i + 1}@example.com`,
-    role: ["Admin", "User", "Editor"][i % 3] as string,
-    status: (i % 2 === 0 ? "active" : "inactive") as "active" | "inactive",
-  }));
-
-  const displayedData = allItems.slice(0, page * itemsPerPage);
-  const hasMore = displayedData.length < allItems.length;
-
-  const fetchNextPage = () => {
-    setTimeout(() => {
-      setPage((p) => p + 1);
-    }, 500);
-  };
-
-  return (
-    <div className="space-y-4">
-      <DataTable<User>
-        data={displayedData}
-        label="Infinite scroll user list"
-        hasNextPage={hasMore}
-        fetchNextPage={fetchNextPage}
-        isFetchingNextPage={false}
-        pageLimit={itemsPerPage}
-        triggerOffset={1}
-        tableHeader={
-          <tr>
-            <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-white/60">
-              Name
-            </th>
-            <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-white/60">
-              Email
-            </th>
-            <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-white/60">
-              Role
-            </th>
-          </tr>
-        }
-        tableRow={(user) => (
-          <tr key={user.id} className="border-b border-white/10 last:border-0">
-            <td className="px-4 py-3 text-sm text-white/80">{user.name}</td>
-            <td className="px-4 py-3 text-sm text-white/80">{user.email}</td>
-            <td className="px-4 py-3 text-sm text-white/80">{user.role}</td>
-          </tr>
-        )}
-        loadingRow={
-          <tr className="border-b border-white/10">
-            <td className="px-4 py-3" colSpan={3}>
-              <div className="h-8 animate-pulse rounded bg-white/10" />
-            </td>
-          </tr>
-        }
-        emptyRow={<UserEmptyState />}
-      />
-
-      <div className="text-center text-sm text-white/60">
-        Showing {displayedData.length} of {allItems.length} items
-        {hasMore && " (scroll to load more)"}
-      </div>
-    </div>
-  );
-}
+BasicTable.props = {
+  label: { type: "string", default: "User Information Table" },
+  description: {
+    type: "string",
+    default: "A simple data table displaying user information.",
+  },
+  data: { type: "array", default: mockUsers },
+};

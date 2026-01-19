@@ -211,7 +211,7 @@ function renderControl(
     );
   }
 
-  if (config.type === "text") {
+  if (config.type === "string") {
     return (
       <input
         type="text"

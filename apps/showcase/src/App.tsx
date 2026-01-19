@@ -6,16 +6,30 @@ import { Sidebar } from "./components/Sidebar";
 import { Preview } from "./components/Preview";
 import { Controls } from "./components/Controls";
 import { Header } from "./components/Header";
+import { ErrorBoundary } from "./components/ErrorBoundary";
 
 type Theme = "light" | "dark" | "system";
 type ControlsPosition = "bottom" | "right";
 
 export default function App() {
   const firstShowcase = Object.values(showcaseGroups)[0]?.[0];
+
+  // Initialize control values with defaults from first showcase
+  const getInitialControlValues = (showcase: Showcase | undefined) => {
+    if (!showcase?.props) return {};
+    const values: Record<string, any> = {};
+    Object.entries(showcase.props).forEach(([key, config]) => {
+      values[key] = config.default;
+    });
+    return values;
+  };
+
   const [selectedShowcase, setSelectedShowcase] = useState<Showcase | null>(
     firstShowcase || null,
   );
-  const [controlValues, setControlValues] = useState<Record<string, any>>({});
+  const [controlValues, setControlValues] = useState<Record<string, any>>(
+    getInitialControlValues(firstShowcase),
+  );
   const [searchQuery, setSearchQuery] = useState("");
   const [theme, setTheme] = useState<Theme>(() => {
     const stored = localStorage.getItem("showcase-theme");
@@ -115,7 +129,9 @@ export default function App() {
         <div
           className={`flex-1 flex overflow-hidden ${controlsPosition === "bottom" ? "flex-col" : "flex-row"}`}
         >
-          <Preview showcase={selectedShowcase} controlValues={controlValues} />
+          <ErrorBoundary>
+            <Preview showcase={selectedShowcase} controlValues={controlValues} />
+          </ErrorBoundary>
 
           {hasControls && (
             <Controls

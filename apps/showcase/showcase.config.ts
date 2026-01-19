@@ -5,7 +5,6 @@ const config: ShowcaseConfig = {
     "../../packages/ui/src/**/*.showcase.{ts,tsx}",
     "./src/**/*.showcase.{ts,tsx}",
   ],
-  globalCss: "./src/index.css",
   title: "Component Labs",
   port: 6060,
   outDir: "./showcase-dist",

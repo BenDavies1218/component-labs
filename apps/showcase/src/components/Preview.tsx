@@ -1,6 +1,6 @@
 "use client";
 
-import { cloneElement, useState } from "react";
+import { useState } from "react";
 import {
   Monitor,
   Tablet,
@@ -61,12 +61,26 @@ export function Preview({ showcase, controlValues }: PreviewProps) {
   }
 
   const renderDemo = () => {
-    const element = showcase.component();
-    const componentWithProps =
-      showcase.props && Object.keys(controlValues).length > 0
-        ? cloneElement(element, controlValues as any)
-        : element;
-    return <GlobalProvider>{componentWithProps}</GlobalProvider>;
+    // Create a wrapper component that properly passes props to the showcase component
+    const ComponentWrapper = () => {
+      const Component = showcase.component;
+
+      // If there are props defined, pass the control values directly to the component
+      if (showcase.props && Object.keys(showcase.props).length > 0) {
+        return Component(controlValues);
+      }
+
+      // Otherwise, call it without props
+      return Component();
+    };
+
+    return (
+      <GlobalProvider>
+        <ComponentWrapper
+          key={`${showcase.id}-${JSON.stringify(controlValues)}`}
+        />
+      </GlobalProvider>
+    );
   };
 
   return (

@@ -9,12 +9,12 @@ export interface Showcase {
   id: string;
   name: string;
   title: string;
-  component: () => React.ReactElement;
+  component: (props?: any) => React.ReactElement;
   props?: Record<string, PropConfig>;
 }
 
 export interface PropConfig {
-  type: "text" | "boolean" | "select" | "number" | "object" | "array"; // Data type of the prop
+  type: "string" | "boolean" | "select" | "number" | "object" | "array";
   label?: string; // Optional label for the control
   default?: any; // Default value for the control
   options?: string[]; // For 'select' type, the available options
