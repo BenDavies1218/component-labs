@@ -1,11 +1,13 @@
 import { existsSync } from "fs";
 import { resolve } from "path";
 import { pathToFileURL } from "url";
+import pc from "picocolors";
 import {
   ShowcaseConfigSchema,
   defaultConfig,
   type ShowcaseConfig,
 } from "./schema.js";
+import { initCommand } from "../cli/commands/init.js";
 
 const CONFIG_FILES = [
   "showcase.config.js",
@@ -36,13 +38,19 @@ export async function findConfigFile(
 export async function loadConfig(
   cwd: string = process.cwd(),
 ): Promise<ShowcaseConfig> {
-  const configPath = await findConfigFile(cwd);
+  let configPath = await findConfigFile(cwd);
 
+  // Auto-initialize if no config found
   if (!configPath) {
-    throw new Error(
-      `Configuration file not found. Please create one of: ${CONFIG_FILES.join(", ")}\n` +
-        `Run 'npx component-showcase init' to generate a config file.`,
-    );
+    console.log(pc.cyan("No config found. Creating showcase.config.ts...\n"));
+    await initCommand({ silent: false });
+    configPath = await findConfigFile(cwd);
+
+    if (!configPath) {
+      throw new Error(
+        `Failed to create configuration file. Please run 'npx component-showcase init' manually.`,
+      );
+    }
   }
 
   try {
@@ -68,9 +76,6 @@ export async function loadConfig(
       showcasePaths: resolvedShowcasePaths,
       globalCss: validated.globalCss
         ? resolve(configDir, validated.globalCss)
-        : undefined,
-      tailwindConfig: validated.tailwindConfig
-        ? resolve(configDir, validated.tailwindConfig)
         : undefined,
       outDir: resolve(configDir, validated.outDir),
     };

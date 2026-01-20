@@ -146,6 +146,9 @@ importers:
         specifier: ^3.4.0
         version: 3.4.0
     devDependencies:
+      '@component-labs/react-showcase':
+        specifier: workspace:*
+        version: link:../../apps/showcase
       '@types/react':
         specifier: ^19.0.0
         version: 19.2.8

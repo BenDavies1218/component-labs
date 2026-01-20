@@ -12,8 +12,8 @@ export const ShowcaseConfigSchema = z.object({
   // Path to global CSS file
   globalCss: z.string().optional(),
 
-  // Custom app title
-  title: z.string().default("Component Labs"),
+  // Path to global provider component file
+  globalProvider: z.string().optional(),
 
   // Dev server port
   port: z.number().int().min(1).max(65535).default(6060),
@@ -21,26 +21,8 @@ export const ShowcaseConfigSchema = z.object({
   // Output directory for build
   outDir: z.string().default("./showcase-dist"),
 
-  // Base path for deployment
-  base: z.string().default("/").optional(),
-
-  // Path to Tailwind config file
-  tailwindConfig: z.string().optional(),
-
   // Exclude patterns (files to ignore)
   exclude: z.array(z.string()).optional(),
-
-  // Path to global provider component file
-  globalProvider: z.string().optional(),
-
-  // Custom theme colors
-  theme: z
-    .object({
-      primary: z.string().optional(),
-      secondary: z.string().optional(),
-      background: z.string().optional(),
-    })
-    .optional(),
 });
 
 export type ShowcaseConfig = z.infer<typeof ShowcaseConfigSchema>;
@@ -49,9 +31,7 @@ export type ShowcaseConfig = z.infer<typeof ShowcaseConfigSchema>;
  * Default configuration
  */
 export const defaultConfig: Partial<ShowcaseConfig> = {
-  title: "Component Labs",
   port: 6060,
   outDir: "./showcase-dist",
-  base: "/",
-  exclude: ["**/node_modules/**", "**/.git/**"],
+  exclude: ["**/node_modules/**", "**/.git/**", "**/*.test.*"],
 };

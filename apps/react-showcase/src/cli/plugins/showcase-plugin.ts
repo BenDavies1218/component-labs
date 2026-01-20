@@ -54,22 +54,22 @@ export function showcasePlugin(config: ShowcaseConfig, cwd: string): Plugin {
           if (!existsSync(providerPath)) {
             const errorMessage = `
 ╔════════════════════════════════════════════════════════════════════════════╗
-║ ${pc.red("Global Provider Error")}                                                      ║
+║ ${pc.red("Global Provider Error")}                                         ║
 ╟────────────────────────────────────────────────────────────────────────────╢
-║ The global provider file specified in showcase.config.ts does not exist:  ║
+║ The global provider file specified in showcase.config.ts does not exist:   ║
 ║                                                                            ║
-║ ${pc.yellow("Config path:")} ${config.globalProvider.padEnd(57)}║
-║ ${pc.yellow("Resolved to:")} ${providerPath.padEnd(56)}║
+║ ${pc.yellow("Config path:")} ${config.globalProvider.padEnd(57)}           ║
+║ ${pc.yellow("Resolved to:")} ${providerPath.padEnd(56)}                    ║  
 ║                                                                            ║
-║ ${pc.cyan("Solutions:")}                                                              ║
-║ 1. Create the provider file at the specified path                         ║
-║ 2. Update the globalProvider path in showcase.config.ts                   ║
-║ 3. Remove the globalProvider option if not needed                         ║
+║ ${pc.cyan("Solutions:")}                                                   ║
+║ 1. Create the provider file at the specified path                          ║
+║ 2. Update the globalProvider path in showcase.config.ts                    ║
+║ 3. Remove the globalProvider option if not needed                          ║
 ║                                                                            ║
-║ ${pc.cyan("Example provider file:")}                                                  ║
-║ ${pc.dim("export default function GlobalProvider({ children }) {")}                ║
-║ ${pc.dim("  return <>{children}</>;")}                                              ║
-║ ${pc.dim("}")}                                                                      ║
+║ ${pc.cyan("Example provider file:")}                                       ║
+║ ${pc.dim("export default function GlobalProvider({ children }) {")}        ║
+║ ${pc.dim("  return <>{children}</>;")}                                     ║
+║ ${pc.dim("}")}                                                             ║
 ╚════════════════════════════════════════════════════════════════════════════╝
             `.trim();
 
@@ -87,7 +87,7 @@ export function showcasePlugin(config: ShowcaseConfig, cwd: string): Plugin {
                     borderRadius: '8px',
                     fontFamily: 'monospace'
                   }}>
-                    <h2>⚠️ Global Provider Error, Path doesn't exist</h2>
+                    <h2>⚠️ Global Provider Error</h2>
                     <p>The global provider file does not exist:</p>
                     <code style={{
                       display: 'block',

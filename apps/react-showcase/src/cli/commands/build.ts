@@ -1,10 +1,14 @@
 import { build as viteBuild } from "vite";
 import react from "@vitejs/plugin-react";
 import tailwindcss from "@tailwindcss/vite";
-import { resolve } from "path";
+import { resolve, dirname } from "path";
+import { fileURLToPath } from "url";
 import pc from "picocolors";
 import { loadConfig } from "../../config/loader.js";
 import { showcasePlugin } from "../plugins/showcase-plugin.js";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 interface BuildOptions {
   config?: string;
@@ -25,7 +29,6 @@ export async function buildCommand(options: BuildOptions = {}) {
     // Build with Vite
     await viteBuild({
       root: resolve(__dirname, "../../../"),
-      base: config.base,
       build: {
         outDir,
         emptyOutDir: true,

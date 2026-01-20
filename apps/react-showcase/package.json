@@ -1,6 +1,6 @@
 {
-  "name": "component-labs-showcase",
-  "version": "0.2.0",
+  "name": "@component_labs/react-showcase",
+  "version": "0.3.0",
   "description": "A lightweight component showcase tool for React components",
   "type": "module",
   "bin": {
@@ -41,7 +41,7 @@
     "vite"
   ],
   "author": "Benjamin Davies",
-  "license": "MIT",
+  "license": "AGPL-3.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/benjamindavies/component-labs",
