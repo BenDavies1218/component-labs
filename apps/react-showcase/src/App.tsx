@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { showcaseGroups, type Showcase } from "./showcase";
 import { Sidebar } from "./components/Sidebar";
 import { Preview } from "./components/Preview";
@@ -13,9 +13,10 @@ type ControlsPosition = "bottom" | "right";
 
 export default function App() {
   const firstShowcase = Object.values(showcaseGroups)[0]?.[0];
+  const selectedIdRef = useRef<string | null>(null);
 
   // Initialize control values with defaults from first showcase
-  const getInitialControlValues = (showcase: Showcase | undefined) => {
+  const getInitialControlValues = (showcase: Showcase | null) => {
     if (!showcase?.props) return {};
     const values: Record<string, any> = {};
     Object.entries(showcase.props).forEach(([key, config]) => {
@@ -24,19 +25,37 @@ export default function App() {
     return values;
   };
 
+  // Get initial showcase from localStorage or use first showcase
+  const getInitialShowcase = (): Showcase | null => {
+    const storedId = localStorage.getItem("showcase-selected-id");
+    if (storedId) {
+      selectedIdRef.current = storedId;
+      // Find the showcase by ID
+      for (const showcases of Object.values(showcaseGroups)) {
+        const found = showcases.find((s) => s.id === storedId);
+        if (found) return found;
+      }
+    }
+    const initial = firstShowcase || null;
+    if (initial) {
+      selectedIdRef.current = initial.id;
+    }
+    return initial;
+  };
+
   const [selectedShowcase, setSelectedShowcase] = useState<Showcase | null>(
-    firstShowcase || null,
+    getInitialShowcase,
   );
   const [controlValues, setControlValues] = useState<Record<string, any>>(
-    getInitialControlValues(firstShowcase),
+    getInitialControlValues(getInitialShowcase()),
   );
   const [searchQuery, setSearchQuery] = useState("");
   const [theme, setTheme] = useState<Theme>(() => {
     const stored = localStorage.getItem("showcase-theme");
-    return (stored as Theme) || "system";
+    return (stored as Theme) || "dark";
   });
   const [controlsPosition, setControlsPosition] =
-    useState<ControlsPosition>("right");
+    useState<ControlsPosition>("bottom");
 
   // Apply theme
   useEffect(() => {
@@ -89,7 +108,10 @@ export default function App() {
   }, []);
 
   const handleShowcaseSelect = (showcase: Showcase) => {
+    selectedIdRef.current = showcase.id;
     setSelectedShowcase(showcase);
+    // Save to localStorage
+    localStorage.setItem("showcase-selected-id", showcase.id);
     const initialValues: Record<string, any> = {};
     if (showcase.props) {
       Object.entries(showcase.props).forEach(([key, config]) => {
@@ -98,6 +120,30 @@ export default function App() {
     }
     setControlValues(initialValues);
   };
+
+  // Save selected showcase ID to localStorage whenever it changes
+  useEffect(() => {
+    if (selectedShowcase) {
+      localStorage.setItem("showcase-selected-id", selectedShowcase.id);
+      selectedIdRef.current = selectedShowcase.id;
+    }
+  }, [selectedShowcase]);
+
+  // Update selected showcase when showcaseGroups changes (hot reload)
+  useEffect(() => {
+    // Always try to restore from the ref (which persists across renders)
+    const currentId = selectedIdRef.current;
+    if (!currentId) return;
+
+    // Find the showcase with the stored ID
+    for (const showcases of Object.values(showcaseGroups)) {
+      const found = showcases.find((s) => s.id === currentId);
+      if (found) {
+        setSelectedShowcase(found);
+        return;
+      }
+    }
+  }, [showcaseGroups]);
 
   const handleControlChange = (key: string, value: any) => {
     setControlValues((prev) => ({ ...prev, [key]: value }));
@@ -130,7 +176,10 @@ export default function App() {
           className={`flex-1 flex overflow-hidden ${controlsPosition === "bottom" ? "flex-col" : "flex-row"}`}
         >
           <ErrorBoundary>
-            <Preview showcase={selectedShowcase} controlValues={controlValues} />
+            <Preview
+              showcase={selectedShowcase}
+              controlValues={controlValues}
+            />
           </ErrorBoundary>
 
           {hasControls && (

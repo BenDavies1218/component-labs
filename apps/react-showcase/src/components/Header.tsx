@@ -69,6 +69,8 @@ export function Header({ showcase, theme, onThemeChange }: HeaderProps) {
         )}
       </div>
 
+      <div>🚀 Component Labs</div>
+
       <div className="flex items-center gap-3">
         {/* Theme switcher */}
         <div

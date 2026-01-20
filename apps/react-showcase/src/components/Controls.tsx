@@ -53,6 +53,7 @@ export function Controls({
         borderColor: "var(--border)",
         maxHeight: isBottom ? (isOpen ? "400px" : "48px") : "100%",
         minHeight: isBottom ? "250px" : "auto",
+        minWidth: isBottom ? "100px" : "400px",
       }}
     >
       {/* Header */}
@@ -124,7 +125,11 @@ export function Controls({
 
           <ChevronDown
             size={16}
-            className={`transition-transform duration-200 ${isOpen ? "rotate-0" : isBottom ? "rotate-180" : "-rotate-90"}`}
+            className={`transition-transform duration-200 ${
+              isBottom
+                ? (isOpen ? "rotate-180" : "rotate-0")
+                : (isOpen ? "rotate-0" : "-rotate-90")
+            }`}
             style={{ color: "var(--foreground-muted)" } as React.CSSProperties}
           />
         </div>

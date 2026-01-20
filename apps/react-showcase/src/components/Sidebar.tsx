@@ -58,7 +58,7 @@ export function Sidebar({
 
   return (
     <aside
-      className="w-72 flex flex-col overflow-hidden border-r transition-colors duration-200"
+      className="w-96 flex flex-col overflow-hidden border-r transition-colors duration-200"
       style={{
         backgroundColor: "var(--sidebar-bg)",
         borderColor: "var(--sidebar-border)",
@@ -76,7 +76,7 @@ export function Sidebar({
               className="text-base font-semibold"
               style={{ color: "var(--foreground)" }}
             >
-              Showcase
+              React Showcase
             </h1>
             <p className="text-xs" style={{ color: "var(--foreground-muted)" }}>
               UI Testing Library
