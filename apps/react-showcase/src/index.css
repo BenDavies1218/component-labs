@@ -15,6 +15,24 @@
   --font-mono: "JetBrains Mono", "Fira Code", monospace;
 }
 
+:root {
+  --text-gradient: linear-gradient(
+    90deg,
+    #1f2937,
+    #374151,
+    #1f2937
+  ); /* charcoal */
+}
+
+.dark {
+  --text-gradient: linear-gradient(
+    90deg,
+    #b9c1cd,
+    #76888b,
+    #b5bd77
+  ); /* blue/cyan */
+}
+
 @layer base {
   * {
     margin: 0;
@@ -38,7 +56,6 @@
     --sidebar-bg: #fafbfc;
     --sidebar-border: #e2e8f0;
     --preview-bg: #ffffff;
-    --preview-pattern: #f1f5f9;
     --controls-bg: #ffffff;
     --input-bg: #ffffff;
     --input-border: #e2e8f0;
@@ -62,7 +79,6 @@
     --sidebar-bg: #0c0c0e;
     --sidebar-border: #27272a;
     --preview-bg: #18181b;
-    --preview-pattern: #27272a;
     --controls-bg: #18181b;
     --input-bg: #27272a;
     --input-border: #3f3f46;

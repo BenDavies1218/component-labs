@@ -1,6 +1,6 @@
 {
   "name": "@component-labs/react-showcase",
-  "version": "0.4.0",
+  "version": "0.4.2",
   "description": "A lightweight component showcase tool for React components",
   "type": "module",
   "bin": {
@@ -21,6 +21,8 @@
   },
   "files": [
     "dist",
+    "src",
+    "index.html",
     "templates",
     "README.md"
   ],

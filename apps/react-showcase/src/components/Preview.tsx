@@ -16,6 +16,7 @@ import type { Showcase } from "../showcase";
 import { GlobalProvider } from "virtual:global-provider";
 import { IPhoneFrame, IPadFrame, DesktopFrame } from "./DeviceContainers";
 import { injectUserCss } from "virtual:user-global-css";
+import { DotPattern } from "./DotPattern";
 
 interface PreviewProps {
   showcase: Showcase | null;
@@ -93,8 +94,9 @@ export function Preview({ showcase, controlValues }: PreviewProps) {
 
   if (!showcase) {
     return (
-      <div className="flex-1 flex items-center justify-center preview-pattern">
-        <div className="text-center">
+      <div className="flex-1 flex items-center justify-center relative">
+        <DotPattern className="opacity-50 p-1" />
+        <div className="text-center relative z-10">
           <div
             className="w-20 h-20 mx-auto mb-6 rounded-2xl flex items-center justify-center"
             style={{ backgroundColor: "var(--background-tertiary)" }}
@@ -346,7 +348,7 @@ export function Preview({ showcase, controlValues }: PreviewProps) {
       {/* Preview area */}
       <div
         ref={previewRef}
-        className="flex-1 overflow-hidden p-6 preview-pattern relative"
+        className="flex-1 overflow-hidden p-6 relative"
         onMouseDown={handleMouseDown}
         onMouseMove={handleMouseMove}
         onMouseUp={handleMouseUp}
@@ -355,8 +357,9 @@ export function Preview({ showcase, controlValues }: PreviewProps) {
           cursor: isDragging ? "grabbing" : "grab",
         }}
       >
+        <DotPattern className="opacity-50" />
         <div
-          className="mx-auto h-full flex items-center justify-center"
+          className="mx-auto h-full flex items-center justify-center relative z-10"
           style={{
             maxWidth: showDeviceFrame ? "none" : viewportSizes[viewport].width,
             transform: `translate(${pan.x}px, ${pan.y}px) scale(${zoom / 100})`,

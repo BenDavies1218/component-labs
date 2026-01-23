@@ -21,6 +21,7 @@
     "src/config/**/*",
     "src/utils/**/*",
     "src/index.ts",
+    "src/showcase.ts",
     "src/vite-env.d.ts"
   ],
   "exclude": [
@@ -28,7 +29,6 @@
     "dist",
     "src/**/*.test.ts",
     "src/**/*.test.tsx",
-    "src/showcase.ts",
     "src/App.tsx",
     "src/main.tsx",
     "src/components/**/*"

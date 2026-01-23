@@ -1,9 +1,8 @@
-import { existsSync, writeFileSync, mkdirSync, readdirSync } from "fs";
+import { existsSync, writeFileSync, mkdirSync } from "fs";
 import { resolve, dirname, join } from "path";
 import pc from "picocolors";
 
 function detectProjectStructure(cwd: string) {
-  const packageJsonPath = join(cwd, "package.json");
 
   // Check common directories
   const hasSrc = existsSync(join(cwd, "src"));

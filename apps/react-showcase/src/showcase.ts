@@ -20,6 +20,11 @@ export interface PropConfig {
   options?: string[]; // For 'select' type, the available options
 }
 
+/**
+ * Helper type for defining showcase props
+ */
+export type Props = Record<string, PropConfig>;
+
 export interface ShowcaseModule {
   default: {
     title: string;

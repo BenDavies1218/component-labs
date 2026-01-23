@@ -109,7 +109,7 @@ describe('ErrorBoundary', () => {
     const resetMock = vi.fn();
     let shouldThrow = true;
 
-    const customFallback = (error: Error, resetError: () => void) => (
+    const customFallback = (_error: Error, resetError: () => void) => (
       <div>
         <h1>Custom Error UI</h1>
         <button onClick={() => {

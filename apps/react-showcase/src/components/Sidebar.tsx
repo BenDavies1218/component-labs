@@ -76,10 +76,10 @@ export function Sidebar({
               className="text-base font-semibold"
               style={{ color: "var(--foreground)" }}
             >
-              React Showcase
+              Component Labs
             </h1>
             <p className="text-xs" style={{ color: "var(--foreground-muted)" }}>
-              UI Testing Library
+              React UI Testing Library
             </p>
           </div>
         </div>

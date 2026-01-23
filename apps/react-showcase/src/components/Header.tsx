@@ -4,6 +4,7 @@ import React from "react";
 import { Sun, Moon, Monitor, Code } from "lucide-react";
 
 import type { Showcase } from "../showcase";
+import Logo from "./Logo";
 
 type Theme = "light" | "dark" | "system";
 
@@ -28,7 +29,7 @@ export function Header({ showcase, theme, onThemeChange }: HeaderProps) {
 
   return (
     <header
-      className="flex items-center justify-between px-4 py-3 border-b"
+      className="relative flex items-center justify-between w-full px-4 py-3 border-b"
       style={{
         backgroundColor: "var(--background)",
         borderColor: "var(--border)",
@@ -36,8 +37,8 @@ export function Header({ showcase, theme, onThemeChange }: HeaderProps) {
     >
       <div className="flex items-center gap-4">
         {/* Current component info */}
-        {showcase ? (
-          <div className="flex items-center gap-3">
+        {showcase && (
+          <div className="absolute left-4 flex items-center gap-3">
             <div
               className="flex items-center justify-center w-8 h-8 rounded-lg"
               style={{ backgroundColor: "var(--background-tertiary)" }}
@@ -62,16 +63,12 @@ export function Header({ showcase, theme, onThemeChange }: HeaderProps) {
               </p>
             </div>
           </div>
-        ) : (
-          <div className="text-sm" style={{ color: "var(--foreground-muted)" }}>
-            No component selected
-          </div>
         )}
       </div>
 
-      <div>🚀 Component Labs</div>
+      <Logo />
 
-      <div className="flex items-center gap-3">
+      <div className="absolute right-4 flex items-center gap-3 z-100">
         {/* Theme switcher */}
         <div
           className="flex items-center rounded-lg p-1 gap-0.5"
@@ -81,7 +78,7 @@ export function Header({ showcase, theme, onThemeChange }: HeaderProps) {
             <button
               key={t.value}
               onClick={() => onThemeChange(t.value)}
-              className="p-1.5 rounded-md transition-all"
+              className="p-2 rounded-md transition-all cursor-pointer hover:bg-var(--background) hover:shadow-md"
               style={{
                 backgroundColor:
                   theme === t.value ? "var(--background)" : "transparent",
