@@ -14,6 +14,9 @@ const RESOLVED_VIRTUAL_MODULE_ID = "\0" + VIRTUAL_MODULE_ID;
 const PROVIDER_MODULE_ID = "virtual:global-provider";
 const RESOLVED_PROVIDER_MODULE_ID = "\0" + PROVIDER_MODULE_ID;
 
+const USER_CSS_MODULE_ID = "virtual:user-global-css";
+const RESOLVED_USER_CSS_MODULE_ID = "\0" + USER_CSS_MODULE_ID;
+
 /**
  * Vite plugin that creates a virtual module with all discovered showcase files
  */
@@ -40,11 +43,61 @@ export function showcasePlugin(config: ShowcaseConfig, cwd: string): Plugin {
       if (id === PROVIDER_MODULE_ID) {
         return RESOLVED_PROVIDER_MODULE_ID;
       }
+      if (id === USER_CSS_MODULE_ID) {
+        return RESOLVED_USER_CSS_MODULE_ID;
+      }
     },
 
     load(id) {
       if (id === RESOLVED_VIRTUAL_MODULE_ID) {
         return showcaseModuleContent;
+      }
+      if (id === RESOLVED_USER_CSS_MODULE_ID) {
+        // Load user's global CSS and inject it only into the preview area
+        if (config.globalCss) {
+          const cssPath = resolve(cwd, config.globalCss);
+
+          // Check if the file exists
+          if (!existsSync(cssPath)) {
+            console.warn(pc.yellow(`⚠️  Global CSS file not found: ${cssPath}`));
+            return `
+              export function injectUserCss() {}
+              export const hasUserCss = false;
+            `.trim();
+          }
+
+          // Import the CSS as a string and export a function to inject it
+          return `
+            import userCssContent from '${cssPath}?inline';
+
+            let injected = false;
+
+            export function injectUserCss(targetElement) {
+              if (injected) return;
+
+              // Create a style element for user CSS
+              const styleEl = document.createElement('style');
+              styleEl.setAttribute('data-user-css', 'true');
+              styleEl.textContent = userCssContent;
+
+              // Inject into the target element (preview container) or document head
+              if (targetElement) {
+                targetElement.appendChild(styleEl);
+              } else {
+                document.head.appendChild(styleEl);
+              }
+
+              injected = true;
+            }
+
+            export const hasUserCss = true;
+          `.trim();
+        }
+        // No user CSS configured
+        return `
+          export function injectUserCss() {}
+          export const hasUserCss = false;
+        `.trim();
       }
       if (id === RESOLVED_PROVIDER_MODULE_ID) {
         if (config.globalProvider) {

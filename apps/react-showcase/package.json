@@ -1,6 +1,6 @@
 {
-  "name": "@component_labs/react-showcase",
-  "version": "0.3.0",
+  "name": "@component-labs/react-showcase",
+  "version": "0.4.0",
   "description": "A lightweight component showcase tool for React components",
   "type": "module",
   "bin": {
@@ -29,6 +29,9 @@
     "build": "tsc && vite build",
     "build:cli": "tsc --project tsconfig.cli.json",
     "preview": "vite preview",
+    "test": "vitest",
+    "test:ui": "vitest --ui",
+    "test:coverage": "vitest --coverage",
     "prepublishOnly": "pnpm run build:cli"
   },
   "keywords": [
@@ -73,13 +76,19 @@
   },
   "devDependencies": {
     "@component_labs/react-showcase": "^0.3.0",
+    "@testing-library/jest-dom": "^6.2.0",
+    "@testing-library/react": "^14.1.2",
+    "@testing-library/user-event": "^14.5.2",
     "@types/node": "^20.11.5",
     "@types/react": "^19.0.0",
     "@types/react-dom": "^19.0.0",
+    "@vitest/ui": "^1.2.1",
+    "jsdom": "^23.2.0",
     "postcss": "8.5.6",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "typescript": "^5.3.3",
-    "vite": "^5.0.12"
+    "vite": "^5.0.12",
+    "vitest": "^1.2.1"
   }
 }

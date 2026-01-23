@@ -15,6 +15,7 @@ import {
 import type { Showcase } from "../showcase";
 import { GlobalProvider } from "virtual:global-provider";
 import { IPhoneFrame, IPadFrame, DesktopFrame } from "./DeviceContainers";
+import { injectUserCss } from "virtual:user-global-css";
 
 interface PreviewProps {
   showcase: Showcase | null;
@@ -39,6 +40,11 @@ export function Preview({ showcase, controlValues }: PreviewProps) {
   const [isDragging, setIsDragging] = useState(false);
   const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
   const previewRef = useRef<HTMLDivElement>(null);
+
+  // Inject user CSS once when component mounts
+  useEffect(() => {
+    injectUserCss();
+  }, []);
 
   useEffect(() => {
     const handleWheel = (e: WheelEvent) => {

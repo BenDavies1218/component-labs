@@ -16,3 +16,8 @@ declare module 'virtual:global-provider' {
   export const GlobalProvider: React.ComponentType<{ children: ReactNode }>;
   export const hasGlobalProvider: boolean;
 }
+
+declare module 'virtual:user-global-css' {
+  export function injectUserCss(targetElement?: HTMLElement): void;
+  export const hasUserCss: boolean;
+}
