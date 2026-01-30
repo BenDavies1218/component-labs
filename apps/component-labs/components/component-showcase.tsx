@@ -1,0 +1,187 @@
+"use client";
+
+import Link from "next/link";
+import {
+  RectangleHorizontal,
+  BarChartBig as ChartBar,
+  Square,
+  Search,
+  Terminal,
+  GalleryHorizontal,
+  Table,
+  Baseline as ChartLine,
+  TextCursorInput,
+  MenuIcon,
+  ChevronRight,
+  ToggleLeft,
+  Calendar,
+  SlidersHorizontal,
+  Bell,
+  Layers,
+} from "lucide-react";
+
+const componentCategories = [
+  {
+    name: "Inputs",
+    components: [
+      {
+        icon: RectangleHorizontal,
+        name: "Button",
+        description: "Interactive button with multiple variants and sizes.",
+      },
+      {
+        icon: TextCursorInput,
+        name: "Input",
+        description: "Text input with validation and icon support.",
+      },
+      {
+        icon: Square,
+        name: "Checkbox",
+        description: "Accessible checkbox with indeterminate state.",
+      },
+      {
+        icon: ToggleLeft,
+        name: "Switch",
+        description: "Toggle switch for boolean settings.",
+      },
+      {
+        icon: Calendar,
+        name: "Date Picker",
+        description: "Calendar-based date selection component.",
+      },
+      {
+        icon: SlidersHorizontal,
+        name: "Slider",
+        description: "Range slider with single or dual handles.",
+      },
+    ],
+  },
+  {
+    name: "Data Display",
+    components: [
+      {
+        icon: ChartBar,
+        name: "Charts",
+        description: "Bar, line, pie, and area chart components.",
+      },
+      {
+        icon: ChartLine,
+        name: "Graphs",
+        description: "Interactive data visualization graphs.",
+      },
+      {
+        icon: Table,
+        name: "Data Table",
+        description: "Sortable, filterable data table with pagination.",
+      },
+      {
+        icon: GalleryHorizontal,
+        name: "Carousel",
+        description: "Image and content carousel with auto-play.",
+      },
+    ],
+  },
+  {
+    name: "Navigation",
+    components: [
+      {
+        icon: MenuIcon,
+        name: "Menu",
+        description: "Dropdown menu with keyboard navigation.",
+      },
+      {
+        icon: ChevronRight,
+        name: "SubMenu",
+        description: "Nested menu with hover and click triggers.",
+      },
+      {
+        icon: Search,
+        name: "Combobox",
+        description: "Searchable select with autocomplete.",
+      },
+      {
+        icon: Terminal,
+        name: "Command",
+        description: "Command palette with fuzzy search.",
+      },
+    ],
+  },
+  {
+    name: "Feedback",
+    components: [
+      {
+        icon: Bell,
+        name: "Toast",
+        description: "Non-blocking notification messages.",
+      },
+      {
+        icon: Layers,
+        name: "Dialog",
+        description: "Modal dialog with focus trap.",
+      },
+    ],
+  },
+];
+
+export function ComponentShowcase() {
+  return (
+    <section id="components" className="px-6 py-24">
+      <div className="mx-auto max-w-7xl">
+        <div className="mb-16 text-center">
+          <h2 className="mb-4 text-3xl font-bold tracking-tight text-foreground md:text-4xl">
+            Component Library
+          </h2>
+          <p className="mx-auto max-w-2xl text-lg text-muted-foreground">
+            A comprehensive set of accessible, customizable components built for
+            modern React applications.
+          </p>
+        </div>
+
+        <div className="space-y-12">
+          {componentCategories.map((category) => (
+            <div key={category.name}>
+              <h3 className="mb-6 text-sm font-medium uppercase tracking-wider text-muted-foreground">
+                {category.name}
+              </h3>
+              <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+                {category.components.map((component) => (
+                  <Link
+                    key={component.name}
+                    href={`/docs/${component.name.toLowerCase().replace(/\s+/g, "-")}`}
+                    className="group rounded-xl border border-border bg-card p-5 transition-all hover:border-accent/50 hover:bg-secondary/50"
+                  >
+                    <div className="mb-3 flex h-10 w-10 items-center justify-center rounded-lg bg-secondary text-accent transition-colors group-hover:bg-accent group-hover:text-background">
+                      <component.icon className="h-5 w-5" />
+                    </div>
+                    <h4 className="mb-1 font-semibold text-foreground">
+                      {component.name}
+                    </h4>
+                    <p className="text-sm leading-relaxed text-muted-foreground">
+                      {component.description}
+                    </p>
+                  </Link>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div className="mt-16 text-center">
+          <p className="mb-4 text-muted-foreground">
+            Plus many more: Accordion, Alert, Avatar, Badge, Breadcrumb, Card,
+            Collapsible, Context Menu, Hover Card, Popover, Progress, Radio
+            Group, Scroll Area, Select, Separator, Skeleton, Tabs, Textarea,
+            Tooltip...
+          </p>
+          <Link
+            href="/docs"
+            className="inline-flex items-center gap-2 text-accent transition-colors hover:text-accent/80"
+          >
+            View all components
+            <ChevronRight className="h-4 w-4" />
+          </Link>
+        </div>
+      </div>
+    </section>
+  );
+}

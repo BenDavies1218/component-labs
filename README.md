@@ -1,25 +1,19 @@
 # Component Labs
 
-A modern React UI component library built with TypeScript, Tailwind CSS, and Ariakit.
-
-## Features
-
-- **Accessible** - Built on Ariakit for WAI-ARIA compliant components
-- **Type-safe** - Full TypeScript support with type definitions
-- **Customizable** - Styled with Tailwind CSS for easy customization
-- **Modern tooling** - Vite for fast builds, Vitest for testing, Storybook for documentation
-- **Monorepo architecture** - Clean separation of concerns with pnpm workspaces
+- **UI Library** - A react UI library of generic re-uasable components
+- **React Showcase** - A react UI testing framework
 
 ## Project Structure
 
-```
+```text
 component-labs/
-├── packages/
-│   ├── ui/              # React component library
-│   └── testing/         # Test suite with Vitest
 ├── apps/
-│   └── storybook/       # Component documentation
-└── .claude/             # Claude Code configuration
+│   ├── component-labs/   # Componet Lab Website
+│   ├── react-showcase/   # React UI Testing Library
+│   └── nextjs-showcase/  # NextJs UI Testing Library
+│
+└── packages/
+    └── ui/               # Component Library
 ```
 
 ## Getting Started

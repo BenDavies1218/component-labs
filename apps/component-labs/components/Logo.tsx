@@ -5,7 +5,7 @@ export default function Logo() {
   return (
     <div
       className="relative flex items-center justify-center overflow-hidden rounded-xl"
-      style={{ width: "100%", height: "44px" }}
+      style={{ width: "100%", height: "400px" }}
     >
       {/* Flickering grid background - behind everything */}
       <FlickeringGrid

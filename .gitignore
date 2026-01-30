@@ -14,6 +14,12 @@ coverage/
 build/
 dist/
 
+#apps/component-labs/.next
+apps/component-labs/.turbo
+apps/component-labs/out/
+apps/component-labs/.next/
+
+
 # Misc
 .DS_Store
 .env.local
