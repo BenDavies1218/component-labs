@@ -4,7 +4,6 @@ import React from "react";
 import { Sun, Moon, Monitor, Code } from "lucide-react";
 
 import type { Showcase } from "../showcase";
-import Logo from "./Logo";
 
 type Theme = "light" | "dark" | "system";
 
@@ -27,18 +26,20 @@ export function Header({ showcase, theme, onThemeChange }: HeaderProps) {
     return group;
   };
 
+  console.log("Rendering Header with theme:", showcase);
+
   return (
     <header
-      className="relative flex items-center justify-between w-full px-4 py-3 border-b"
+      className="h-16 flex items-center justify-between w-full px-4 py-3 border-b"
       style={{
         backgroundColor: "var(--background)",
         borderColor: "var(--border)",
       }}
     >
-      <div className="flex items-center gap-4">
+      <div className="flex items-center gap-4 flex-1">
         {/* Current component info */}
         {showcase && (
-          <div className="absolute left-4 flex items-center gap-3">
+          <div className="flex items-center gap-3">
             <div
               className="flex items-center justify-center w-8 h-8 rounded-lg"
               style={{ backgroundColor: "var(--background-tertiary)" }}
@@ -66,9 +67,7 @@ export function Header({ showcase, theme, onThemeChange }: HeaderProps) {
         )}
       </div>
 
-      <Logo />
-
-      <div className="absolute right-4 flex items-center gap-3 z-100">
+      <div className="flex items-center gap-3">
         {/* Theme switcher */}
         <div
           className="flex items-center rounded-lg p-1 gap-0.5"

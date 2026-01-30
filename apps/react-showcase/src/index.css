@@ -5,6 +5,7 @@
 @source "../src";
 
 @theme {
+  /* Showcase App Colors - separate from user components */
   --color-primary: #3b82f6;
   --color-primary-hover: #2563eb;
   --color-secondary: #6366f1;

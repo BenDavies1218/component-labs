@@ -16,6 +16,11 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["src"],
+  "include": [
+    "src",
+    "../component-labs/Logo.tsx",
+    "../component-labs/FlickeringGrid.tsx",
+    "../component-labs/MorphingText.tsx"
+  ],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

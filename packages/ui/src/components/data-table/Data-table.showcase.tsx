@@ -1,8 +1,11 @@
 import { CompositeItem } from "@ariakit/react/composite";
 import { DataTable } from "./data-table";
 import { Dialog, DialogDismiss, DialogHeading } from "@ariakit/react/dialog";
-import { useState } from "react";
-import { Checkbox } from "@ariakit/react";
+import { useMemo, useState } from "react";
+import { Checkbox } from "../checkbox/Checkbox";
+import { Combobox } from "../combobox/Combobox";
+import { Button } from "../button/Button";
+import { Menu } from "../menu/Menu";
 
 // Showcase Configuration
 export default {
@@ -74,11 +77,16 @@ const userTableHeaderClassName =
 // User Table Components
 function UserTableHeader() {
   return (
-    <div role="row" className="bg-black/5 grid grid-cols-4 gap-4">
+    <div
+      role="row"
+      className="bg-gray-50 dark:bg-gray-800 grid grid-cols-[auto_1fr_1fr_120px_120px_80px] gap-4 items-center border-b border-gray-200 dark:border-gray-700"
+    >
+      <div className="px-4 py-3"></div>
       <div className={userTableHeaderClassName}>Name</div>
       <div className={userTableHeaderClassName}>Email</div>
       <div className={userTableHeaderClassName}>Role</div>
       <div className={userTableHeaderClassName}>Status</div>
+      <div className={userTableHeaderClassName}>Actions</div>
     </div>
   );
 }
@@ -134,8 +142,9 @@ function UserRowTwo({
 }) {
   const [open, setOpen] = useState(false);
 
-  const handleRowClick = () => {
-    setOpen(true);
+  const isSelected = selectedRows.has(user.id);
+
+  const handleCheckboxChange = () => {
     setSelectedRows((prev) => {
       const newSet = new Set(prev);
       if (newSet.has(user.id)) {
@@ -153,19 +162,70 @@ function UserRowTwo({
         render={
           <div
             role="row"
-            className="border-b border-black/10 last:border-0 grid grid-cols-2 md:grid-cols-4 gap-4 data-active-item:bg-black/5 cursor-pointer"
+            className="border-b border-gray-200 dark:border-gray-700 last:border-0 grid grid-cols-[auto_1fr_1fr_120px_120px_80px] gap-4 items-center data-active-item:bg-primary-50 dark:data-active-item:bg-primary-950/30 hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors"
           />
         }
-        onClick={() => handleRowClick()}
       >
-        <Checkbox
-          checked={selectedRows.has(user.id)}
-          onChange={() => handleRowClick()}
-        />
-        <div className="px-4 py-3">{user.name}</div>
-        <div className="px-4 py-3">{user.email}</div>
-        <div className="px-4 py-3 hidden md:block">{user.role}</div>
-        <div className="px-4 py-3 hidden md:block">{user.status}</div>
+        <div className="px-4 py-3 flex items-center">
+          <Checkbox
+            checked={isSelected}
+            onChange={handleCheckboxChange}
+            size="sm"
+          />
+        </div>
+        <div className="px-4 py-3">
+          <div className="font-medium text-gray-900 dark:text-gray-100">
+            {user.name}
+          </div>
+        </div>
+        <div className="px-4 py-3">
+          <div className="text-gray-600 dark:text-gray-400 text-sm">
+            {user.email}
+          </div>
+        </div>
+        <div className="px-4 py-3">
+          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-primary-100 text-primary-800 dark:bg-primary-900 dark:text-primary-200">
+            {user.role}
+          </span>
+        </div>
+        <div className="px-4 py-3">
+          <span
+            className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
+              user.status === "active"
+                ? "bg-success-100 text-success-800 dark:bg-success-900 dark:text-success-200"
+                : "bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-gray-200"
+            }`}
+          >
+            {user.status}
+          </span>
+        </div>
+        <div className="px-4 py-3 flex items-center gap-2">
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={() => setOpen(true)}
+            aria-label="View details"
+          >
+            View
+          </Button>
+          <Menu.Root>
+            <Menu.Trigger variant="ghost" size="sm" showArrow={false}>
+              •••
+            </Menu.Trigger>
+            <Menu.Content>
+              <Menu.Item onClick={() => alert(`Edit ${user.name}`)}>
+                Edit
+              </Menu.Item>
+              <Menu.Item onClick={() => alert(`Share ${user.name}`)}>
+                Share
+              </Menu.Item>
+              <Menu.Separator />
+              <Menu.Item onClick={() => alert(`Delete ${user.name}`)}>
+                Delete
+              </Menu.Item>
+            </Menu.Content>
+          </Menu.Root>
+        </div>
       </CompositeItem>
       {open && <UserDetailsDialog user={user} open={open} setOpen={setOpen} />}
     </>
@@ -203,30 +263,118 @@ function UserEmptyState() {
   );
 }
 
+// Filtering Component
+function TableFilters({
+  onSearchChange,
+  onRoleChange,
+  onStatusChange,
+}: {
+  onSearchChange: (value: string) => void;
+  onRoleChange: (value: string) => void;
+  onStatusChange: (value: string) => void;
+}) {
+  const roleOptions = [
+    { value: "all", label: "All Roles" },
+    { value: "admin", label: "Admin" },
+    { value: "user", label: "User" },
+    { value: "editor", label: "Editor" },
+  ];
+
+  const statusOptions = [
+    { value: "all", label: "All Status" },
+    { value: "active", label: "Active" },
+    { value: "inactive", label: "Inactive" },
+  ];
+
+  return (
+    <div className="flex flex-wrap gap-4 p-4 bg-gray-50 dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
+      <div className="flex-1 min-w-40">
+        <Combobox
+          placeholder="Search users..."
+          onValueChange={onSearchChange}
+          options={[]}
+          showClear={true}
+          size="sm"
+        />
+      </div>
+      <div className="min-w-40">
+        <Combobox
+          placeholder="Filter by role"
+          options={roleOptions}
+          onSelectOption={onRoleChange}
+          size="sm"
+        />
+      </div>
+      <div className="min-w-40">
+        <Combobox
+          placeholder="Filter by status"
+          options={statusOptions}
+          onSelectOption={onStatusChange}
+          size="sm"
+        />
+      </div>
+    </div>
+  );
+}
+
 export function BasicTable(props: {
   data: User[];
   label: string;
   description: string;
 }) {
   const [selectedRows, setSelectedRows] = useState<Set<number>>(new Set());
+  const [searchQuery, setSearchQuery] = useState("");
+  const [roleFilter, setRoleFilter] = useState("all");
+  const [statusFilter, setStatusFilter] = useState("all");
+
+  // Filter data based on search and filters
+  const filteredData = useMemo(() => {
+    return props.data.filter((user) => {
+      const matchesSearch =
+        searchQuery === "" ||
+        user.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        user.email.toLowerCase().includes(searchQuery.toLowerCase());
+
+      const matchesRole =
+        roleFilter === "all" ||
+        user.role.toLowerCase() === roleFilter.toLowerCase();
+
+      const matchesStatus =
+        statusFilter === "all" ||
+        user.status.toLowerCase() === statusFilter.toLowerCase();
+
+      return matchesSearch && matchesRole && matchesStatus;
+    });
+  }, [props.data, searchQuery, roleFilter, statusFilter]);
 
   return (
-    <DataTable<User>
-      data={props.data}
-      label={props.label}
-      description={props.description}
-      tableHeader={<UserTableHeader />}
-      tableRow={(user) => (
-        <UserRowTwo
-          key={user.id}
-          user={user}
-          selectedRows={selectedRows}
-          setSelectedRows={setSelectedRows}
-        />
-      )}
-      loadingRow={<UserSkeletonRow />}
-      emptyRow={<UserEmptyState />}
-    />
+    <div className="space-y-0">
+      <TableFilters
+        onSearchChange={setSearchQuery}
+        onRoleChange={(value) =>
+          setRoleFilter(value === "All Roles" ? "all" : value)
+        }
+        onStatusChange={(value) =>
+          setStatusFilter(value === "All Status" ? "all" : value)
+        }
+      />
+      <DataTable<User>
+        data={filteredData}
+        label={props.label}
+        description={props.description}
+        tableHeader={<UserTableHeader />}
+        tableRow={(user) => (
+          <UserRowTwo
+            key={user.id}
+            user={user}
+            selectedRows={selectedRows}
+            setSelectedRows={setSelectedRows}
+          />
+        )}
+        loadingRow={<UserSkeletonRow />}
+        emptyRow={<UserEmptyState />}
+      />
+    </div>
   );
 }
 

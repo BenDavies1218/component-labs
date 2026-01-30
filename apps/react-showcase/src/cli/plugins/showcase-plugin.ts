@@ -66,28 +66,13 @@ export function showcasePlugin(config: ShowcaseConfig, cwd: string): Plugin {
             `.trim();
           }
 
-          // Import the CSS as a string and export a function to inject it
+          // Import the CSS directly so Vite can process it (including Tailwind)
           return `
-            import userCssContent from '${cssPath}?inline';
+            import '${cssPath}';
 
-            let injected = false;
-
-            export function injectUserCss(targetElement) {
-              if (injected) return;
-
-              // Create a style element for user CSS
-              const styleEl = document.createElement('style');
-              styleEl.setAttribute('data-user-css', 'true');
-              styleEl.textContent = userCssContent;
-
-              // Inject into the target element (preview container) or document head
-              if (targetElement) {
-                targetElement.appendChild(styleEl);
-              } else {
-                document.head.appendChild(styleEl);
-              }
-
-              injected = true;
+            export function injectUserCss() {
+              // CSS is already imported globally by Vite
+              // No need to inject manually
             }
 
             export const hasUserCss = true;

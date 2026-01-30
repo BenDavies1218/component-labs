@@ -6,137 +6,11 @@ export default {
   component: Button,
 };
 
-// Showcase Variants
-export function Default() {
-  return <Button>Button</Button>;
-}
+// Interactive playground with controls
+export function Playground(props: ButtonProps) {
+  const { children, ...buttonProps } = props;
 
-Default.props = {
-  variant: {
-    type: "select",
-    options: [
-      "default",
-      "primary",
-      "secondary",
-      "outline",
-      "ghost",
-      "destructive",
-      "link",
-    ],
-    default: "default",
-  },
-  data: {
-    type: "array",
-    default: [
-      {
-        name: "button-1",
-        number: 1,
-        wallets: {
-          address: "0x123",
-          balance: {
-            eth: 2.5,
-            usd: 4500,
-          },
-        },
-      },
-    ],
-  },
-};
-
-export function Primary(props: { variant?: ButtonProps["variant"] }) {
-  return <Button variant={props.variant}>Primary</Button>;
-}
-
-Primary.props = {
-  variant: {
-    type: "select",
-    options: [
-      "default",
-      "primary",
-      "secondary",
-      "outline",
-      "ghost",
-      "destructive",
-      "link",
-    ],
-    default: "primary",
-  },
-};
-
-export function Secondary() {
-  return <Button variant="secondary">Secondary</Button>;
-}
-
-export function Outline() {
-  return <Button variant="outline">Outline</Button>;
-}
-
-export function Ghost() {
-  return <Button variant="ghost">Ghost</Button>;
-}
-
-export function Destructive() {
-  return <Button variant="destructive">Destructive</Button>;
-}
-
-export function Link() {
-  return <Button variant="link">Link</Button>;
-}
-
-export function FullWidth() {
-  return (
-    <div className="w-full max-w-md">
-      <Button fullWidth>Full Width Button</Button>
-    </div>
-  );
-}
-
-export function AllVariants() {
-  return (
-    <div className="flex flex-col gap-6 p-4">
-      <div>
-        <h3 className="text-sm font-semibold text-gray-700 mb-3">Variants</h3>
-        <div className="flex gap-2 flex-wrap">
-          <Button variant="default">Default</Button>
-          <Button variant="primary">Primary</Button>
-          <Button variant="secondary">Secondary</Button>
-          <Button variant="outline">Outline</Button>
-          <Button variant="ghost">Ghost</Button>
-          <Button variant="destructive">Destructive</Button>
-          <Button variant="link">Link</Button>
-        </div>
-      </div>
-
-      <div>
-        <h3 className="text-sm font-semibold text-gray-700 mb-3">Sizes</h3>
-        <div className="flex gap-2 items-center">
-          <Button size="sm">Small</Button>
-          <Button size="md">Medium</Button>
-          <Button size="lg">Large</Button>
-          <Button size="icon">→</Button>
-        </div>
-      </div>
-
-      <div>
-        <h3 className="text-sm font-semibold text-gray-700 mb-3">States</h3>
-        <div className="flex gap-2">
-          <Button>Normal</Button>
-          <Button disabled>Disabled</Button>
-          <Button loading>Loading</Button>
-        </div>
-      </div>
-
-      <div>
-        <h3 className="text-sm font-semibold text-gray-700 mb-3">Full Width</h3>
-        <Button fullWidth>Full Width</Button>
-      </div>
-    </div>
-  );
-}
-
-// Optional: Add interactive playground with controls
-export function Playground() {
-  return <Button>Click me</Button>;
+  return <Button {...buttonProps}>{children}</Button>;
 }
 
 Playground.props = {
@@ -144,7 +18,6 @@ Playground.props = {
     type: "select",
     options: [
       "default",
-      "primary",
       "secondary",
       "outline",
       "ghost",
@@ -172,20 +45,7 @@ Playground.props = {
   },
   children: {
     label: "Text",
-    type: "text",
+    type: "string",
     default: "Click me",
-  },
-  data: {
-    type: "array",
-    default: [
-      {
-        name: "button-1",
-        number: 1,
-        wallets: {
-          wallet1: "0x123",
-          wallet2: "0x456",
-        },
-      },
-    ],
   },
 };
