@@ -7,6 +7,7 @@ import { Preview } from "./components/Preview";
 import { Controls } from "./components/Controls";
 import { Header } from "./components/Header";
 import { ErrorBoundary } from "./components/ErrorBoundary";
+import { GettingStarted } from "./components/GettingStarted";
 
 type Theme = "light" | "dark" | "system";
 type ControlsPosition = "bottom" | "right";
@@ -56,6 +57,7 @@ export default function App() {
   });
   const [controlsPosition, setControlsPosition] =
     useState<ControlsPosition>("bottom");
+  const [showGettingStarted, setShowGettingStarted] = useState(false);
 
   // Apply theme
   useEffect(() => {
@@ -110,6 +112,7 @@ export default function App() {
   const handleShowcaseSelect = (showcase: Showcase) => {
     selectedIdRef.current = showcase.id;
     setSelectedShowcase(showcase);
+    setShowGettingStarted(false); // Hide getting started when selecting a showcase
     // Save to localStorage
     localStorage.setItem("showcase-selected-id", showcase.id);
     const initialValues: Record<string, any> = {};
@@ -119,6 +122,11 @@ export default function App() {
       });
     }
     setControlValues(initialValues);
+  };
+
+  const handleGettingStartedClick = () => {
+    setShowGettingStarted(true);
+    setSelectedShowcase(null);
   };
 
   // Save selected showcase ID to localStorage whenever it changes
@@ -163,6 +171,8 @@ export default function App() {
         onShowcaseSelect={handleShowcaseSelect}
         searchQuery={searchQuery}
         onSearchChange={setSearchQuery}
+        onGettingStartedClick={handleGettingStartedClick}
+        showGettingStarted={showGettingStarted}
       />
 
       <div className="flex-1 flex flex-col overflow-hidden">
@@ -172,26 +182,30 @@ export default function App() {
           onThemeChange={setTheme}
         />
 
-        <div
-          className={`flex-1 flex overflow-hidden ${controlsPosition === "bottom" ? "flex-col" : "flex-row"}`}
-        >
-          <ErrorBoundary>
-            <Preview
-              showcase={selectedShowcase}
-              controlValues={controlValues}
-            />
-          </ErrorBoundary>
+        {showGettingStarted ? (
+          <GettingStarted />
+        ) : (
+          <div
+            className={`flex-1 flex overflow-hidden ${controlsPosition === "bottom" ? "flex-col" : "flex-row"}`}
+          >
+            <ErrorBoundary>
+              <Preview
+                showcase={selectedShowcase}
+                controlValues={controlValues}
+              />
+            </ErrorBoundary>
 
-          {hasControls && (
-            <Controls
-              showcase={selectedShowcase}
-              controlValues={controlValues}
-              onControlChange={handleControlChange}
-              position={controlsPosition}
-              onPositionChange={setControlsPosition}
-            />
-          )}
-        </div>
+            {hasControls && (
+              <Controls
+                showcase={selectedShowcase}
+                controlValues={controlValues}
+                onControlChange={handleControlChange}
+                position={controlsPosition}
+                onPositionChange={setControlsPosition}
+              />
+            )}
+          </div>
+        )}
       </div>
     </div>
   );

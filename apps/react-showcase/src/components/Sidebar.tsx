@@ -8,6 +8,7 @@ import {
   Box,
   Search,
   TestTubeDiagonal,
+  BookOpen,
 } from "lucide-react";
 import type { Showcase } from "../showcase";
 
@@ -17,6 +18,8 @@ interface SidebarProps {
   onShowcaseSelect: (showcase: Showcase) => void;
   searchQuery: string;
   onSearchChange: (query: string) => void;
+  onGettingStartedClick: () => void;
+  showGettingStarted: boolean;
 }
 
 export function Sidebar({
@@ -25,6 +28,8 @@ export function Sidebar({
   onShowcaseSelect,
   searchQuery,
   onSearchChange,
+  onGettingStartedClick,
+  showGettingStarted,
 }: SidebarProps) {
   const [expandedGroups, setExpandedGroups] = useState<Record<string, boolean>>(
     () =>
@@ -116,6 +121,38 @@ export function Sidebar({
             /
           </kbd>
         </div>
+      </div>
+
+      {/* Getting Started Button */}
+      <div className="px-5 py-3 border-b" style={{ borderColor: "var(--border)" }}>
+        <button
+          onClick={onGettingStartedClick}
+          className="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium transition-all"
+          style={{
+            backgroundColor: showGettingStarted
+              ? "var(--selected-bg)"
+              : "var(--background-tertiary)",
+            color: showGettingStarted
+              ? "var(--selected-text)"
+              : "var(--foreground)",
+            boxShadow: showGettingStarted
+              ? "0 1px 3px rgba(59, 130, 246, 0.3)"
+              : "none",
+          }}
+          onMouseEnter={(e) => {
+            if (!showGettingStarted) {
+              e.currentTarget.style.backgroundColor = "var(--hover-bg)";
+            }
+          }}
+          onMouseLeave={(e) => {
+            if (!showGettingStarted) {
+              e.currentTarget.style.backgroundColor = "var(--background-tertiary)";
+            }
+          }}
+        >
+          <BookOpen size={18} />
+          <span>Getting Started</span>
+        </button>
       </div>
 
       {/* Component count */}
