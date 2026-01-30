@@ -24,7 +24,6 @@
     "src",
     "index.html",
     "templates",
-    "examples",
     "README.md"
   ],
   "scripts": {
