@@ -4,7 +4,7 @@
   "private": true,
   "description": "A modern React UI component library built with TypeScript, Tailwind CSS, and Ariakit",
   "scripts": {
-    "dev": "pnpm --filter @component-labs/showcase dev",
+    "dev": "pnpm --filter @component-labs/apps/component-labs dev",
     "build": "pnpm --filter @component-labs/ui build",
     "build:all": "pnpm -r build",
     "test": "pnpm --filter @component-labs/testing test",

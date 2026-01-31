@@ -34,12 +34,6 @@ export function Header() {
             React Showcase
           </Link>
           <Link
-            href="#docs"
-            className="text-sm text-muted-foreground transition-colors hover:text-foreground"
-          >
-            Docs
-          </Link>
-          <Link
             href="https://github.com/BenDavies1218/component-labs"
             target="_blank"
             className="text-sm text-muted-foreground transition-colors hover:text-foreground"

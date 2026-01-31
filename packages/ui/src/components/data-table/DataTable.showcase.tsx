@@ -1,5 +1,5 @@
 import { CompositeItem } from "@ariakit/react/composite";
-import { DataTable } from "./data-table";
+import { DataTable } from "./DataTable";
 import { Dialog, DialogDismiss, DialogHeading } from "@ariakit/react/dialog";
 import { useMemo, useState } from "react";
 import { Checkbox } from "../checkbox/Checkbox";
