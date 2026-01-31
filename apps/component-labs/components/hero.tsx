@@ -7,6 +7,8 @@ import Link from "next/link";
 import { Meteors } from "@/components/ui/meteors";
 import { Particles } from "@/components/ui/particles";
 import { ShimmerButton } from "@/components/ui/shimmer-button";
+import { MorphingText } from "./MorphingText";
+import Logo from "./Logo";
 
 export function Hero() {
   const [copied, setCopied] = useState(false);
@@ -32,11 +34,6 @@ export function Hero() {
       <Meteors number={10} />
 
       <div className="relative z-10 mx-auto max-w-4xl text-center">
-        <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-border bg-secondary px-4 py-1.5 text-sm text-muted-foreground">
-          <span className="h-2 w-2 rounded-full bg-accent" />
-          50+ Components
-        </div>
-
         <h1 className="mb-6 text-balance text-4xl font-bold tracking-tight text-foreground sm:text-5xl md:text-6xl lg:text-7xl">
           Beautiful React
           <br />
@@ -53,7 +50,13 @@ export function Hero() {
             shimmerColor="gold"
             className="shadow-2xl"
             onClick={() => {
-              window.location.href = "#docs";
+              const element = document.getElementById("content-tabs");
+              if (element) {
+                const offset = 80; // Adjust this value to show more space above tabs
+                const elementPosition = element.getBoundingClientRect().top;
+                const offsetPosition = elementPosition + window.pageYOffset - offset;
+                window.scrollTo({ top: offsetPosition, behavior: "smooth" });
+              }
             }}
           >
             <span className="whitespace-pre-wrap text-center text-sm font-medium leading-none tracking-tight text-white lg:text-lg">
@@ -67,20 +70,25 @@ export function Hero() {
           </Button>
         </div>
 
-        <div className="mt-10">
-          <button
-            type="button"
-            onClick={copyToClipboard}
-            className="group inline-flex items-center gap-3 rounded-lg border border-border bg-secondary px-4 py-3 font-mono text-sm text-muted-foreground transition-colors hover:border-accent hover:text-foreground"
-          >
-            <span className="text-accent">$</span>
-            <span>{installCommand}</span>
-            {copied ? (
-              <Check className="h-4 w-4 text-accent" />
-            ) : (
-              <Copy className="h-4 w-4 opacity-50 transition-opacity group-hover:opacity-100" />
-            )}
-          </button>
+        <div className="relative z-50 mt-10 h-24">
+          <MorphingText
+            texts={[
+              "Build. Test. Ship. Repeat.",
+              "Production-Ready React Components",
+              "Test Components in Isolation",
+              "Accessibility by Default",
+              "TypeScript & Tailwind Powered",
+              "Developer Experience First",
+              "Build. Test. Ship. Repeat.",
+              "Built for Modern React",
+              "Customizable & Composable",
+              "Zero Configuration Required",
+              "Test Driven Component Design",
+              "Ship with Confidence",
+              "Components You Can Trust",
+            ]}
+            className="text-lg md:text-2xl [&_span]:bg-linear-to-r! [&_span]:from-yellow-400! [&_span]:via-accent! [&_span]:to-cyan-300! [&_span]:bg-clip-text! [&_span]:text-transparent!"
+          />
         </div>
       </div>
     </section>

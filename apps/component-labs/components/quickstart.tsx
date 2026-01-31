@@ -1,7 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import { Copy, Check } from "lucide-react";
+import { Copy, Check, ExternalLink } from "lucide-react";
+import { Button } from "./ui/button";
+import Link from "next/link";
 
 const steps = [
   {
@@ -37,7 +39,7 @@ export function Quickstart() {
   };
 
   return (
-    <section id="docs" className="px-6 py-24">
+    <section id="docs" className="px-6 py-24 flex flex-col gap-12">
       <div className="mx-auto max-w-4xl">
         <div className="mb-16 text-center">
           <h2 className="mb-4 text-3xl font-bold tracking-tight text-foreground md:text-4xl">
@@ -83,6 +85,20 @@ export function Quickstart() {
             </div>
           ))}
         </div>
+      </div>
+
+      <div className="flex items-center justify-center gap-4">
+        <Button size="lg" asChild>
+          <Link href="/react-showcase">Learn More</Link>
+        </Button>
+        <Button variant="outline" size="lg" asChild>
+          <Link
+            href="https://www.npmjs.com/package/@component-labs/react-showcase"
+            target="_blank"
+          >
+            View on NPM
+          </Link>
+        </Button>
       </div>
     </section>
   );

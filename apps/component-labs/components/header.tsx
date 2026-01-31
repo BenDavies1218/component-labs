@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useState } from "react";
-import { Menu, X } from "lucide-react";
+import { Coffee, Menu, Star, X } from "lucide-react";
 import { RainbowButton } from "@/components/ui/rainbow-button";
 
 export function Header() {
@@ -53,20 +53,25 @@ export function Header() {
             <Link
               href="https://github.com/BenDavies1218/component-labs"
               target="_blank"
+              className="flex items-center gap-2 group"
             >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="yellow"
-                viewBox="0 0 24 24"
-                className="size-4"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M11.48 3.499a.562.562 0 0 1 1.04 0l2.125 5.111a.563.563 0 0 0 .475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 0 0-.182.557l1.285 5.385a.562.562 0 0 1-.84.61l-4.725-2.885a.562.562 0 0 0-.586 0L6.982 20.54a.562.562 0 0 1-.84-.61l1.285-5.386a.562.562 0 0 0-.182-.557l-4.204-3.602a.562.562 0 0 1 .321-.988l5.518-.442a.563.563 0 0 0 .475-.345L11.48 3.5Z"
-                />
-              </svg>
-              Star on GitHub
+              <Star className="h-4 w-4 transition-all group-hover:text-yellow-400 group-hover:fill-yellow-400" />
+              <span className="transition-colors group-hover:text-yellow-400">
+                Star on GitHub
+              </span>
+            </Link>
+          </RainbowButton>
+
+          <RainbowButton size="sm" asChild variant="default">
+            <Link
+              href="https://buymeacoffee.com/bendavies"
+              target="_blank"
+              className="flex items-center gap-2 group"
+            >
+              <Coffee className="h-4 w-4 transition-all group-hover:text-yellow-400 group-hover:fill-yellow-400" />
+              <span className="transition-colors group-hover:text-yellow-400">
+                Buy me a coffee
+              </span>
             </Link>
           </RainbowButton>
         </div>
@@ -117,13 +122,29 @@ export function Header() {
               GitHub
             </Link>
             <div className="flex flex-col gap-2 pt-2">
-              <RainbowButton size="sm" asChild>
+              <RainbowButton size="sm" asChild variant="default">
                 <Link
                   href="https://github.com/BenDavies1218/component-labs"
                   target="_blank"
-                  onClick={() => setMobileMenuOpen(false)}
+                  className="flex items-center gap-2 group"
                 >
-                  Star on GitHub
+                  <Star className="h-4 w-4 transition-all group-hover:text-yellow-400 group-hover:fill-yellow-400" />
+                  <span className="transition-colors group-hover:text-yellow-400">
+                    Star on GitHub
+                  </span>
+                </Link>
+              </RainbowButton>
+
+              <RainbowButton size="sm" asChild variant="default">
+                <Link
+                  href="https://buymeacoffee.com/bendavies"
+                  target="_blank"
+                  className="flex items-center gap-2 group"
+                >
+                  <Coffee className="h-4 w-4 transition-all group-hover:text-yellow-400 group-hover:fill-yellow-400" />
+                  <span className="transition-colors group-hover:text-yellow-400">
+                    Buy me a coffee
+                  </span>
                 </Link>
               </RainbowButton>
             </div>

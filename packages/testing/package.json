@@ -13,14 +13,14 @@
     "@component-labs/ui": "workspace:*",
     "@testing-library/react": "^14.1.2",
     "@testing-library/user-event": "^14.5.2",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react": "19.2.0",
+    "react-dom": "19.2.0"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^6.2.0",
-    "@types/react": "^18.2.48",
-    "@types/react-dom": "^18.2.18",
-    "@vitejs/plugin-react": "^4.2.1",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "@vitejs/plugin-react": "^4.3.4",
     "@vitest/ui": "^1.2.1",
     "jsdom": "^23.2.0",
     "typescript": "^5.3.3",

@@ -46,10 +46,7 @@ const features = [
 
 export function ShowcaseSection() {
   return (
-    <section
-      id="showcase"
-      className="border-t border-border bg-card px-6 py-24"
-    >
+    <section id="showcase" className="border-t border-border px-6 pt-20">
       <div className="mx-auto max-w-7xl">
         <div className="mb-16 text-center">
           <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-accent/30 bg-accent/10 px-4 py-1.5 text-sm text-accent">
@@ -85,7 +82,7 @@ export function ShowcaseSection() {
         </div>
 
         {/* Code example */}
-        <div className="mb-12 overflow-hidden rounded-xl border border-border bg-background">
+        <div className="overflow-hidden rounded-xl border border-border bg-background">
           <div className="flex items-center gap-2 border-b border-border bg-secondary/50 px-4 py-3">
             <div className="flex gap-1.5">
               <div className="h-3 w-3 rounded-full bg-red-500/70" />
@@ -129,20 +126,6 @@ Interactive.props = {
 } satisfies Props;`}</code>
             </pre>
           </div>
-        </div>
-
-        <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
-          <Button size="lg" asChild>
-            <Link href="/react-showcase">Learn More</Link>
-          </Button>
-          <Button variant="outline" size="lg" asChild>
-            <Link
-              href="https://www.npmjs.com/package/@component-labs/react-showcase"
-              target="_blank"
-            >
-              View on NPM
-            </Link>
-          </Button>
         </div>
       </div>
     </section>
