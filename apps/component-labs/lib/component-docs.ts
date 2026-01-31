@@ -8,18 +8,18 @@ import {
   menuDocs,
   switchDocs,
   type ComponentDoc,
-} from "@component-labs/ui";
+} from "../../../packages/ui/src/index";
 
 // Map of component slugs to their documentation
 export const componentDocsMap: Record<string, ComponentDoc> = {
-  "button": buttonDocs,
-  "checkbox": checkboxDocs,
-  "combobox": comboboxDocs,
+  button: buttonDocs,
+  checkbox: checkboxDocs,
+  combobox: comboboxDocs,
   "data-table": dataTableDocs,
-  "dialog": dialogDocs,
-  "input": inputDocs,
-  "menu": menuDocs,
-  "switch": switchDocs,
+  dialog: dialogDocs,
+  input: inputDocs,
+  menu: menuDocs,
+  switch: switchDocs,
 };
 
 // Get all component slugs
@@ -34,7 +34,10 @@ export function getComponentDocs(slug: string): ComponentDoc | undefined {
 
 // Get all components grouped by category
 export function getComponentsByCategory() {
-  const categories: Record<string, Array<{ slug: string; doc: ComponentDoc }>> = {};
+  const categories: Record<
+    string,
+    Array<{ slug: string; doc: ComponentDoc }>
+  > = {};
 
   Object.entries(componentDocsMap).forEach(([slug, doc]) => {
     if (!categories[doc.category]) {
@@ -47,12 +50,15 @@ export function getComponentsByCategory() {
 }
 
 // Search components by name or description
-export function searchComponents(query: string): Array<{ slug: string; doc: ComponentDoc }> {
+export function searchComponents(
+  query: string,
+): Array<{ slug: string; doc: ComponentDoc }> {
   const lowercaseQuery = query.toLowerCase();
   return Object.entries(componentDocsMap)
-    .filter(([_, doc]) =>
-      doc.name.toLowerCase().includes(lowercaseQuery) ||
-      doc.description.toLowerCase().includes(lowercaseQuery)
+    .filter(
+      ([_, doc]) =>
+        doc.name.toLowerCase().includes(lowercaseQuery) ||
+        doc.description.toLowerCase().includes(lowercaseQuery),
     )
     .map(([slug, doc]) => ({ slug, doc }));
 }
