@@ -28,13 +28,13 @@ export function GettingStarted() {
         <div className="mb-12">
           <h1
             className="text-4xl font-bold mb-4"
-            style={{ color: "var(--foreground)" }}
+            style={{ color: "var(--SC-foreground)" }}
           >
             Getting Started
           </h1>
           <p
             className="text-lg"
-            style={{ color: "var(--foreground-secondary)" }}
+            style={{ color: "var(--SC-foreground-secondary)" }}
           >
             Learn how to use Component Labs to showcase and test your React
             components
@@ -44,13 +44,13 @@ export function GettingStarted() {
         {/* Quick Start */}
         <Section icon={<Zap size={20} />} title="Quick Start" id="quick-start">
           <Step number={1} title="Install the Package">
-            <p style={{ color: "var(--foreground-secondary)" }}>
+            <p style={{ color: "var(--SC-foreground-secondary)" }}>
               Add Component Labs to your project using your preferred package
               manager:
             </p>
             <p
               className="text-sm mt-2"
-              style={{ color: "var(--foreground-muted)" }}
+              style={{ color: "var(--SC-foreground-muted)" }}
             >
               npm:
             </p>
@@ -64,7 +64,7 @@ export function GettingStarted() {
             />
             <p
               className="text-sm mt-2"
-              style={{ color: "var(--foreground-muted)" }}
+              style={{ color: "var(--SC-foreground-muted)" }}
             >
               pnpm:
             </p>
@@ -78,7 +78,7 @@ export function GettingStarted() {
             />
             <p
               className="text-sm mt-2"
-              style={{ color: "var(--foreground-muted)" }}
+              style={{ color: "var(--SC-foreground-muted)" }}
             >
               yarn:
             </p>
@@ -93,7 +93,7 @@ export function GettingStarted() {
           </Step>
 
           <Step number={2} title="Initialize Configuration">
-            <p style={{ color: "var(--foreground-secondary)" }}>
+            <p style={{ color: "var(--SC-foreground-secondary)" }}>
               Create a showcase configuration file:
             </p>
             <CodeBlock
@@ -104,14 +104,14 @@ export function GettingStarted() {
             />
             <p
               className="text-sm mt-3"
-              style={{ color: "var(--foreground-secondary)" }}
+              style={{ color: "var(--SC-foreground-secondary)" }}
             >
               This creates a{" "}
               <code
                 className="px-1.5 py-0.5 rounded text-sm"
                 style={{
-                  backgroundColor: "var(--background-tertiary)",
-                  color: "var(--color-primary)",
+                  backgroundColor: "var(--SC-background-tertiary)",
+                  color: "var(--SC-primary)",
                 }}
               >
                 showcase.config.ts
@@ -121,7 +121,7 @@ export function GettingStarted() {
           </Step>
 
           <Step number={3} title="Run the Showcase">
-            <p style={{ color: "var(--foreground-secondary)" }}>
+            <p style={{ color: "var(--SC-foreground-secondary)" }}>
               Start the development server:
             </p>
             <CodeBlock
@@ -132,14 +132,14 @@ export function GettingStarted() {
             />
             <p
               className="text-sm mt-3"
-              style={{ color: "var(--foreground-secondary)" }}
+              style={{ color: "var(--SC-foreground-secondary)" }}
             >
               By Default your showcase will open at{" "}
               <code
                 className="px-1.5 py-0.5 rounded text-sm"
                 style={{
-                  backgroundColor: "var(--background-tertiary)",
-                  color: "var(--color-primary)",
+                  backgroundColor: "var(--SC-background-tertiary)",
+                  color: "var(--SC-primary)",
                 }}
               >
                 http://localhost:6060
@@ -154,13 +154,16 @@ export function GettingStarted() {
           title="Configuration"
           id="configuration"
         >
-          <p className="mb-4" style={{ color: "var(--foreground-secondary)" }}>
+          <p
+            className="mb-4"
+            style={{ color: "var(--SC-foreground-secondary)" }}
+          >
             Edit{" "}
             <code
               className="px-1.5 py-0.5 rounded"
               style={{
-                backgroundColor: "var(--background-tertiary)",
-                color: "var(--color-primary)",
+                backgroundColor: "var(--SC-background-tertiary)",
+                color: "var(--SC-primary)",
               }}
             >
               showcase.config.ts
@@ -203,20 +206,20 @@ export default defineConfig({
           <div className="mb-6">
             <h3
               className="text-lg font-semibold mb-3"
-              style={{ color: "var(--foreground)" }}
+              style={{ color: "var(--SC-foreground)" }}
             >
               Basic Showcase
             </h3>
             <p
               className="mb-3"
-              style={{ color: "var(--foreground-secondary)" }}
+              style={{ color: "var(--SC-foreground-secondary)" }}
             >
               Create a file with the{" "}
               <code
                 className="px-1.5 py-0.5 rounded"
                 style={{
-                  backgroundColor: "var(--background-tertiary)",
-                  color: "var(--color-primary)",
+                  backgroundColor: "var(--SC-background-tertiary)",
+                  color: "var(--SC-primary)",
                 }}
               >
                 *.showcase.tsx
@@ -253,13 +256,13 @@ export function WithProps() {
           <div className="mb-6">
             <h3
               className="text-lg font-semibold mb-3"
-              style={{ color: "var(--foreground)" }}
+              style={{ color: "var(--SC-foreground)" }}
             >
               Interactive Controls
             </h3>
             <p
               className="mb-3"
-              style={{ color: "var(--foreground-secondary)" }}
+              style={{ color: "var(--SC-foreground-secondary)" }}
             >
               Add interactive props to let users experiment with your
               components:
@@ -315,7 +318,7 @@ Interactive.props = {
           <div>
             <h3
               className="text-lg font-semibold mb-3"
-              style={{ color: "var(--foreground)" }}
+              style={{ color: "var(--SC-foreground)" }}
             >
               Available Prop Types
             </h3>
@@ -364,8 +367,8 @@ Interactive.props = {
               <code
                 className="px-1.5 py-0.5 rounded"
                 style={{
-                  backgroundColor: "var(--background-tertiary)",
-                  color: "var(--color-primary)",
+                  backgroundColor: "var(--SC-background-tertiary)",
+                  color: "var(--SC-primary)",
                 }}
               >
                 *.showcase.tsx
@@ -394,8 +397,8 @@ Interactive.props = {
               <code
                 className="px-1.5 py-0.5 rounded"
                 style={{
-                  backgroundColor: "var(--background-tertiary)",
-                  color: "var(--color-primary)",
+                  backgroundColor: "var(--SC-background-tertiary)",
+                  color: "var(--SC-primary)",
                 }}
               >
                 DisabledState
@@ -404,8 +407,8 @@ Interactive.props = {
               <code
                 className="px-1.5 py-0.5 rounded"
                 style={{
-                  backgroundColor: "var(--background-tertiary)",
-                  color: "var(--color-primary)",
+                  backgroundColor: "var(--SC-background-tertiary)",
+                  color: "var(--SC-primary)",
                 }}
               >
                 WithIcon
@@ -417,24 +420,27 @@ Interactive.props = {
 
         {/* Example Files */}
         <Section icon={<Package size={20} />} title="Examples" id="examples">
-          <p className="mb-4" style={{ color: "var(--foreground-secondary)" }}>
+          <p
+            className="mb-4"
+            style={{ color: "var(--SC-foreground-secondary)" }}
+          >
             Here are the complete example files you can copy and use in your
             project:
           </p>
 
           <div className="mb-8">
             <div className="flex items-center gap-2 mb-3">
-              <FileCode size={18} style={{ color: "var(--color-primary)" }} />
+              <FileCode size={18} style={{ color: "var(--SC-primary)" }} />
               <h3
                 className="text-lg font-semibold"
-                style={{ color: "var(--foreground)" }}
+                style={{ color: "var(--SC-foreground)" }}
               >
                 Button.tsx
               </h3>
             </div>
             <p
               className="mb-3 text-sm"
-              style={{ color: "var(--foreground-muted)" }}
+              style={{ color: "var(--SC-foreground-muted)" }}
             >
               A fully functional Button component with variants, sizes, and
               states
@@ -534,17 +540,17 @@ export const Button: React.FC<ButtonProps> = ({
 
           <div>
             <div className="flex items-center gap-2 mb-3">
-              <FileCode size={18} style={{ color: "var(--color-primary)" }} />
+              <FileCode size={18} style={{ color: "var(--SC-primary)" }} />
               <h3
                 className="text-lg font-semibold"
-                style={{ color: "var(--foreground)" }}
+                style={{ color: "var(--SC-foreground)" }}
               >
                 Button.showcase.tsx
               </h3>
             </div>
             <p
               className="mb-3 text-sm"
-              style={{ color: "var(--foreground-muted)" }}
+              style={{ color: "var(--SC-foreground-muted)" }}
             >
               Comprehensive showcase demonstrating 6 different use cases with
               interactive controls
@@ -779,15 +785,15 @@ function Section({ icon, title, id, children }: SectionProps) {
         <div
           className="p-2 rounded-lg"
           style={{
-            backgroundColor: "var(--background-tertiary)",
-            color: "var(--color-primary)",
+            backgroundColor: "var(--SC-background-secondary)",
+            color: "var(--SC-primary)",
           }}
         >
           {icon}
         </div>
         <h2
           className="text-2xl font-bold"
-          style={{ color: "var(--foreground)" }}
+          style={{ color: "var(--SC-foreground)" }}
         >
           {title}
         </h2>
@@ -808,14 +814,17 @@ function Step({ number, title, children }: StepProps) {
     <div className="mb-8 flex gap-4">
       <div
         className="shrink-0 w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm"
-        style={{ backgroundColor: "var(--color-primary)", color: "white" }}
+        style={{
+          backgroundColor: "var(--SC-sidebar-primary)",
+          color: "white",
+        }}
       >
         {number}
       </div>
       <div className="flex-1">
         <h3
           className="text-lg font-semibold mb-3"
-          style={{ color: "var(--foreground)" }}
+          style={{ color: "var(--SC-foreground)" }}
         >
           {title}
         </h3>
@@ -838,25 +847,25 @@ function CodeBlock({ code, onCopy, copied }: CodeBlockProps) {
       <pre
         className="p-4 rounded-lg overflow-x-auto text-sm"
         style={{
-          backgroundColor: "var(--background-tertiary)",
-          border: "1px solid var(--border)",
+          backgroundColor: "var(--SC-background-tertiary)",
+          border: "1px solid var(--SC-border)",
         }}
       >
-        <code style={{ color: "var(--foreground)" }}>{code}</code>
+        <code style={{ color: "var(--SC-foreground)" }}>{code}</code>
       </pre>
       <button
         onClick={onCopy}
         className="absolute top-3 right-3 p-2 rounded-md opacity-0 group-hover:opacity-100 transition-opacity"
         style={{
-          backgroundColor: "var(--background)",
-          border: "1px solid var(--border)",
+          backgroundColor: "var(--SC-background)",
+          border: "1px solid var(--SC-border)",
         }}
         title="Copy to clipboard"
       >
         {copied ? (
           <Check size={16} style={{ color: "var(--color-success, #10b981)" }} />
         ) : (
-          <Copy size={16} style={{ color: "var(--foreground-muted)" }} />
+          <Copy size={16} style={{ color: "var(--SC-foreground-muted)" }} />
         )}
       </button>
     </div>
@@ -873,17 +882,20 @@ function PropTypeCard({ type, description }: PropTypeCardProps) {
     <div
       className="p-4 rounded-lg border"
       style={{
-        backgroundColor: "var(--background-secondary)",
-        borderColor: "var(--border)",
+        backgroundColor: "var(--SC-background-secondary)",
+        borderColor: "var(--SC-border)",
       }}
     >
       <code
         className="text-sm font-semibold"
-        style={{ color: "var(--color-primary)" }}
+        style={{ color: "var(--SC-primary)" }}
       >
         {type}
       </code>
-      <p className="text-sm mt-1" style={{ color: "var(--foreground-muted)" }}>
+      <p
+        className="text-sm mt-1"
+        style={{ color: "var(--SC-foreground-muted)" }}
+      >
         {description}
       </p>
     </div>
@@ -900,22 +912,22 @@ function CommandCard({ command, description }: CommandCardProps) {
     <div
       className="p-4 rounded-lg border"
       style={{
-        backgroundColor: "var(--background-secondary)",
-        borderColor: "var(--border)",
+        backgroundColor: "var(--SC-background-secondary)",
+        borderColor: "var(--SC-border)",
       }}
     >
       <code
         className="text-sm font-mono px-2 py-1 rounded"
         style={{
-          backgroundColor: "var(--background-tertiary)",
-          color: "var(--color-primary)",
+          backgroundColor: "var(--SC-background-tertiary)",
+          color: "var(--SC-primary)",
         }}
       >
         {command}
       </code>
       <p
         className="text-sm mt-2"
-        style={{ color: "var(--foreground-secondary)" }}
+        style={{ color: "var(--SC-foreground-secondary)" }}
       >
         {description}
       </p>
@@ -925,10 +937,13 @@ function CommandCard({ command, description }: CommandCardProps) {
 
 function BestPracticeItem({ children }: { children: React.ReactNode }) {
   return (
-    <li className="flex gap-3" style={{ color: "var(--foreground-secondary)" }}>
+    <li
+      className="flex gap-3"
+      style={{ color: "var(--SC-foreground-secondary)" }}
+    >
       <span
         className="shrink-0 w-1.5 h-1.5 rounded-full mt-2"
-        style={{ backgroundColor: "var(--color-primary)" }}
+        style={{ backgroundColor: "var(--SC-primary)" }}
       />
       <span>{children}</span>
     </li>

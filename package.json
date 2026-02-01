@@ -24,8 +24,17 @@
     "tailwind",
     "ariakit"
   ],
-  "author": "",
-  "license": "MIT",
+  "author": "Benjamin Davies",
+  "license": "AGPL-3.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/BenDavies1218/component-labs",
+    "directory": "apps/showcase"
+  },
+  "homepage": "https://github.com/BenDavies1218/component-labs#readme",
+  "bugs": {
+    "url": "https://github.com/BenDavies1218/component-labs/issues"
+  },
   "devDependencies": {
     "@types/node": "^22",
     "typescript": "^5.3.3"

@@ -1,8 +1,10 @@
 import type { ComponentDoc } from "../../types/docs";
+import { Button } from "./Button";
 
 export const buttonDocs: ComponentDoc = {
   name: "Button",
-  description: "Interactive button with multiple variants and sizes, built on Ariakit for accessibility.",
+  description:
+    "Interactive button with multiple variants and sizes, built on Ariakit for accessibility.",
   category: "Inputs",
   installation: `pnpm add @component-labs/ui`,
   usage: `import { Button } from "@component-labs/ui";
@@ -36,7 +38,8 @@ export const buttonDocs: ComponentDoc = {
     {
       name: "loading",
       type: "boolean",
-      description: "Loading state - shows loading indicator and disables the button",
+      description:
+        "Loading state - shows loading indicator and disables the button",
       default: "false",
     },
     {
@@ -109,4 +112,5 @@ export const buttonDocs: ComponentDoc = {
     "Focus visible states with ring indicator",
     "Disabled state prevents interaction and updates ARIA",
   ],
+  component: Button,
 };

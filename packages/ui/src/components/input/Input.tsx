@@ -1,5 +1,5 @@
 import { cva, type VariantProps } from "class-variance-authority";
-import { forwardRef, type InputHTMLAttributes, type ReactNode } from "react";
+import { forwardRef, type InputHTMLAttributes, type ReactNode, useId } from "react";
 import { cn } from "../../lib/utils";
 
 const inputVariants = cva(
@@ -78,11 +78,23 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
   ) => {
     const hasError = Boolean(error);
     const displayVariant = hasError ? "error" : variant;
+    const generatedId = useId();
+    const inputId = props.id || generatedId;
+    const labelId = `${inputId}-label`;
+    const helperTextId = `${inputId}-helper-text`;
+    const errorId = `${inputId}-error`;
+
+    // Build aria-describedby from available helper text or error
+    const describedBy = error ? errorId : helperText ? helperTextId : undefined;
 
     return (
       <div className="w-full space-y-1.5">
         {label && (
-          <label className="text-sm font-medium text-gray-900 dark:text-gray-100">
+          <label
+            id={labelId}
+            htmlFor={inputId}
+            className="text-sm font-medium text-gray-900 dark:text-gray-100"
+          >
             {label}
           </label>
         )}
@@ -94,12 +106,16 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
           )}
           <input
             ref={ref}
+            id={inputId}
             className={cn(
               inputVariants({ variant: displayVariant, size }),
               startIcon && "pl-10",
               endIcon && "pr-10",
               className,
             )}
+            aria-labelledby={label ? labelId : undefined}
+            aria-describedby={describedBy}
+            aria-invalid={hasError ? true : undefined}
             {...props}
           />
           {endIcon && (
@@ -108,16 +124,22 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
             </div>
           )}
         </div>
-        {(helperText || error) && (
+        {error && (
           <p
-            className={cn(
-              "text-xs",
-              hasError
-                ? "text-error-600 dark:text-error-400"
-                : "text-gray-500 dark:text-gray-400",
-            )}
+            id={errorId}
+            role="alert"
+            aria-live="polite"
+            className="text-xs text-error-600 dark:text-error-400"
           >
-            {error || helperText}
+            {error}
+          </p>
+        )}
+        {helperText && !error && (
+          <p
+            id={helperTextId}
+            className="text-xs text-gray-500 dark:text-gray-400"
+          >
+            {helperText}
           </p>
         )}
       </div>

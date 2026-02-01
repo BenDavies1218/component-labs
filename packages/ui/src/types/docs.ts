@@ -1,3 +1,5 @@
+import { ForwardRefExoticComponent, RefAttributes } from "react";
+
 export interface PropDoc {
   name: string;
   type: string;
@@ -15,11 +17,20 @@ export interface ExampleDoc {
 export interface ComponentDoc {
   name: string;
   description: string;
-  category: "Inputs" | "Data Display" | "Navigation" | "Feedback" | "Layout" | "Overlay";
+  category:
+    | "Inputs"
+    | "Data Display"
+    | "Navigation"
+    | "Feedback"
+    | "Layout"
+    | "Overlay";
   installation: string;
   usage: string;
   props?: PropDoc[];
   examples: ExampleDoc[];
   accessibility?: string[];
   relatedComponents?: string[];
+  component: ForwardRefExoticComponent<
+    Omit<unknown, "ref"> & RefAttributes<HTMLButtonElement>
+  >;
 }

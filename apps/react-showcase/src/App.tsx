@@ -163,7 +163,7 @@ export default function App() {
   return (
     <div
       className="flex h-screen overflow-hidden transition-colors duration-200"
-      style={{ backgroundColor: "var(--background)" }}
+      style={{ backgroundColor: "var(--SC-background)" }}
     >
       <Sidebar
         showcaseGroups={showcaseGroups}

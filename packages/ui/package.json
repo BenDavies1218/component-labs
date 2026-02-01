@@ -3,13 +3,57 @@
   "version": "0.0.1",
   "description": "React UI component library with Ariakit and Tailwind CSS",
   "type": "module",
-  "main": "./dist/index.js",
-  "module": "./dist/index.js",
-  "types": "./dist/index.d.ts",
+  "keywords": [
+    "react",
+    "components",
+    "ui",
+    "ariakit",
+    "tailwind",
+    "tailwindcss",
+    "accessible",
+    "component-library"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/component-labs/ui.git",
+    "directory": "packages/ui"
+  },
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
   "exports": {
-    ".": {
-      "import": "./dist/index.js",
-      "types": "./dist/index.d.ts"
+    "./button": {
+      "import": "./dist/button.js",
+      "types": "./dist/button.d.ts"
+    },
+    "./checkbox": {
+      "import": "./dist/checkbox.js",
+      "types": "./dist/checkbox.d.ts"
+    },
+    "./combobox": {
+      "import": "./dist/combobox.js",
+      "types": "./dist/combobox.d.ts"
+    },
+    "./data-table": {
+      "import": "./dist/data-table.js",
+      "types": "./dist/data-table.d.ts"
+    },
+    "./dialog": {
+      "import": "./dist/dialog.js",
+      "types": "./dist/dialog.d.ts"
+    },
+    "./input": {
+      "import": "./dist/input.js",
+      "types": "./dist/input.d.ts"
+    },
+    "./menu": {
+      "import": "./dist/menu.js",
+      "types": "./dist/menu.d.ts"
+    },
+    "./switch": {
+      "import": "./dist/switch.js",
+      "types": "./dist/switch.d.ts"
     },
     "./styles.css": "./dist/style.css",
     "./src/styles.css": "./src/styles.css"
@@ -30,6 +74,7 @@
   },
   "dependencies": {
     "@ariakit/react": "^0.4.1",
+    "@tailwindcss/vite": "^4.0.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "tailwind-merge": "3.4.0"
@@ -46,7 +91,8 @@
     "lightningcss": "^1.28.2",
     "react": "19.2.0",
     "react-dom": "19.2.0",
-    "tailwindcss": "^4.1.9",
+    "tailwindcss": "^4.1.18",
+    "tailwindcss-animate": "^1.0.7",
     "typescript": "^5.3.3",
     "vite": "^5.0.12",
     "vite-plugin-dts": "^3.7.1"

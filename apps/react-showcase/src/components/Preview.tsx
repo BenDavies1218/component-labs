@@ -99,19 +99,19 @@ export function Preview({ showcase, controlValues }: PreviewProps) {
         <div className="text-center relative z-10">
           <div
             className="w-20 h-20 mx-auto mb-6 rounded-2xl flex items-center justify-center"
-            style={{ backgroundColor: "var(--background-tertiary)" }}
+            style={{ backgroundColor: "var(--SC-background-tertiary)" }}
           >
-            <Grid3x3 size={32} style={{ color: "var(--color-primary)" }} />
+            <Grid3x3 size={32} style={{ color: "var(--SC-primary)" }} />
           </div>
           <h3
             className="text-lg font-semibold mb-2"
-            style={{ color: "var(--foreground)" }}
+            style={{ color: "var(--SC-foreground)" }}
           >
             Select a component
           </h3>
           <p
             className="text-sm max-w-xs"
-            style={{ color: "var(--foreground-muted)" }}
+            style={{ color: "var(--SC-foreground-muted)" }}
           >
             Choose a component from the sidebar to preview and interact with its
             controls
@@ -146,15 +146,15 @@ export function Preview({ showcase, controlValues }: PreviewProps) {
       <div
         className="flex items-center justify-between px-4 py-2 border-b"
         style={{
-          backgroundColor: "var(--background)",
-          borderColor: "var(--border)",
+          backgroundColor: "var(--SC-background)",
+          borderColor: "var(--SC-border)",
         }}
       >
         <div className="flex items-center gap-1">
           {/* Viewport buttons */}
           <div
             className="flex items-center rounded-lg p-1 gap-0.5"
-            style={{ backgroundColor: "var(--background-tertiary)" }}
+            style={{ backgroundColor: "var(--SC-background-tertiary)" }}
           >
             <button
               onClick={() => setViewport("responsive")}
@@ -162,12 +162,12 @@ export function Preview({ showcase, controlValues }: PreviewProps) {
               style={{
                 backgroundColor:
                   viewport === "responsive"
-                    ? "var(--background)"
+                    ? "var(--SC-background)"
                     : "transparent",
                 color:
                   viewport === "responsive"
-                    ? "var(--foreground)"
-                    : "var(--foreground-muted)",
+                    ? "var(--SC-foreground)"
+                    : "var(--SC-foreground-muted)",
                 boxShadow:
                   viewport === "responsive"
                     ? "0 1px 2px rgba(0,0,0,0.1)"
@@ -182,11 +182,11 @@ export function Preview({ showcase, controlValues }: PreviewProps) {
               className="p-1.5 rounded-md transition-colors"
               style={{
                 backgroundColor:
-                  viewport === "desktop" ? "var(--background)" : "transparent",
+                  viewport === "desktop" ? "var(--SC-background)" : "transparent",
                 color:
                   viewport === "desktop"
-                    ? "var(--foreground)"
-                    : "var(--foreground-muted)",
+                    ? "var(--SC-foreground)"
+                    : "var(--SC-foreground-muted)",
                 boxShadow:
                   viewport === "desktop" ? "0 1px 2px rgba(0,0,0,0.1)" : "none",
               }}
@@ -199,11 +199,11 @@ export function Preview({ showcase, controlValues }: PreviewProps) {
               className="p-1.5 rounded-md transition-colors"
               style={{
                 backgroundColor:
-                  viewport === "tablet" ? "var(--background)" : "transparent",
+                  viewport === "tablet" ? "var(--SC-background)" : "transparent",
                 color:
                   viewport === "tablet"
-                    ? "var(--foreground)"
-                    : "var(--foreground-muted)",
+                    ? "var(--SC-foreground)"
+                    : "var(--SC-foreground-muted)",
                 boxShadow:
                   viewport === "tablet" ? "0 1px 2px rgba(0,0,0,0.1)" : "none",
               }}
@@ -216,11 +216,11 @@ export function Preview({ showcase, controlValues }: PreviewProps) {
               className="p-1.5 rounded-md transition-colors"
               style={{
                 backgroundColor:
-                  viewport === "mobile" ? "var(--background)" : "transparent",
+                  viewport === "mobile" ? "var(--SC-background)" : "transparent",
                 color:
                   viewport === "mobile"
-                    ? "var(--foreground)"
-                    : "var(--foreground-muted)",
+                    ? "var(--SC-foreground)"
+                    : "var(--SC-foreground-muted)",
                 boxShadow:
                   viewport === "mobile" ? "0 1px 2px rgba(0,0,0,0.1)" : "none",
               }}
@@ -233,7 +233,7 @@ export function Preview({ showcase, controlValues }: PreviewProps) {
           {viewport !== "responsive" && (
             <span
               className="text-xs ml-2"
-              style={{ color: "var(--foreground-muted)" }}
+              style={{ color: "var(--SC-foreground-muted)" }}
             >
               {viewportSizes[viewport].width}
             </span>
@@ -244,8 +244,8 @@ export function Preview({ showcase, controlValues }: PreviewProps) {
             onClick={() => setShowBackdrop(!showBackdrop)}
             className="ml-2 p-2.5 rounded-lg transition-colors flex items-center gap-1.5"
             style={{
-              backgroundColor: "var(--background-tertiary)",
-              color: "var(--foreground-secondary)",
+              backgroundColor: "var(--SC-background-tertiary)",
+              color: "var(--SC-foreground-secondary)",
             }}
             title={showBackdrop ? "Hide backdrop" : "Show backdrop"}
           >
@@ -259,11 +259,11 @@ export function Preview({ showcase, controlValues }: PreviewProps) {
               className="ml-2 p-2.5 rounded-lg transition-colors flex items-center gap-1.5"
               style={{
                 backgroundColor: showDeviceFrame
-                  ? "var(--color-primary)"
-                  : "var(--background-tertiary)",
+                  ? "var(--SC-primary)"
+                  : "var(--SC-background-tertiary)",
                 color: showDeviceFrame
                   ? "white"
-                  : "var(--foreground-secondary)",
+                  : "var(--SC-foreground-secondary)",
               }}
               title={
                 showDeviceFrame ? "Hide device frame" : "Show device frame"
@@ -279,15 +279,15 @@ export function Preview({ showcase, controlValues }: PreviewProps) {
           <div className="relative group">
             <Info
               size={14}
-              style={{ color: "var(--foreground-muted)" }}
+              style={{ color: "var(--SC-foreground-muted)" }}
               className="cursor-help"
             />
             <div
               className="absolute right-0 top-full mt-2 px-3 py-2 rounded-lg shadow-lg opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity duration-200 whitespace-nowrap z-10"
               style={{
-                backgroundColor: "var(--card)",
-                border: "1px solid var(--border)",
-                color: "var(--foreground-secondary)",
+                backgroundColor: "var(--SC-card)",
+                border: "1px solid var(--SC-border)",
+                color: "var(--SC-foreground-secondary)",
               }}
             >
               <div className="text-xs space-y-1">
@@ -295,8 +295,8 @@ export function Preview({ showcase, controlValues }: PreviewProps) {
                   <kbd
                     className="px-1.5 py-0.5 rounded text-[10px] font-mono"
                     style={{
-                      backgroundColor: "var(--background-tertiary)",
-                      border: "1px solid var(--border)",
+                      backgroundColor: "var(--SC-background-tertiary)",
+                      border: "1px solid var(--SC-border)",
                     }}
                   >
                     Ctrl/Cmd
@@ -309,7 +309,7 @@ export function Preview({ showcase, controlValues }: PreviewProps) {
           </div>
           <span
             className="text-xs"
-            style={{ color: "var(--foreground-muted)" }}
+            style={{ color: "var(--SC-foreground-muted)" }}
           >
             Zoom
           </span>
@@ -321,13 +321,13 @@ export function Preview({ showcase, controlValues }: PreviewProps) {
             onChange={(e) => setZoom(Number(e.target.value))}
             className="w-20 h-1 rounded-full appearance-none cursor-pointer"
             style={{
-              backgroundColor: "var(--background-tertiary)",
-              accentColor: "var(--color-primary)",
+              backgroundColor: "var(--SC-background-tertiary)",
+              accentColor: "var(--SC-primary)",
             }}
           />
           <span
             className="text-xs w-8 text-right tabular-nums"
-            style={{ color: "var(--foreground-secondary)" }}
+            style={{ color: "var(--SC-foreground-secondary)" }}
           >
             {Math.round(zoom)}%
           </span>
@@ -335,8 +335,8 @@ export function Preview({ showcase, controlValues }: PreviewProps) {
             onClick={() => setZoom(100)}
             className="px-2 py-1 rounded-md text-xs transition-colors"
             style={{
-              backgroundColor: "var(--background-tertiary)",
-              color: "var(--foreground-secondary)",
+              backgroundColor: "var(--SC-background-tertiary)",
+              color: "var(--SC-foreground-secondary)",
             }}
             title="Reset zoom"
           >
@@ -385,8 +385,8 @@ export function Preview({ showcase, controlValues }: PreviewProps) {
                 <div
                   className="rounded-xl p-8 shadow-sm min-w-50 flex items-center justify-center"
                   style={{
-                    backgroundColor: "var(--card)",
-                    border: "1px solid var(--border)",
+                    backgroundColor: "var(--SC-card)",
+                    border: "1px solid var(--SC-border)",
                   }}
                 >
                   {renderDemo()}

@@ -65,25 +65,28 @@ export function Sidebar({
     <aside
       className="w-96 flex flex-col overflow-hidden border-r transition-colors duration-200"
       style={{
-        backgroundColor: "var(--sidebar-bg)",
-        borderColor: "var(--sidebar-border)",
+        backgroundColor: "var(--SC-background)",
+        borderColor: "var(--SC-border)",
       }}
     >
       {/* Header */}
-      <div className="p-5 border-b" style={{ borderColor: "var(--border)" }}>
+      <div className="p-5 border-b" style={{ borderColor: "var(--SC-border)" }}>
         <div className="flex items-center gap-3 mb-4">
           <TestTubeDiagonal
             size={24}
-            style={{ color: "var(--color-primary)" }}
+            style={{ color: "var(--SC-sidebar-primary)" }}
           />
           <div>
             <h1
               className="text-base font-semibold"
-              style={{ color: "var(--foreground)" }}
+              style={{ color: "var(--SC-sidebar-foreground)" }}
             >
               Component Labs
             </h1>
-            <p className="text-xs" style={{ color: "var(--foreground-muted)" }}>
+            <p
+              className="text-xs"
+              style={{ color: "var(--SC-sidebar-muted-foreground)" }}
+            >
               React UI Testing Library
             </p>
           </div>
@@ -94,7 +97,11 @@ export function Sidebar({
           <Search
             size={16}
             className="absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none"
-            style={{ color: "var(--foreground-muted)" } as React.CSSProperties}
+            style={
+              {
+                color: "var(--SC-sidebar-muted-foreground)",
+              } as React.CSSProperties
+            }
           />
           <input
             type="text"
@@ -104,18 +111,18 @@ export function Sidebar({
             className="w-full h-9 pl-9 pr-3 text-sm rounded-lg outline-none transition-all focus:ring-2"
             style={
               {
-                backgroundColor: "var(--input-bg)",
-                border: "1px solid var(--input-border)",
-                color: "var(--foreground)",
-                "--tw-ring-color": "var(--ring)",
+                backgroundColor: "var(--SC-sidebar-input)",
+                border: "1px solid var(--SC-sidebar-input-border)",
+                color: "var(--SC-sidebar-foreground)",
+                "--tw-ring-color": "var(--SC-sidebar-ring)",
               } as React.CSSProperties
             }
           />
           <kbd
             className="absolute right-2 top-1/2 -translate-y-1/2 hidden sm:inline-flex items-center px-1.5 py-0.5 text-[10px] font-medium rounded"
             style={{
-              backgroundColor: "var(--background-tertiary)",
-              color: "var(--foreground-muted)",
+              backgroundColor: "var(--SC-background-tertiary)",
+              color: "var(--SC-foreground-muted)",
             }}
           >
             /
@@ -124,29 +131,33 @@ export function Sidebar({
       </div>
 
       {/* Getting Started Button */}
-      <div className="px-5 py-3 border-b" style={{ borderColor: "var(--border)" }}>
+      <div
+        className="px-5 py-3 border-b"
+        style={{ borderColor: "var(--SC-border)" }}
+      >
         <button
           onClick={onGettingStartedClick}
           className="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium transition-all"
           style={{
             backgroundColor: showGettingStarted
-              ? "var(--selected-bg)"
-              : "var(--background-tertiary)",
+              ? "var(--SC-selected-bg)"
+              : "var(--SC-background-tertiary)",
             color: showGettingStarted
-              ? "var(--selected-text)"
-              : "var(--foreground)",
+              ? "var(--SC-selected-text)"
+              : "var(--SC-foreground)",
             boxShadow: showGettingStarted
               ? "0 1px 3px rgba(59, 130, 246, 0.3)"
               : "none",
           }}
           onMouseEnter={(e) => {
             if (!showGettingStarted) {
-              e.currentTarget.style.backgroundColor = "var(--hover-bg)";
+              e.currentTarget.style.backgroundColor = "var(--SC-hover-bg)";
             }
           }}
           onMouseLeave={(e) => {
             if (!showGettingStarted) {
-              e.currentTarget.style.backgroundColor = "var(--background-tertiary)";
+              e.currentTarget.style.backgroundColor =
+                "var(--SC-background-tertiary)";
             }
           }}
         >
@@ -158,20 +169,20 @@ export function Sidebar({
       {/* Component count */}
       <div
         className="px-5 py-3 border-b"
-        style={{ borderColor: "var(--border)" }}
+        style={{ borderColor: "var(--SC-border)" }}
       >
         <div className="flex items-center justify-between">
           <span
             className="text-xs font-medium uppercase tracking-wider"
-            style={{ color: "var(--foreground-muted)" }}
+            style={{ color: "var(--SC-foreground-muted)" }}
           >
             Components
           </span>
           <span
             className="text-xs font-medium px-2 py-0.5 rounded-full"
             style={{
-              backgroundColor: "var(--background-tertiary)",
-              color: "var(--foreground-secondary)",
+              backgroundColor: "var(--SC-background-tertiary)",
+              color: "var(--SC-foreground-secondary)",
             }}
           >
             {totalComponents}
@@ -190,9 +201,9 @@ export function Sidebar({
                 <button
                   onClick={() => toggleGroup(group)}
                   className="w-full flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition-colors group"
-                  style={{ color: "var(--foreground)" }}
+                  style={{ color: "var(--SC-foreground)" }}
                   onMouseEnter={(e) => {
-                    e.currentTarget.style.backgroundColor = "var(--hover-bg)";
+                    e.currentTarget.style.backgroundColor = "var(--SC-hover-bg)";
                   }}
                   onMouseLeave={(e) => {
                     e.currentTarget.style.backgroundColor = "transparent";
@@ -203,7 +214,7 @@ export function Sidebar({
                     className={`transition-transform duration-200 ${isExpanded ? "rotate-0" : "-rotate-90"}`}
                     style={
                       {
-                        color: "var(--foreground-muted)",
+                        color: "var(--SC-foreground-muted)",
                       } as React.CSSProperties
                     }
                   />
@@ -211,7 +222,7 @@ export function Sidebar({
                     size={16}
                     style={
                       {
-                        color: "var(--foreground-secondary)",
+                        color: "var(--SC-foreground-secondary)",
                       } as React.CSSProperties
                     }
                   />
@@ -219,8 +230,8 @@ export function Sidebar({
                   <span
                     className="text-xs px-1.5 py-0.5 rounded"
                     style={{
-                      backgroundColor: "var(--background-tertiary)",
-                      color: "var(--foreground-muted)",
+                      backgroundColor: "var(--SC-background-tertiary)",
+                      color: "var(--SC-foreground-muted)",
                     }}
                   >
                     {showcases.length}
@@ -239,11 +250,11 @@ export function Sidebar({
                             className="w-full flex items-center gap-2 text-left px-3 py-2 rounded-lg text-sm transition-all"
                             style={{
                               backgroundColor: isSelected
-                                ? "var(--selected-bg)"
+                                ? "var(--SC-selected-bg)"
                                 : "transparent",
                               color: isSelected
-                                ? "var(--selected-text)"
-                                : "var(--foreground-secondary)",
+                                ? "var(--SC-selected-text)"
+                                : "var(--SC-foreground-secondary)",
                               boxShadow: isSelected
                                 ? "0 1px 3px rgba(59, 130, 246, 0.3)"
                                 : "none",
@@ -251,9 +262,9 @@ export function Sidebar({
                             onMouseEnter={(e) => {
                               if (!isSelected) {
                                 e.currentTarget.style.backgroundColor =
-                                  "var(--hover-bg)";
+                                  "var(--SC-hover-bg)";
                                 e.currentTarget.style.color =
-                                  "var(--foreground)";
+                                  "var(--SC-foreground)";
                               }
                             }}
                             onMouseLeave={(e) => {
@@ -261,7 +272,7 @@ export function Sidebar({
                                 e.currentTarget.style.backgroundColor =
                                   "transparent";
                                 e.currentTarget.style.color =
-                                  "var(--foreground-secondary)";
+                                  "var(--SC-foreground-secondary)";
                               }
                             }}
                           >
@@ -271,7 +282,7 @@ export function Sidebar({
                                 {
                                   color: isSelected
                                     ? "rgba(255,255,255,0.7)"
-                                    : "var(--foreground-muted)",
+                                    : "var(--SC-foreground-muted)",
                                 } as React.CSSProperties
                               }
                             />
@@ -290,7 +301,7 @@ export function Sidebar({
             <div className="text-center py-8">
               <p
                 className="text-sm"
-                style={{ color: "var(--foreground-muted)" }}
+                style={{ color: "var(--SC-foreground-muted)" }}
               >
                 No components found
               </p>

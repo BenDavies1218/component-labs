@@ -8,7 +8,7 @@ import { cn } from "../../lib/utils";
 
 const buttonVariants = cva(
   [
-    "inline-flex items-center justify-center gap-2",
+    "inline-flex items-center justify-center gap-2 cursor-pointer",
     "font-medium transition-all duration-200",
     "rounded-lg",
     "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2",
@@ -19,14 +19,14 @@ const buttonVariants = cva(
     variants: {
       variant: {
         default: [
-          "bg-primary-600 text-black border border-transparent",
-          "hover:bg-primary-700",
-          "focus-visible:ring-primary-600",
+          "bg-primary-900 text-white border border-transparent",
+          "hover:bg-primary-800",
+          "focus-visible:ring-primary-800",
           "shadow-sm hover:shadow",
         ],
         secondary: [
-          "bg-secondary-600 text-black border border-transparent",
-          "hover:bg-secondary-700",
+          "bg-secondary-700 text-black border border-transparent",
+          "hover:bg-secondary-800",
           "focus-visible:ring-secondary-600",
           "shadow-sm hover:shadow",
         ],
@@ -36,13 +36,13 @@ const buttonVariants = cva(
           "focus-visible:ring-primary-600",
         ],
         ghost: [
-          "text-primary-600 text-black dark:text-primary-400 bg-transparent border-transparent",
-          "hover:bg-primary-50 dark:hover:bg-primary-950",
-          "focus-visible:ring-primary-600",
+          "text-gray-600 text-black dark:text-gray-400 bg-transparent border-transparent",
+          "hover:bg-gray-50 dark:hover:bg-gray-950",
+          "focus-visible:ring-gray-600",
         ],
         destructive: [
           "bg-error-600 text-black border border-transparent",
-          "hover:bg-error-700",
+          "hover:bg-error-100",
           "focus-visible:ring-error-600",
           "shadow-sm hover:shadow",
         ],
