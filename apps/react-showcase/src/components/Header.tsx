@@ -26,8 +26,6 @@ export function Header({ showcase, theme, onThemeChange }: HeaderProps) {
     return group;
   };
 
-  console.log("Rendering Header with theme:", showcase);
-
   return (
     <header
       className="h-16 flex items-center justify-between w-full px-4 py-3 border-b"

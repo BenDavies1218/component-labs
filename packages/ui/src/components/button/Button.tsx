@@ -3,6 +3,7 @@ import {
   ButtonProps as AccessibleButtonProps,
 } from "@ariakit/react";
 import { cva, type VariantProps } from "class-variance-authority";
+import { Loader2 } from "lucide-react";
 import { forwardRef, type ReactNode } from "react";
 import { cn } from "../../lib/utils";
 
@@ -19,37 +20,37 @@ const buttonVariants = cva(
     variants: {
       variant: {
         default: [
-          "bg-primary-900 text-white border border-transparent",
-          "hover:bg-primary-800",
-          "focus-visible:ring-primary-800",
+          "bg-primary-600 dark:bg-primary-700 text-white border border-transparent",
+          "hover:bg-primary-700 dark:hover:bg-primary-600",
+          "focus-visible:ring-primary-500 dark:focus-visible:ring-primary-400",
           "shadow-sm hover:shadow",
         ],
         secondary: [
-          "bg-secondary-700 text-black border border-transparent",
-          "hover:bg-secondary-800",
-          "focus-visible:ring-secondary-600",
+          "bg-secondary-100 dark:bg-secondary-700 text-black dark:text-white border border-transparent",
+          "hover:bg-secondary-200 dark:hover:bg-secondary-600",
+          "focus-visible:ring-secondary-500 dark:focus-visible:ring-secondary-400",
           "shadow-sm hover:shadow",
         ],
         outline: [
-          "border-2 border-primary-600 text-primary-600 dark:text-primary-400 bg-transparent",
-          "hover:bg-primary-50 dark:hover:bg-primary-950",
-          "focus-visible:ring-primary-600",
+          "border-2 border-primary-600 text-foreground/70 dark:text-primary-400 bg-transparent",
+          "hover:bg-primary-900 dark:hover:bg-primary-950",
+          "focus-visible:ring-primary-500 dark:focus-visible:ring-primary-400",
         ],
         ghost: [
-          "text-gray-600 text-black dark:text-gray-400 bg-transparent border-transparent",
-          "hover:bg-gray-50 dark:hover:bg-gray-950",
-          "focus-visible:ring-gray-600",
+          "text-foreground/70 dark:text-foreground/80 bg-transparent border-transparent",
+          "hover:bg-primary-900 dark:hover:bg-primary-950",
+          "focus-visible:ring-primary-500 dark:focus-visible:ring-primary-400",
         ],
         destructive: [
-          "bg-error-600 text-black border border-transparent",
-          "hover:bg-error-100",
-          "focus-visible:ring-error-600",
+          "bg-error-500 dark:bg-error-600 text-white border border-transparent",
+          "hover:bg-error-600 dark:hover:bg-error-500",
+          "focus-visible:ring-error-500 dark:focus-visible:ring-error-400",
           "shadow-sm hover:shadow",
         ],
         link: [
-          "text-primary-600 text-black dark:text-primary-400 underline-offset-4 bg-transparent border-transparent",
+          "text-primary-600 dark:text-primary-400 underline-offset-4 bg-transparent border-transparent",
           "hover:underline",
-          "focus-visible:ring-primary-600",
+          "focus-visible:ring-primary-500 dark:focus-visible:ring-primary-400",
         ],
       },
       size: {
@@ -122,7 +123,8 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         )}
         {...props}
       >
-        {loading && (loadingIndicator || <Spinner />)}
+        {loading &&
+          (loadingIndicator || <Loader2 className="h-4 w-4 animate-spin" />)}
         {!loading && startIcon && <span className="shrink-0">{startIcon}</span>}
         {children}
         {!loading && endIcon && <span className="shrink-0">{endIcon}</span>}
@@ -132,30 +134,3 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
 );
 
 Button.displayName = "Button";
-
-// Default spinner component
-function Spinner() {
-  return (
-    <svg
-      className="animate-spin h-4 w-4"
-      xmlns="http://www.w3.org/2000/svg"
-      fill="none"
-      viewBox="0 0 24 24"
-      aria-label="Loading"
-    >
-      <circle
-        className="opacity-25"
-        cx="12"
-        cy="12"
-        r="10"
-        stroke="currentColor"
-        strokeWidth="4"
-      />
-      <path
-        className="opacity-75"
-        fill="currentColor"
-        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-      />
-    </svg>
-  );
-}

@@ -1,11 +1,51 @@
-@import 'tailwindcss';
-@import 'tw-animate-css';
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "../../../packages/ui/src/global.css";
 
 @custom-variant dark (&:is(.dark *));
 
 :root {
   --background: oklch(0.09 0 0);
   --foreground: oklch(0.98 0 0);
+
+  /* Primary colors */
+  --color-primary: oklch(55.2% 0.016 285.938);
+  --color-primary-50: oklch(98.5% 0 0);
+  --color-primary-100: oklch(96.7% 0.001 286.375);
+  --color-primary-200: oklch(92% 0.004 286.32);
+  --color-primary-300: oklch(87.1% 0.006 286.286);
+  --color-primary-400: oklch(70.5% 0.015 286.067);
+  --color-primary-500: oklch(55.2% 0.016 285.938);
+  --color-primary-600: oklch(44.2% 0.017 285.786);
+  --color-primary-700: oklch(37% 0.013 285.805);
+  --color-primary-800: oklch(27.4% 0.006 286.033);
+  --color-primary-900: oklch(21% 0.006 285.885);
+  --color-primary-950: oklch(14.1% 0.005 285.823);
+  /* Secondary colors */
+  --color-secondary-50: oklch(0.98 0.005 264);
+  --color-secondary-100: oklch(0.96 0.005 264);
+  --color-secondary-200: oklch(0.92 0.008 264);
+  --color-secondary-300: oklch(0.87 0.01 264);
+  --color-secondary-400: oklch(0.74 0.015 264);
+  --color-secondary-500: oklch(0.62 0.02 264);
+  --color-secondary-600: oklch(0.5 0.02 264);
+  --color-secondary-700: oklch(0.42 0.018 264);
+  --color-secondary-800: oklch(0.36 0.015 264);
+  --color-secondary-900: oklch(0.32 0.012 264);
+  --color-secondary-950: oklch(0.2 0.008 264);
+
+  /* Error colors */
+  --color-error-50: oklch(0.98 0.01 25);
+  --color-error-100: oklch(0.95 0.03 25);
+  --color-error-200: oklch(0.9 0.06 25);
+  --color-error-300: oklch(0.82 0.12 25);
+  --color-error-400: oklch(0.68 0.2 25);
+  --color-error-500: oklch(0.577 0.245 27.325);
+  --color-error-600: oklch(0.5 0.22 25);
+  --color-error-700: oklch(0.42 0.18 25);
+  --color-error-800: oklch(0.36 0.15 25);
+  --color-error-900: oklch(0.32 0.12 25);
+  --color-error-950: oklch(0.2 0.08 25);
   --card: oklch(0.12 0 0);
   --card-foreground: oklch(0.98 0 0);
   --popover: oklch(0.12 0 0);
@@ -85,10 +125,49 @@
 }
 
 @theme inline {
-  --font-sans: 'Geist', 'Geist Fallback';
-  --font-mono: 'Geist Mono', 'Geist Mono Fallback';
+  --font-sans: "Geist", "Geist Fallback";
+  --font-mono: "Geist Mono", "Geist Mono Fallback";
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+
+  /* Map primary colors to Tailwind */
+  --color-primary-50: var(--color-primary-50);
+  --color-primary-100: var(--color-primary-100);
+  --color-primary-200: var(--color-primary-200);
+  --color-primary-300: var(--color-primary-300);
+  --color-primary-400: var(--color-primary-400);
+  --color-primary-500: var(--color-primary-500);
+  --color-primary-600: var(--color-primary-600);
+  --color-primary-700: var(--color-primary-700);
+  --color-primary-800: var(--color-primary-800);
+  --color-primary-900: var(--color-primary-900);
+  --color-primary-950: var(--color-primary-950);
+
+  /* Map secondary colors to Tailwind */
+  --color-secondary-50: var(--color-secondary-50);
+  --color-secondary-100: var(--color-secondary-100);
+  --color-secondary-200: var(--color-secondary-200);
+  --color-secondary-300: var(--color-secondary-300);
+  --color-secondary-400: var(--color-secondary-400);
+  --color-secondary-500: var(--color-secondary-500);
+  --color-secondary-600: var(--color-secondary-600);
+  --color-secondary-700: var(--color-secondary-700);
+  --color-secondary-800: var(--color-secondary-800);
+  --color-secondary-900: var(--color-secondary-900);
+  --color-secondary-950: var(--color-secondary-950);
+
+  /* Map error colors to Tailwind */
+  --color-error-50: var(--color-error-50);
+  --color-error-100: var(--color-error-100);
+  --color-error-200: var(--color-error-200);
+  --color-error-300: var(--color-error-300);
+  --color-error-400: var(--color-error-400);
+  --color-error-500: var(--color-error-500);
+  --color-error-600: var(--color-error-600);
+  --color-error-700: var(--color-error-700);
+  --color-error-800: var(--color-error-800);
+  --color-error-900: var(--color-error-900);
+  --color-error-950: var(--color-error-950);
   --color-card: var(--card);
   --color-card-foreground: var(--card-foreground);
   --color-popover: var(--popover);
@@ -125,38 +204,40 @@
   --color-sidebar-ring: var(--sidebar-ring);
   --animate-meteor: meteor 5s linear infinite;
   @keyframes meteor {
-  0% {
-    transform: rotate(var(--angle)) translateX(0);
-    opacity: 1;
+    0% {
+      transform: rotate(var(--angle)) translateX(0);
+      opacity: 1;
     }
-  70% {
-    opacity: 1;
+    70% {
+      opacity: 1;
     }
-  100% {
-    transform: rotate(var(--angle)) translateX(-1200px);
-    opacity: 0;
+    100% {
+      transform: rotate(var(--angle)) translateX(-1200px);
+      opacity: 0;
     }
   }
-  --animate-shimmer-slide: shimmer-slide var(--speed) ease-in-out infinite alternate;
-  --animate-spin-around: spin-around calc(var(--speed) * 2) infinite linear
-;
+  --animate-shimmer-slide: shimmer-slide var(--speed) ease-in-out infinite
+    alternate;
+  --animate-spin-around: spin-around calc(var(--speed) * 2) infinite linear;
   @keyframes shimmer-slide {
-  to {
-    transform: translate(calc(100cqw - 100%), 0);
+    to {
+      transform: translate(calc(100cqw - 100%), 0);
     }
   }
   @keyframes spin-around {
-  0% {
-    transform: translateZ(0) rotate(0);
+    0% {
+      transform: translateZ(0) rotate(0);
     }
-  15%, 35% {
-    transform: translateZ(0) rotate(90deg);
+    15%,
+    35% {
+      transform: translateZ(0) rotate(90deg);
     }
-  65%, 85% {
-    transform: translateZ(0) rotate(270deg);
+    65%,
+    85% {
+      transform: translateZ(0) rotate(270deg);
     }
-  100% {
-    transform: translateZ(0) rotate(360deg);
+    100% {
+      transform: translateZ(0) rotate(360deg);
     }
   }
   --animate-rainbow: rainbow var(--speed, 2s) infinite linear;
@@ -166,13 +247,14 @@
   --color-color-2: var(--color-2);
   --color-color-1: var(--color-1);
   @keyframes rainbow {
-  0% {
-    background-position: 0%;
+    0% {
+      background-position: 0%;
     }
-  100% {
-    background-position: 200%;
+    100% {
+      background-position: 200%;
     }
-  }}
+  }
+}
 
 @layer base {
   * {

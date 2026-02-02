@@ -23,6 +23,7 @@
     "access": "public"
   },
   "exports": {
+    "./base": "./src/global.css",
     "./button": {
       "import": "./dist/button.js",
       "types": "./dist/button.d.ts"
@@ -60,7 +61,8 @@
   },
   "files": [
     "dist",
-    "src/styles.css"
+    "src/styles.css",
+    "src/global.css"
   ],
   "scripts": {
     "build": "vite build && tsc --emitDeclarationOnly",
@@ -77,6 +79,7 @@
     "@tailwindcss/vite": "^4.0.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
+    "lucide-react": "0.562.0",
     "tailwind-merge": "3.4.0"
   },
   "devDependencies": {

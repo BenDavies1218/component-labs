@@ -48,4 +48,9 @@ Playground.props = {
     type: "string",
     default: "Click me",
   },
+  endIcon: {
+    type: "select",
+    default: "",
+    options: ["", "🔐", "🔑", "💱"],
+  },
 };

@@ -1,0 +1,34 @@
+{
+  "name": "@component-labs/cli",
+  "version": "0.0.1",
+  "description": "CLI for installing Component Labs components",
+  "type": "module",
+  "bin": {
+    "componentlabs": "./dist/index.js"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsup src/index.ts --format esm --dts --minify --clean",
+    "dev": "tsup src/index.ts --format esm --watch",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@component-labs/registry": "workspace:*",
+    "commander": "^11.1.0",
+    "picocolors": "^1.0.0",
+    "prompts": "^2.4.2",
+    "ora": "^8.0.1",
+    "execa": "^8.0.1"
+  },
+  "devDependencies": {
+    "@types/node": "^20.10.6",
+    "@types/prompts": "^2.4.9",
+    "tsup": "^8.0.1",
+    "typescript": "^5.3.3"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

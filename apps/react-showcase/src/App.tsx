@@ -53,7 +53,7 @@ export default function App() {
   const [searchQuery, setSearchQuery] = useState("");
   const [theme, setTheme] = useState<Theme>(() => {
     const stored = localStorage.getItem("showcase-theme");
-    return (stored as Theme) || "dark";
+    return (stored as Theme) || "system";
   });
   const [controlsPosition, setControlsPosition] =
     useState<ControlsPosition>("bottom");
@@ -66,7 +66,9 @@ export default function App() {
     const applyTheme = (isDark: boolean) => {
       if (isDark) {
         root.classList.add("dark");
+        root.classList.remove("light");
       } else {
+        root.classList.add("light");
         root.classList.remove("dark");
       }
     };

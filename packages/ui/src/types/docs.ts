@@ -1,4 +1,4 @@
-import { ForwardRefExoticComponent, RefAttributes } from "react";
+import React from "react";
 
 export interface PropDoc {
   name: string;
@@ -12,6 +12,28 @@ export interface ExampleDoc {
   title: string;
   code: string;
   description?: string;
+}
+
+export interface PerformanceDoc {
+  bundleSize?: string;
+  renderTime?: string;
+  rerenderOptimization?: string[];
+  dependencies?: string[];
+}
+
+export interface MethodDoc {
+  name: string;
+  signature: string;
+  description: string;
+  parameters?: {
+    name: string;
+    type: string;
+    description: string;
+  }[];
+  returns?: {
+    type: string;
+    description: string;
+  };
 }
 
 export interface ComponentDoc {
@@ -30,7 +52,10 @@ export interface ComponentDoc {
   examples: ExampleDoc[];
   accessibility?: string[];
   relatedComponents?: string[];
-  component: ForwardRefExoticComponent<
-    Omit<unknown, "ref"> & RefAttributes<HTMLButtonElement>
-  >;
+  performance: PerformanceDoc;
+  methods?: MethodDoc[];
+  dependencies?: string[];
+  version?: string;
+  status?: "stable" | "beta" | "experimental" | "deprecated";
+  preview?: () => React.JSX.Element;
 }

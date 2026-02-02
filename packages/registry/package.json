@@ -1,0 +1,17 @@
+{
+  "name": "@component-labs/registry",
+  "version": "0.0.1",
+  "description": "Component registry for Component Labs",
+  "type": "module",
+  "main": "./src/index.ts",
+  "files": [
+    "src"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch"
+  },
+  "devDependencies": {
+    "typescript": "^5.3.3"
+  }
+}
