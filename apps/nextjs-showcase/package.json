@@ -1,11 +1,11 @@
 {
-  "name": "@component-labs/react-showcase",
-  "version": "0.5.0",
-  "description": "A lightweight component showcase tool for React components",
+  "name": "@component-labs/nextjs-showcase",
+  "version": "0.1.0",
+  "description": "A lightweight component showcase tool for Next.js with SSR support",
   "type": "module",
   "bin": {
-    "component-showcase": "./dist/cli/index.js",
-    "showcase": "./dist/cli/index.js"
+    "nextjs-showcase": "./dist/cli/index.js",
+    "showcase-next": "./dist/cli/index.js"
   },
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -22,35 +22,37 @@
   "files": [
     "dist",
     "src",
-    "index.html",
+    "app",
     "templates",
     "README.md"
   ],
   "scripts": {
     "dev": "node ./dist/cli/index.js dev",
-    "build": "tsc && vite build",
+    "build": "tsc && next build",
     "build:cli": "tsc --project tsconfig.cli.json",
-    "preview": "vite preview",
+    "preview": "next start",
     "test": "vitest",
     "test:ui": "vitest --ui",
     "test:coverage": "vitest --coverage",
     "prepublishOnly": "pnpm run build:cli"
   },
   "keywords": [
+    "nextjs",
     "react",
     "components",
     "showcase",
-    "storybook-alternative",
+    "ssr",
+    "server-side-rendering",
     "component-library",
     "ui",
-    "vite"
+    "documentation"
   ],
   "author": "Benjamin Davies",
   "license": "AGPL-3.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/BenDavies1218/component-labs",
-    "directory": "apps/react-showcase"
+    "directory": "apps/nextjs-showcase"
   },
   "homepage": "https://github.com/BenDavies1218/component-labs#readme",
   "bugs": {
@@ -58,12 +60,12 @@
   },
   "dependencies": {
     "@component-labs/showcase-ui": "workspace:*",
-    "@tailwindcss/vite": "^4.0.0",
-    "lucide-react": "0.562.0",
-    "@vitejs/plugin-react": "^4.3.4",
+    "@tailwindcss/postcss": "^4.1.9",
     "commander": "^14.0.2",
     "fast-glob": "^3.3.3",
     "glob": "^13.0.0",
+    "lucide-react": "0.562.0",
+    "next": "16.0.10",
     "picocolors": "^1.1.1",
     "tailwindcss": "^4.1.9",
     "tailwindcss-animate": "^1.0.7",
@@ -71,8 +73,7 @@
   },
   "peerDependencies": {
     "react": ">=18.0.0",
-    "react-dom": ">=18.0.0",
-    "vite": ">=5.0.0"
+    "react-dom": ">=18.0.0"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^6.2.0",
@@ -87,7 +88,6 @@
     "react": "19.2.0",
     "react-dom": "19.2.0",
     "typescript": "^5.3.3",
-    "vite": "^5.0.12",
     "vitest": "^1.2.1"
   }
 }

@@ -10,7 +10,7 @@ import {
   TestTubeDiagonal,
   BookOpen,
 } from "lucide-react";
-import type { Showcase } from "../showcase";
+import type { Showcase } from "../types";
 
 interface SidebarProps {
   showcaseGroups: Record<string, Showcase[]>;

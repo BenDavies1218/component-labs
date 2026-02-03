@@ -2,15 +2,16 @@
 
 import { useState, useEffect, useRef } from "react";
 import { showcaseGroups, type Showcase } from "./showcase";
-import { Sidebar } from "./components/Sidebar";
+import {
+  Sidebar,
+  Header,
+  Controls,
+  ErrorBoundary,
+  GettingStarted,
+  type Theme,
+  type ControlsPosition
+} from "@component-labs/showcase-ui";
 import { Preview } from "./components/Preview";
-import { Controls } from "./components/Controls";
-import { Header } from "./components/Header";
-import { ErrorBoundary } from "./components/ErrorBoundary";
-import { GettingStarted } from "./components/GettingStarted";
-
-type Theme = "light" | "dark" | "system";
-type ControlsPosition = "bottom" | "right";
 
 export default function App() {
   const firstShowcase = Object.values(showcaseGroups)[0]?.[0];

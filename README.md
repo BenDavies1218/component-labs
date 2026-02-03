@@ -50,11 +50,15 @@ pnpm build
 
 ### Available Scripts
 
-- `pnpm dev` - Start Storybook development server
+- `pnpm dev` - Start the main Component Labs website
 - `pnpm build` - Build the UI package
 - `pnpm build:all` - Build all packages
 - `pnpm test` - Run tests
 - `pnpm test:watch` - Run tests in watch mode
+- `pnpm showcase` - Start React Showcase development server
+- `pnpm build-showcase` - Build React Showcase for production
+- `pnpm nextjs-showcase` - Start Next.js Showcase development server
+- `pnpm build-nextjs-showcase` - Build Next.js Showcase for production
 - `pnpm storybook` - Start Storybook
 - `pnpm build-storybook` - Build Storybook for production
 

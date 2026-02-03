@@ -3,9 +3,7 @@
 import React from "react";
 import { Sun, Moon, Monitor, Code } from "lucide-react";
 
-import type { Showcase } from "../showcase";
-
-type Theme = "light" | "dark" | "system";
+import type { Showcase, Theme } from "../types";
 
 interface HeaderProps {
   showcase: Showcase | null;

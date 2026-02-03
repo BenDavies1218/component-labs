@@ -8,9 +8,7 @@ import {
   PanelBottom,
   PanelRight,
 } from "lucide-react";
-import type { Showcase, PropConfig } from "../showcase";
-
-type ControlsPosition = "bottom" | "right";
+import type { Showcase, PropConfig, ControlsPosition } from "../types";
 
 interface ControlsProps {
   showcase: Showcase | null;

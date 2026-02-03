@@ -1,13 +1,13 @@
 import { ReactNode } from "react";
 import { cn } from "../lib/utils";
 
-export default function AnimatedGradientText({
+export const AnimatedGradientText = ({
   children,
   className,
 }: {
   children: ReactNode;
   className?: string;
-}) {
+}) => {
   return (
     <div
       className={cn(
@@ -18,4 +18,4 @@ export default function AnimatedGradientText({
       {children}
     </div>
   );
-}
+};
