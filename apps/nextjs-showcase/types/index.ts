@@ -1,7 +1,7 @@
 // Shared types for showcase tools
 
 export interface PropConfig {
-  type: 'string' | 'boolean' | 'number' | 'select' | 'object' | 'array';
+  type: "string" | "boolean" | "number" | "select" | "object" | "array";
   label: string;
   default: any;
   options?: string[];
@@ -12,6 +12,7 @@ export type Props = Record<string, PropConfig>;
 export interface ShowcaseMetadata {
   title: string;
   description?: string;
+  group?: string;
 }
 
 export interface Showcase {
@@ -25,6 +26,6 @@ export interface Showcase {
 
 export type ShowcaseGroups = Record<string, Showcase[]>;
 
-export type Theme = 'light' | 'dark' | 'system';
-export type ControlsPosition = 'bottom' | 'right';
-export type ViewportSize = 'responsive' | 'mobile' | 'tablet' | 'desktop';
+export type Theme = "light" | "dark" | "system";
+export type ControlsPosition = "bottom" | "right";
+export type ViewportSize = "responsive" | "mobile" | "tablet" | "desktop";

@@ -95,8 +95,8 @@ describe('Showcase parsing', () => {
         title: 'Input / WithLabel',
         component: () => React.createElement('div', null, 'Input'),
         props: {
-          label: { type: 'string', default: 'Label' },
-          disabled: { type: 'boolean', default: false },
+          label: { type: 'string', label: 'Label', default: 'Label' },
+          disabled: { type: 'boolean', label: 'Disabled', default: false },
         },
       };
 
@@ -125,7 +125,7 @@ describe('Showcase parsing', () => {
         title: 'test',
         component: () => React.createElement('div', null, 'Test'),
         props: {
-          text: { type: 'string', default: 'Hello' },
+          text: { type: 'string', label: 'Text', default: 'Hello' },
         },
       };
 
@@ -140,7 +140,7 @@ describe('Showcase parsing', () => {
         title: 'test',
         component: () => React.createElement('div', null, 'Test'),
         props: {
-          enabled: { type: 'boolean', default: true },
+          enabled: { type: 'boolean', label: 'Enabled', default: true },
         },
       };
 
@@ -157,6 +157,7 @@ describe('Showcase parsing', () => {
         props: {
           variant: {
             type: 'select',
+            label: 'Variant',
             options: ['primary', 'secondary', 'ghost'],
             default: 'primary',
           },
@@ -178,7 +179,7 @@ describe('Showcase parsing', () => {
         title: 'test',
         component: () => React.createElement('div', null, 'Test'),
         props: {
-          size: { type: 'number', default: 16 },
+          size: { type: 'number', label: 'Size', default: 16 },
         },
       };
 
@@ -193,7 +194,7 @@ describe('Showcase parsing', () => {
         title: 'test',
         component: () => React.createElement('div', null, 'Test'),
         props: {
-          config: { type: 'object', default: { key: 'value' } },
+          config: { type: 'object', label: 'Config', default: { key: 'value' } },
         },
       };
 
@@ -208,7 +209,7 @@ describe('Showcase parsing', () => {
         title: 'test',
         component: () => React.createElement('div', null, 'Test'),
         props: {
-          items: { type: 'array', default: ['item1', 'item2'] },
+          items: { type: 'array', label: 'Items', default: ['item1', 'item2'] },
         },
       };
 

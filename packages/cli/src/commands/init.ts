@@ -3,6 +3,7 @@ import { resolve } from "path";
 import prompts from "prompts";
 import pc from "picocolors";
 import ora from "ora";
+import { injectBaseCSS } from "../utils/inject-css.js";
 
 export async function init(cwd: string = process.cwd()) {
   const configPath = resolve(cwd, "components.json");
@@ -113,10 +114,40 @@ export async function init(cwd: string = process.cwd()) {
     writeFileSync(configPath, JSON.stringify(config, null, 2), "utf-8");
     spinner.succeed(pc.green("Created components.json"));
 
+    // Optionally inject CSS imports
+    console.log("");
+    const { injectCss } = await prompts({
+      type: "confirm",
+      name: "injectCss",
+      message: `Would you like to automatically add the Component Labs CSS import to ${options.tailwindCss}?`,
+      initial: true,
+    });
+
+    if (injectCss) {
+      spinner.start("Setting up CSS imports...");
+      try {
+        await injectBaseCSS({
+          cssFilePath: options.tailwindCss,
+          cwd,
+        });
+        spinner.succeed(pc.green("CSS imports configured"));
+      } catch (error) {
+        spinner.warn(pc.yellow("Could not automatically inject CSS"));
+        console.log(pc.dim(`  Please manually add ${pc.bold('@import "@component-labs/ui/base";')} to your ${options.tailwindCss}`));
+      }
+    }
+
+    console.log("");
+    console.log(pc.green("✓ Setup complete!"));
     console.log("");
     console.log(pc.dim("Next steps:"));
-    console.log(pc.dim(`  1. Add ${pc.bold("@import '@component-labs/ui/base';")} to your ${options.tailwindCss}`));
-    console.log(pc.dim(`  2. Run ${pc.bold("npx @component-labs/cli add button")} to add your first component`));
+    if (!injectCss) {
+      console.log(pc.dim(`  1. Add ${pc.bold('@import "tailwindcss";')} to your ${options.tailwindCss} (if not present)`));
+      console.log(pc.dim(`  2. Add ${pc.bold('@import "@component-labs/ui/base";')} to your ${options.tailwindCss}`));
+      console.log(pc.dim(`  3. Run ${pc.bold("npx @component-labs/cli add button")} to add your first component`));
+    } else {
+      console.log(pc.dim(`  1. Run ${pc.bold("npx @component-labs/cli add button")} to add your first component`));
+    }
     console.log("");
   } catch (error) {
     spinner.fail(pc.red("Failed to create components.json"));

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useId } from "react";
 import {
   Monitor,
   Tablet,
@@ -12,8 +12,12 @@ import {
   Info,
   Smartphone as DeviceIcon,
 } from "lucide-react";
-import type { Showcase } from "@component-labs/showcase-ui";
-import { IPhoneFrame, IPadFrame, DesktopFrame, DotPattern } from "@component-labs/showcase-ui";
+import type { Showcase } from "../../types";
+import {
+  IPhoneFrame,
+  IPadFrame,
+  DesktopFrame,
+} from "./DeviceContainers";
 
 interface PreviewProps {
   showcase: Showcase | null;
@@ -30,6 +34,7 @@ const viewportSizes: Record<ViewportSize, { width: string; label: string }> = {
 };
 
 export function Preview({ showcase, controlValues }: PreviewProps) {
+  const id = useId();
   const [viewport, setViewport] = useState<ViewportSize>("responsive");
   const [zoom, setZoom] = useState(100);
   const [showBackdrop, setShowBackdrop] = useState(true);
@@ -87,7 +92,6 @@ export function Preview({ showcase, controlValues }: PreviewProps) {
   if (!showcase) {
     return (
       <div className="flex-1 flex items-center justify-center relative">
-        <DotPattern className="opacity-50 p-1" />
         <div className="text-center relative z-10">
           <div
             className="w-20 h-20 mx-auto mb-6 rounded-2xl flex items-center justify-center"
@@ -123,7 +127,11 @@ export function Preview({ showcase, controlValues }: PreviewProps) {
       return Component();
     };
 
-    return <ComponentWrapper key={`${showcase.id}-${JSON.stringify(controlValues)}`} />;
+    return (
+      <ComponentWrapper
+        key={`${showcase.id}-${JSON.stringify(controlValues)}`}
+      />
+    );
   };
 
   return (
@@ -168,7 +176,9 @@ export function Preview({ showcase, controlValues }: PreviewProps) {
               className="p-1.5 rounded-md transition-colors"
               style={{
                 backgroundColor:
-                  viewport === "desktop" ? "var(--SC-background)" : "transparent",
+                  viewport === "desktop"
+                    ? "var(--SC-background)"
+                    : "transparent",
                 color:
                   viewport === "desktop"
                     ? "var(--SC-foreground)"
@@ -185,7 +195,9 @@ export function Preview({ showcase, controlValues }: PreviewProps) {
               className="p-1.5 rounded-md transition-colors"
               style={{
                 backgroundColor:
-                  viewport === "tablet" ? "var(--SC-background)" : "transparent",
+                  viewport === "tablet"
+                    ? "var(--SC-background)"
+                    : "transparent",
                 color:
                   viewport === "tablet"
                     ? "var(--SC-foreground)"
@@ -202,7 +214,9 @@ export function Preview({ showcase, controlValues }: PreviewProps) {
               className="p-1.5 rounded-md transition-colors"
               style={{
                 backgroundColor:
-                  viewport === "mobile" ? "var(--SC-background)" : "transparent",
+                  viewport === "mobile"
+                    ? "var(--SC-background)"
+                    : "transparent",
                 color:
                   viewport === "mobile"
                     ? "var(--SC-foreground)"
@@ -343,7 +357,36 @@ export function Preview({ showcase, controlValues }: PreviewProps) {
           cursor: isDragging ? "grabbing" : "grab",
         }}
       >
-        <DotPattern className="opacity-50" />
+        <svg
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0 h-full w-full fill-neutral-400/20"
+        >
+          <defs>
+            <pattern
+              id={id}
+              width={16}
+              height={16}
+              patternUnits="userSpaceOnUse"
+              patternContentUnits="userSpaceOnUse"
+              x={0}
+              y={0}
+            >
+              <circle
+                id="pattern-circle"
+                cx={1}
+                cy={1}
+                r={1}
+                fill="var(--SC-border)"
+              />
+            </pattern>
+          </defs>
+          <rect
+            width="100%"
+            height="100%"
+            strokeWidth={0}
+            fill={`url(#${id})`}
+          />
+        </svg>
         <div
           className="mx-auto h-full flex items-center justify-center relative z-10"
           style={{

@@ -1,29 +1,9 @@
 // Import showcase files dynamically from virtual module
 import { showcaseModules } from "virtual:showcase-files";
+import type { Showcase, PropConfig, Props } from "./types";
 
-/**
- * A Showcase is a React component function that renders a demo of a UI component,
- * along with optional control configurations for interactive props.
- */
-export interface Showcase {
-  id: string;
-  name: string;
-  title: string;
-  component: (props?: any) => React.ReactElement;
-  props?: Record<string, PropConfig>;
-}
-
-export interface PropConfig {
-  type: "string" | "boolean" | "select" | "number" | "object" | "array";
-  label?: string; // Optional label for the control
-  default?: any; // Default value for the control
-  options?: string[]; // For 'select' type, the available options
-}
-
-/**
- * Helper type for defining showcase props
- */
-export type Props = Record<string, PropConfig>;
+// Re-export types for convenience
+export type { Showcase, PropConfig, Props };
 
 export interface ShowcaseModule {
   default: {

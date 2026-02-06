@@ -1,18 +1,38 @@
 {
   "name": "@component-labs/cli",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "CLI for installing Component Labs components",
   "type": "module",
   "bin": {
     "componentlabs": "./dist/index.js"
   },
   "files": [
-    "dist"
+    "dist",
+    "README.md"
   ],
   "scripts": {
     "build": "tsup src/index.ts --format esm --dts --minify --clean",
     "dev": "tsup src/index.ts --format esm --watch",
     "typecheck": "tsc --noEmit"
+  },
+  "keywords": [
+    "component-labs",
+    "cli",
+    "components",
+    "ui",
+    "shadcn",
+    "tailwind"
+  ],
+  "author": "Benjamin Davies",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/BenDavies1218/component-labs",
+    "directory": "packages/cli"
+  },
+  "homepage": "https://github.com/BenDavies1218/component-labs#readme",
+  "bugs": {
+    "url": "https://github.com/BenDavies1218/component-labs/issues"
   },
   "dependencies": {
     "@component-labs/registry": "workspace:*",

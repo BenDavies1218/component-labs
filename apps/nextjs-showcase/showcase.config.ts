@@ -13,6 +13,9 @@ export default defineConfig({
   // Optional: Port for dev server (default: 3060)
   port: 3060,
 
+  // Output directory for generated files
+  outDir: "./app",
+
   // Optional: Path to global CSS file
   // globalCss: "./src/styles/globals.css",
 

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import type { Showcase } from "@component-labs/showcase-ui";
+import type { Showcase } from "../../types";
 import { ShowcaseApp } from "./ShowcaseApp";
 
 interface ShowcaseLoaderProps {
@@ -37,7 +37,7 @@ export function ShowcaseLoader({ title, hasShowcases }: ShowcaseLoaderProps) {
           Object.keys(module).forEach((key) => {
             if (key === "default" || key === "__esModule") return;
 
-            const exportValue = module[key];
+            const exportValue = (module as any)[key];
 
             // Check if this is a component function
             if (typeof exportValue === "function") {
@@ -49,7 +49,6 @@ export function ShowcaseLoader({ title, hasShowcases }: ShowcaseLoaderProps) {
                 props: (exportValue as any).props || {},
                 metadata: {
                   title: title,
-                  description: defaultExport.description,
                 },
               };
 
@@ -63,11 +62,10 @@ export function ShowcaseLoader({ title, hasShowcases }: ShowcaseLoaderProps) {
               id: filePath,
               name: "Default",
               title: title,
-              component: baseComponent,
+              component: baseComponent as (props?: any) => React.ReactElement,
               props: {},
               metadata: {
                 title: title,
-                description: defaultExport.description,
               },
             });
           }
@@ -84,7 +82,10 @@ export function ShowcaseLoader({ title, hasShowcases }: ShowcaseLoaderProps) {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center" style={{ backgroundColor: "var(--SC-background)" }}>
+      <div
+        className="min-h-screen flex items-center justify-center"
+        style={{ backgroundColor: "var(--SC-background)" }}
+      >
         <div className="text-center">
           <p style={{ color: "var(--SC-foreground)" }}>Loading showcases...</p>
         </div>
@@ -94,9 +95,15 @@ export function ShowcaseLoader({ title, hasShowcases }: ShowcaseLoaderProps) {
 
   if (showcases.length === 0) {
     return (
-      <div className="min-h-screen flex items-center justify-center" style={{ backgroundColor: "var(--SC-background)" }}>
+      <div
+        className="min-h-screen flex items-center justify-center"
+        style={{ backgroundColor: "var(--SC-background)" }}
+      >
         <div className="text-center">
-          <h1 className="text-4xl font-bold mb-4" style={{ color: "var(--SC-foreground)" }}>
+          <h1
+            className="text-4xl font-bold mb-4"
+            style={{ color: "var(--SC-foreground)" }}
+          >
             Next.js Component Showcase
           </h1>
           <p className="mb-8" style={{ color: "var(--SC-foreground-muted)" }}>
@@ -106,7 +113,7 @@ export function ShowcaseLoader({ title, hasShowcases }: ShowcaseLoaderProps) {
             className="px-4 py-2 rounded text-sm"
             style={{
               backgroundColor: "var(--SC-background-tertiary)",
-              color: "var(--SC-foreground)"
+              color: "var(--SC-foreground)",
             }}
           >
             npx nextjs-showcase dev

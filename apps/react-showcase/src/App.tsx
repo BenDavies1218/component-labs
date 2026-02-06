@@ -2,15 +2,12 @@
 
 import { useState, useEffect, useRef } from "react";
 import { showcaseGroups, type Showcase } from "./showcase";
-import {
-  Sidebar,
-  Header,
-  Controls,
-  ErrorBoundary,
-  GettingStarted,
-  type Theme,
-  type ControlsPosition
-} from "@component-labs/showcase-ui";
+import { GettingStarted } from "./components/GettingStarted";
+import { Header } from "./components/Header";
+import { Sidebar } from "./components/Sidebar";
+import { Controls } from "./components/Controls";
+import { ErrorBoundary } from "./components/ErrorBoundary";
+import type { Theme, ControlsPosition } from "./types";
 import { Preview } from "./components/Preview";
 
 export default function App() {

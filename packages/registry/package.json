@@ -1,15 +1,32 @@
 {
   "name": "@component-labs/registry",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Component registry for Component Labs",
   "type": "module",
   "main": "./src/index.ts",
+  "types": "./src/index.ts",
   "files": [
-    "src"
+    "src",
+    "README.md"
   ],
   "scripts": {
-    "build": "tsc",
-    "dev": "tsc --watch"
+    "build": "echo 'No build step needed - publishing source'",
+    "dev": "echo 'No dev step needed'"
+  },
+  "keywords": [
+    "component-labs",
+    "registry",
+    "components"
+  ],
+  "author": "Benjamin Davies",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/BenDavies1218/component-labs",
+    "directory": "packages/registry"
+  },
+  "publishConfig": {
+    "access": "public"
   },
   "devDependencies": {
     "typescript": "^5.3.3"

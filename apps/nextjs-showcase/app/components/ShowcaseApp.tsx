@@ -2,15 +2,15 @@
 
 import { useState, useEffect } from "react";
 import {
-  Sidebar,
-  Header,
-  Controls,
-  GettingStarted,
   type Theme,
   type ControlsPosition,
   type Showcase,
   type ShowcaseGroups,
-} from "@component-labs/showcase-ui";
+} from "../../types";
+import { Header } from "./Header";
+import { Sidebar } from "./Sidebar";
+import { Controls } from "./Controls";
+import { GettingStarted } from "./GettingStarted";
 import { Preview } from "./Preview";
 
 interface ShowcaseAppProps {
@@ -18,11 +18,17 @@ interface ShowcaseAppProps {
   title?: string;
 }
 
-export function ShowcaseApp({ showcases, title = "Component Showcase" }: ShowcaseAppProps) {
-  const [selectedShowcase, setSelectedShowcase] = useState<Showcase | null>(null);
+export function ShowcaseApp({
+  showcases,
+  title = "Component Showcase",
+}: ShowcaseAppProps) {
+  const [selectedShowcase, setSelectedShowcase] = useState<Showcase | null>(
+    null,
+  );
   const [theme, setTheme] = useState<Theme>("system");
   const [controlValues, setControlValues] = useState<Record<string, any>>({});
-  const [controlsPosition, setControlsPosition] = useState<ControlsPosition>("bottom");
+  const [controlsPosition, setControlsPosition] =
+    useState<ControlsPosition>("bottom");
   const [searchQuery, setSearchQuery] = useState("");
   const [showGettingStarted, setShowGettingStarted] = useState(true);
 
@@ -49,7 +55,9 @@ export function ShowcaseApp({ showcases, title = "Component Showcase" }: Showcas
       root.classList.remove("dark");
     } else {
       // System theme
-      const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+      const prefersDark = window.matchMedia(
+        "(prefers-color-scheme: dark)",
+      ).matches;
       if (prefersDark) {
         root.classList.add("dark");
       } else {
@@ -72,7 +80,10 @@ export function ShowcaseApp({ showcases, title = "Component Showcase" }: Showcas
   };
 
   return (
-    <div className="flex h-screen overflow-hidden" style={{ backgroundColor: "var(--SC-background)" }}>
+    <div
+      className="flex h-screen overflow-hidden"
+      style={{ backgroundColor: "var(--SC-background)" }}
+    >
       <Sidebar
         showcaseGroups={showcaseGroups}
         selectedShowcase={selectedShowcase}
@@ -91,34 +102,39 @@ export function ShowcaseApp({ showcases, title = "Component Showcase" }: Showcas
 
       <div className="flex-1 flex flex-col overflow-hidden">
         <Header
-          title={title}
+          showcase={selectedShowcase}
           theme={theme}
           onThemeChange={setTheme}
-          controlsPosition={controlsPosition}
-          onControlsPositionChange={setControlsPosition}
         />
-
         <div className="flex-1 flex overflow-hidden">
           {showGettingStarted || !selectedShowcase ? (
             <GettingStarted />
           ) : controlsPosition === "right" ? (
             <>
-              <Preview showcase={selectedShowcase} controlValues={controlValues} />
+              <Preview
+                showcase={selectedShowcase}
+                controlValues={controlValues}
+              />
               <Controls
                 showcase={selectedShowcase}
                 controlValues={controlValues}
                 onControlChange={handleControlChange}
                 position="right"
+                onPositionChange={setControlsPosition}
               />
             </>
           ) : (
             <div className="flex-1 flex flex-col overflow-hidden">
-              <Preview showcase={selectedShowcase} controlValues={controlValues} />
+              <Preview
+                showcase={selectedShowcase}
+                controlValues={controlValues}
+              />
               <Controls
                 showcase={selectedShowcase}
                 controlValues={controlValues}
                 onControlChange={handleControlChange}
                 position="bottom"
+                onPositionChange={setControlsPosition}
               />
             </div>
           )}

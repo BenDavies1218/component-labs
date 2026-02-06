@@ -201,12 +201,12 @@ importers:
 
   apps/nextjs-showcase:
     dependencies:
-      '@component-labs/showcase-ui':
-        specifier: workspace:*
-        version: link:../../packages/showcase-ui
       '@tailwindcss/postcss':
         specifier: ^4.1.9
         version: 4.1.18
+      clsx:
+        specifier: ^2.1.1
+        version: 2.1.1
       commander:
         specifier: ^14.0.2
         version: 14.0.2
@@ -225,6 +225,9 @@ importers:
       picocolors:
         specifier: ^1.1.1
         version: 1.1.1
+      tailwind-merge:
+        specifier: 3.4.0
+        version: 3.4.0
       tailwindcss:
         specifier: ^4.1.9
         version: 4.1.18
@@ -277,15 +280,15 @@ importers:
 
   apps/react-showcase:
     dependencies:
-      '@component-labs/showcase-ui':
-        specifier: workspace:*
-        version: link:../../packages/showcase-ui
       '@tailwindcss/vite':
         specifier: ^4.0.0
         version: 4.1.18(vite@5.4.21(@types/node@22.19.7)(lightningcss@1.30.2))
       '@vitejs/plugin-react':
         specifier: ^4.3.4
         version: 4.7.0(vite@5.4.21(@types/node@22.19.7)(lightningcss@1.30.2))
+      clsx:
+        specifier: ^2.1.1
+        version: 2.1.1
       commander:
         specifier: ^14.0.2
         version: 14.0.2
@@ -301,6 +304,9 @@ importers:
       picocolors:
         specifier: ^1.1.1
         version: 1.1.1
+      tailwind-merge:
+        specifier: 3.4.0
+        version: 3.4.0
       tailwindcss:
         specifier: ^4.1.9
         version: 4.1.18
@@ -390,37 +396,6 @@ importers:
 
   packages/registry:
     devDependencies:
-      typescript:
-        specifier: ^5.3.3
-        version: 5.9.3
-
-  packages/showcase-ui:
-    dependencies:
-      clsx:
-        specifier: ^2.1.1
-        version: 2.1.1
-      lucide-react:
-        specifier: 0.562.0
-        version: 0.562.0(react@19.2.0)
-      tailwind-merge:
-        specifier: 3.4.0
-        version: 3.4.0
-    devDependencies:
-      '@types/react':
-        specifier: ^19
-        version: 19.2.8
-      '@types/react-dom':
-        specifier: ^19
-        version: 19.2.3(@types/react@19.2.8)
-      react:
-        specifier: 19.2.0
-        version: 19.2.0
-      react-dom:
-        specifier: 19.2.0
-        version: 19.2.0(react@19.2.0)
-      tailwindcss:
-        specifier: ^4.1.18
-        version: 4.1.18
       typescript:
         specifier: ^5.3.3
         version: 5.9.3

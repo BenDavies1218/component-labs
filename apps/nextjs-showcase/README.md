@@ -30,6 +30,8 @@ pnpm add @component-labs/nextjs-showcase
 yarn add @component-labs/nextjs-showcase
 ```
 
+**That's it!** The package will automatically build the CLI during installation via the `postinstall` hook.
+
 ### 2. Initialize Configuration
 
 Create a showcase configuration file:
@@ -48,7 +50,26 @@ Start the development server:
 npx nextjs-showcase dev
 ```
 
-By default, your showcase will open at `http://localhost:3060`
+The CLI will automatically build itself before starting if needed. Your showcase will open at `http://localhost:3060`
+
+### Alternative: Package Scripts
+
+You can also add these to your `package.json` for easier access:
+
+```json
+{
+  "scripts": {
+    "showcase": "nextjs-showcase dev",
+    "showcase:build": "nextjs-showcase build"
+  }
+}
+```
+
+Then run with:
+
+```bash
+npm run showcase
+```
 
 ## Configuration
 
