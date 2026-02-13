@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Check, Copy } from "lucide-react";
-import { TabsCompound } from "@component-labs/ui/tabs";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 const frameworks = [
   {
@@ -64,23 +64,25 @@ export function ShowcaseHero() {
 
         {/* Framework Tabs */}
         <div className="mb-10 flex justify-center">
-          <TabsCompound
-            defaultSelectedId="react"
-            selectedId={selectedFramework}
-            onSelectIdChange={(id) => setSelectedFramework(id ?? "react")}
-            variant="default"
+          <Tabs
+            value={selectedFramework}
+            onValueChange={setSelectedFramework}
           >
-            <TabsCompound.List>
+            <TabsList>
               {frameworks.map((framework) => (
-                <TabsCompound.Tab key={framework.id} id={framework.id}>
+                <TabsTrigger
+                  key={framework.id}
+                  value={framework.id}
+                  disabled={framework.comingSoon}
+                >
                   {framework.name}
                   {framework.comingSoon && (
                     <span className="ml-1 text-xs opacity-60">(Soon)</span>
                   )}
-                </TabsCompound.Tab>
+                </TabsTrigger>
               ))}
-            </TabsCompound.List>
-          </TabsCompound>
+            </TabsList>
+          </Tabs>
         </div>
 
         <p className="mx-auto mb-10 max-w-2xl text-pretty text-lg text-muted-foreground md:text-xl">
@@ -105,11 +107,7 @@ export function ShowcaseHero() {
             )}
           </button>
 
-          <Button
-            size="lg"
-            asChild
-            disabled={currentFramework.comingSoon}
-          >
+          <Button size="lg" asChild disabled={currentFramework.comingSoon}>
             <a href="#quickstart">Get Started</a>
           </Button>
         </div>

@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { Check, Copy } from "lucide-react";
-import { TabsCompound } from "@component-labs/ui/tabs";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 const frameworkSteps = {
   react: [
@@ -16,7 +16,8 @@ const frameworkSteps = {
     {
       number: "02",
       title: "Initialize configuration",
-      description: "Create a showcase configuration file with a single command.",
+      description:
+        "Create a showcase configuration file with a single command.",
       code: "npx showcase init",
     },
     {
@@ -104,21 +105,16 @@ export function ShowcaseQuickstart() {
 
         {/* Framework Tabs */}
         <div className="mb-12 flex justify-center">
-          <TabsCompound
-            defaultSelectedId="react"
-            selectedId={selectedFramework}
-            onSelectIdChange={(id) => setSelectedFramework(id ?? "react")}
-            variant="default"
-          >
-            <TabsCompound.List>
-              <TabsCompound.Tab id="react">React</TabsCompound.Tab>
-              <TabsCompound.Tab id="nextjs">Next.js</TabsCompound.Tab>
-              <TabsCompound.Tab id="tanstack">
+          <Tabs value={selectedFramework} onValueChange={setSelectedFramework}>
+            <TabsList>
+              <TabsTrigger value="react">React</TabsTrigger>
+              <TabsTrigger value="nextjs">Next.js</TabsTrigger>
+              <TabsTrigger value="tanstack" disabled>
                 TanStack Start
                 <span className="ml-1 text-xs opacity-60">(Soon)</span>
-              </TabsCompound.Tab>
-            </TabsCompound.List>
-          </TabsCompound>
+              </TabsTrigger>
+            </TabsList>
+          </Tabs>
         </div>
 
         <div className="space-y-8">
