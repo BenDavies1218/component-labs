@@ -3,13 +3,42 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Check, Copy } from "lucide-react";
+import { TabsCompound } from "@component-labs/ui/tabs";
+
+const frameworks = [
+  {
+    id: "react",
+    name: "React",
+    installCommand: "npm install @component-labs/react-showcase",
+    description:
+      "A lightweight, fast alternative to Storybook for showcasing React components. Built with Vite for instant HMR.",
+  },
+  {
+    id: "nextjs",
+    name: "Next.js",
+    installCommand: "npm install @component-labs/nextjs-showcase",
+    description:
+      "Showcase your Next.js components with full SSR support. Perfect for server components and client components alike.",
+  },
+  {
+    id: "tanstack",
+    name: "TanStack Start",
+    installCommand: "npm install @component-labs/tanstack-showcase",
+    description:
+      "Coming soon: Full-stack React framework support with TanStack Start integration.",
+    comingSoon: true,
+  },
+];
 
 export function ShowcaseHero() {
+  const [selectedFramework, setSelectedFramework] = useState("react");
   const [copied, setCopied] = useState(false);
-  const installCommand = "npm install @component-labs/react-showcase";
+
+  const currentFramework =
+    frameworks.find((f) => f.id === selectedFramework) ?? frameworks[0];
 
   const copyToClipboard = async () => {
-    await navigator.clipboard.writeText(installCommand);
+    await navigator.clipboard.writeText(currentFramework.installCommand);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
@@ -28,24 +57,47 @@ export function ShowcaseHero() {
         </div>
 
         <h1 className="mb-6 text-balance text-4xl font-bold tracking-tight text-foreground sm:text-5xl md:text-6xl lg:text-7xl">
-          React
+          Component
           <br />
           <span className="text-accent">Showcase</span>
         </h1>
 
+        {/* Framework Tabs */}
+        <div className="mb-10 flex justify-center">
+          <TabsCompound
+            defaultSelectedId="react"
+            selectedId={selectedFramework}
+            onSelectIdChange={(id) => setSelectedFramework(id ?? "react")}
+            variant="default"
+          >
+            <TabsCompound.List>
+              {frameworks.map((framework) => (
+                <TabsCompound.Tab key={framework.id} id={framework.id}>
+                  {framework.name}
+                  {framework.comingSoon && (
+                    <span className="ml-1 text-xs opacity-60">(Soon)</span>
+                  )}
+                </TabsCompound.Tab>
+              ))}
+            </TabsCompound.List>
+          </TabsCompound>
+        </div>
+
         <p className="mx-auto mb-10 max-w-2xl text-pretty text-lg text-muted-foreground md:text-xl">
-          A lightweight, fast alternative to Storybook for showcasing React
-          components. Zero config, instant HMR, and full TypeScript support.
+          {currentFramework.description}
         </p>
 
         <div className="flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
           <button
             type="button"
             onClick={copyToClipboard}
-            className="group flex items-center gap-3 rounded-lg border border-border bg-secondary px-4 py-3 font-mono text-sm transition-colors hover:border-accent/50"
+            disabled={currentFramework.comingSoon}
+            className="group flex items-center gap-3 rounded-lg border border-border bg-secondary px-4 py-3 font-mono text-sm transition-colors hover:border-accent/50 disabled:cursor-not-allowed disabled:opacity-50"
           >
             <span className="text-muted-foreground">$</span>
-            <span className="text-foreground">{installCommand}</span>
+            <span className="text-foreground">
+              {currentFramework.installCommand}
+            </span>
             {copied ? (
               <Check className="h-4 w-4 text-accent" />
             ) : (
@@ -53,7 +105,11 @@ export function ShowcaseHero() {
             )}
           </button>
 
-          <Button size="lg" asChild>
+          <Button
+            size="lg"
+            asChild
+            disabled={currentFramework.comingSoon}
+          >
             <a href="#quickstart">Get Started</a>
           </Button>
         </div>

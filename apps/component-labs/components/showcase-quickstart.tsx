@@ -2,32 +2,84 @@
 
 import { useState } from "react";
 import { Check, Copy } from "lucide-react";
+import { TabsCompound } from "@component-labs/ui/tabs";
 
-const steps = [
-  {
-    number: "01",
-    title: "Install the package",
-    description:
-      "Add React Showcase to your project using your preferred package manager.",
-    code: "npm install @component-labs/react-showcase",
-  },
-  {
-    number: "02",
-    title: "Initialize configuration",
-    description: "Create a showcase configuration file with a single command.",
-    code: "npx showcase init",
-  },
-  {
-    number: "03",
-    title: "Start showcasing",
-    description:
-      "Run the development server and start building your component library.",
-    code: "npx showcase dev",
-  },
-];
+const frameworkSteps = {
+  react: [
+    {
+      number: "01",
+      title: "Install the package",
+      description:
+        "Add React Showcase to your project using your preferred package manager.",
+      code: "npm install @component-labs/react-showcase",
+    },
+    {
+      number: "02",
+      title: "Initialize configuration",
+      description: "Create a showcase configuration file with a single command.",
+      code: "npx showcase init",
+    },
+    {
+      number: "03",
+      title: "Start showcasing",
+      description:
+        "Run the development server and start building your component library.",
+      code: "npx showcase dev",
+    },
+  ],
+  nextjs: [
+    {
+      number: "01",
+      title: "Install the package",
+      description:
+        "Add Next.js Showcase to your project using your preferred package manager.",
+      code: "npm install @component-labs/nextjs-showcase",
+    },
+    {
+      number: "02",
+      title: "Initialize configuration",
+      description:
+        "Create a showcase configuration file optimized for Next.js.",
+      code: "npx showcase-next init",
+    },
+    {
+      number: "03",
+      title: "Start showcasing",
+      description:
+        "Run the Next.js development server with showcase integration.",
+      code: "npx showcase-next dev",
+    },
+  ],
+  tanstack: [
+    {
+      number: "01",
+      title: "Coming Soon",
+      description: "TanStack Start support is currently in development.",
+      code: "npm install @component-labs/tanstack-showcase",
+    },
+    {
+      number: "02",
+      title: "Stay Tuned",
+      description: "Follow our progress on GitHub for updates.",
+      code: "npx showcase-tanstack init",
+    },
+    {
+      number: "03",
+      title: "Launch Soon",
+      description: "Full TanStack Start integration coming soon.",
+      code: "npx showcase-tanstack dev",
+    },
+  ],
+};
 
 export function ShowcaseQuickstart() {
+  const [selectedFramework, setSelectedFramework] = useState("react");
   const [copiedIndex, setCopiedIndex] = useState<number | null>(null);
+
+  const steps =
+    frameworkSteps[selectedFramework as keyof typeof frameworkSteps] ??
+    frameworkSteps.react;
+  const isComingSoon = selectedFramework === "tanstack";
 
   const copyToClipboard = async (code: string, index: number) => {
     await navigator.clipboard.writeText(code);
@@ -48,6 +100,25 @@ export function ShowcaseQuickstart() {
           <p className="mx-auto max-w-2xl text-lg text-muted-foreground">
             From install to running showcase in under a minute.
           </p>
+        </div>
+
+        {/* Framework Tabs */}
+        <div className="mb-12 flex justify-center">
+          <TabsCompound
+            defaultSelectedId="react"
+            selectedId={selectedFramework}
+            onSelectIdChange={(id) => setSelectedFramework(id ?? "react")}
+            variant="default"
+          >
+            <TabsCompound.List>
+              <TabsCompound.Tab id="react">React</TabsCompound.Tab>
+              <TabsCompound.Tab id="nextjs">Next.js</TabsCompound.Tab>
+              <TabsCompound.Tab id="tanstack">
+                TanStack Start
+                <span className="ml-1 text-xs opacity-60">(Soon)</span>
+              </TabsCompound.Tab>
+            </TabsCompound.List>
+          </TabsCompound>
         </div>
 
         <div className="space-y-8">
@@ -73,7 +144,8 @@ export function ShowcaseQuickstart() {
                   <button
                     type="button"
                     onClick={() => copyToClipboard(step.code, index)}
-                    className="ml-4 shrink-0 text-muted-foreground transition-colors hover:text-foreground"
+                    disabled={isComingSoon}
+                    className="ml-4 shrink-0 text-muted-foreground transition-colors hover:text-foreground disabled:cursor-not-allowed disabled:opacity-50"
                   >
                     {copiedIndex === index ? (
                       <Check className="h-4 w-4 text-accent" />

@@ -179,9 +179,7 @@ const componentCategories = [
 ];
 
 export function ComponentShowcase() {
-  const composite = useCompositeStore({
-    defaultActiveId: "button", // Set first item as default active
-  });
+  const composite = useCompositeStore();
 
   return (
     <section id="components" className="px-6 py-24">
@@ -204,28 +202,26 @@ export function ComponentShowcase() {
               </h3>
               <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
                 {category.components.map((component) => {
-                  const componentId = component.name.toLowerCase().replace(/\s+/g, "-");
+                  const componentId = component.name
+                    .toLowerCase()
+                    .replace(/\s+/g, "-");
                   return (
                     <CompositeItem
                       key={component.name}
                       id={componentId}
-                      render={
-                        <Link
-                          href={`/docs/${componentId}`}
-                        />
-                      }
+                      render={<Link href={`/docs/${componentId}`} />}
                       className="group rounded-xl border border-border bg-card p-5 transition-all hover:border-accent/50 hover:bg-secondary/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 data-[active-item]:ring-2 data-[active-item]:ring-accent"
                     >
-                    <div className="mb-3 flex h-10 w-10 items-center justify-center rounded-lg bg-secondary text-accent transition-colors group-hover:bg-accent group-hover:text-background group-data-[active-item]:bg-accent group-data-[active-item]:text-background">
-                      <component.icon className="h-5 w-5" />
-                    </div>
-                    <h4 className="mb-1 font-semibold text-foreground">
-                      {component.name}
-                    </h4>
-                    <p className="text-sm leading-relaxed text-muted-foreground">
-                      {component.description}
-                    </p>
-                  </CompositeItem>
+                      <div className="mb-3 flex h-10 w-10 items-center justify-center rounded-lg bg-secondary text-accent transition-colors group-hover:bg-accent group-hover:text-background group-data-[active-item]:bg-accent group-data-[active-item]:text-background">
+                        <component.icon className="h-5 w-5" />
+                      </div>
+                      <h4 className="mb-1 font-semibold text-foreground">
+                        {component.name}
+                      </h4>
+                      <p className="text-sm leading-relaxed text-muted-foreground">
+                        {component.description}
+                      </p>
+                    </CompositeItem>
                   );
                 })}
               </div>
