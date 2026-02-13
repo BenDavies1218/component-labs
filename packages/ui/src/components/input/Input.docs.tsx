@@ -1,4 +1,6 @@
+
 import type { ComponentDoc } from "../../types/docs";
+import { Input } from "./Input";
 
 export const inputDocs: ComponentDoc = {
   name: "Input",
@@ -133,4 +135,11 @@ export const inputDocs: ComponentDoc = {
     "Disabled state prevents interaction",
     "Helper text announced by screen readers",
   ],
+  performance: {
+    bundleSize: "~2kB gzipped",
+    dependencies: ["class-variance-authority"],
+  },
+  status: "stable",
+  version: "1.0.0",
+  preview: () => <Input placeholder="Enter your email" label="Email" />,
 };

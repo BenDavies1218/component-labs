@@ -1,4 +1,6 @@
+
 import type { ComponentDoc } from "../../types/docs";
+import { Menu } from "./Menu";
 
 export const menuDocs: ComponentDoc = {
   name: "Menu",
@@ -112,4 +114,21 @@ export const menuDocs: ComponentDoc = {
     "Automatic focus return to trigger on close",
   ],
   relatedComponents: ["Combobox", "Command"],
+  performance: {
+    bundleSize: "~5kB gzipped",
+    dependencies: ["@ariakit/react", "class-variance-authority"],
+  },
+  status: "stable",
+  version: "1.0.0",
+  preview: () => (
+    <Menu.Root>
+      <Menu.Trigger>Actions</Menu.Trigger>
+      <Menu.Content>
+        <Menu.Item>Edit</Menu.Item>
+        <Menu.Item>Duplicate</Menu.Item>
+        <Menu.Separator />
+        <Menu.Item>Delete</Menu.Item>
+      </Menu.Content>
+    </Menu.Root>
+  ),
 };

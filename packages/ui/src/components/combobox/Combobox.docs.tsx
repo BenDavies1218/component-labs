@@ -1,4 +1,6 @@
+
 import type { ComponentDoc } from "../../types/docs";
+import { Combobox } from "./Combobox";
 
 export const comboboxDocs: ComponentDoc = {
   name: "Combobox",
@@ -143,4 +145,20 @@ const options = [
     "Type-ahead functionality",
   ],
   relatedComponents: ["Menu", "Command"],
+  performance: {
+    bundleSize: "~5kB gzipped",
+    dependencies: ["@ariakit/react", "class-variance-authority"],
+  },
+  status: "stable",
+  version: "1.0.0",
+  preview: () => (
+    <Combobox
+      options={[
+        { value: "apple", label: "Apple" },
+        { value: "banana", label: "Banana" },
+        { value: "orange", label: "Orange" },
+      ]}
+      placeholder="Select fruit..."
+    />
+  ),
 };

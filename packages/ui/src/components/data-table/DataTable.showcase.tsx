@@ -4,7 +4,7 @@ import { Dialog, DialogDismiss, DialogHeading } from "@ariakit/react/dialog";
 import { useMemo, useState } from "react";
 import { Checkbox } from "../checkbox/Checkbox";
 import { Combobox } from "../combobox/Combobox";
-import { Button } from "../button/Button.Primative";
+import { Button } from "../button/Button";
 import { Menu } from "../menu/Menu";
 
 // Showcase Configuration

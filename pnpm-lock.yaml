@@ -363,8 +363,8 @@ importers:
   packages/cli:
     dependencies:
       '@component-labs/registry':
-        specifier: ^0.0.2
-        version: 0.0.2
+        specifier: ^0.0.4
+        version: 0.0.4
       commander:
         specifier: ^11.1.0
         version: 11.1.0
@@ -590,8 +590,8 @@ packages:
     resolution: {integrity: sha512-0ZrskXVEHSWIqZM/sQZ4EV3jZJXRkio/WCxaqKZP1g//CEWEPSfeZFcms4XeKBCHU0ZKnIkdJeU/kF+eRp5lBg==}
     engines: {node: '>=6.9.0'}
 
-  '@component-labs/registry@0.0.2':
-    resolution: {integrity: sha512-Gq96HEU6nzqF+QN5MqNCTGyb6dn38FpuRXvn/gxtl3297SWMn7+Rj6IpLkqodIdY0rcPm0FuUthOT5y5IhzDSQ==}
+  '@component-labs/registry@0.0.4':
+    resolution: {integrity: sha512-kcNVREroJsfY2p0fswwh89njVZDMmhXm53Ft4rgAMoBnl2aOMBvy6mQ9e6vpR658qfRUTsfePufJ1sWyD5lLpg==}
 
   '@csstools/color-helpers@5.1.0':
     resolution: {integrity: sha512-S11EXWJyy0Mz5SYvRmY8nJYTFFd1LCNV+7cXyAgQtOOuzb4EsgfqDufL+9esx72/eLhsRdGZwaldu/h+E4t4BA==}
@@ -4550,7 +4550,7 @@ snapshots:
       '@babel/helper-string-parser': 7.27.1
       '@babel/helper-validator-identifier': 7.28.5
 
-  '@component-labs/registry@0.0.2': {}
+  '@component-labs/registry@0.0.4': {}
 
   '@csstools/color-helpers@5.1.0': {}
 

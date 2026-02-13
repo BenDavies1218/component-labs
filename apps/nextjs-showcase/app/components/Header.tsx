@@ -59,10 +59,10 @@ export function Header({ showcase, theme, onThemeChange }: HeaderProps) {
         )}
       </div>
 
-      <div className="flex items-center gap-3">
+      <div className="flex items-center gap-1">
         {/* Theme switcher */}
         <div
-          className="flex items-center rounded-lg p-1 gap-4"
+          className="flex items-center rounded-lg p-1"
           style={{
             backgroundColor: "var(--SC-background-secondary)",
           }}
@@ -71,7 +71,7 @@ export function Header({ showcase, theme, onThemeChange }: HeaderProps) {
             <button
               key={t.value}
               onClick={() => onThemeChange(t.value)}
-              className="p-2 mx-4 rounded-md transition-all cursor-pointer hover:bg-var(--SC-background) hover:shadow-md"
+              className="p-2 mx-1 rounded-md transition-all cursor-pointer hover:bg-var(--SC-background) hover:shadow-md"
               style={{
                 backgroundColor:
                   theme === t.value ? "var(--SC-background)" : "transparent",

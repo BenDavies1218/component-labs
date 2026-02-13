@@ -1,4 +1,6 @@
+
 import type { ComponentDoc } from "../../types/docs";
+import { Dialog } from "./Dialog";
 
 export const dialogDocs: ComponentDoc = {
   name: "Dialog",
@@ -122,4 +124,28 @@ export const dialogDocs: ComponentDoc = {
     "Screen reader announcements",
   ],
   relatedComponents: ["Toast"],
+  performance: {
+    bundleSize: "~4kB gzipped",
+    dependencies: ["@ariakit/react", "class-variance-authority"],
+  },
+  status: "stable",
+  version: "1.0.0",
+  preview: () => (
+    <Dialog.Root>
+      <Dialog.Trigger>
+        <button>Open Dialog</button>
+      </Dialog.Trigger>
+      <Dialog.Content>
+        <Dialog.Header>
+          <Dialog.Title>Dialog Title</Dialog.Title>
+          <Dialog.Description>This is a dialog description</Dialog.Description>
+        </Dialog.Header>
+        <Dialog.Footer>
+          <Dialog.Close>
+            <button>Close</button>
+          </Dialog.Close>
+        </Dialog.Footer>
+      </Dialog.Content>
+    </Dialog.Root>
+  ),
 };

@@ -1,4 +1,6 @@
+
 import type { ComponentDoc } from "../../types/docs";
+import { DataTable } from "./DataTable";
 
 export const dataTableDocs: ComponentDoc = {
   name: "Data Table",
@@ -176,4 +178,31 @@ export const dataTableDocs: ComponentDoc = {
     "Live region announcements for data changes",
   ],
   relatedComponents: ["Carousel"],
+  performance: {
+    bundleSize: "~6kB gzipped",
+    dependencies: ["@ariakit/react"],
+  },
+  status: "stable",
+  version: "1.0.0",
+  preview: () => (
+    <DataTable
+      data={[
+        { id: 1, name: "Product A", price: "$10" },
+        { id: 2, name: "Product B", price: "$20" },
+      ]}
+      label="Products"
+      tableHeader={
+        <tr>
+          <th>Name</th>
+          <th>Price</th>
+        </tr>
+      }
+      tableRow={(item) => (
+        <tr key={item.id}>
+          <td>{item.name}</td>
+          <td>{item.price}</td>
+        </tr>
+      )}
+    />
+  ),
 };

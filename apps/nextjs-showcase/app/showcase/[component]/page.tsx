@@ -16,7 +16,8 @@ interface ShowcaseManifest {
 
 function getShowcaseManifest(): ShowcaseManifest | null {
   try {
-    const manifestPath = process.env.SHOWCASE_MANIFEST_PATH ||
+    const manifestPath =
+      process.env.SHOWCASE_MANIFEST_PATH ||
       resolve(process.cwd(), ".showcase-manifest.json");
     const content = readFileSync(manifestPath, "utf-8");
     return JSON.parse(content);
@@ -97,7 +98,7 @@ export default async function ShowcasePage({
               <h2 className="text-lg font-semibold text-gray-900 mb-4">
                 {file.relativePath}
               </h2>
-              <div className="bg-gray-50 rounded-lg p-8 min-h-[200px] flex items-center justify-center">
+              <div className="bg-gray-50 rounded-lg p-8 min-h-50 flex items-center justify-center">
                 <p className="text-gray-500 text-sm">
                   Component preview will be rendered here with SSR
                 </p>

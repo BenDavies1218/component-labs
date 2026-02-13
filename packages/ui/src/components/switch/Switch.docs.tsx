@@ -1,4 +1,6 @@
+
 import type { ComponentDoc } from "../../types/docs";
+import { Switch } from "./Switch";
 
 export const switchDocs: ComponentDoc = {
   name: "Switch",
@@ -109,4 +111,11 @@ export const switchDocs: ComponentDoc = {
     "Screen reader announcements for state changes",
   ],
   relatedComponents: ["Checkbox"],
+  performance: {
+    bundleSize: "~3kB gzipped",
+    dependencies: ["@ariakit/react", "class-variance-authority"],
+  },
+  status: "stable",
+  version: "1.0.0",
+  preview: () => <Switch label="Enable notifications" />,
 };

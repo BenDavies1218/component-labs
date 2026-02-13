@@ -1,4 +1,6 @@
+
 import type { ComponentDoc } from "../../types/docs";
+import { Checkbox } from "./Checkbox";
 
 export const checkboxDocs: ComponentDoc = {
   name: "Checkbox",
@@ -109,4 +111,11 @@ export const checkboxDocs: ComponentDoc = {
     "Screen reader announcements for state changes",
     "Supports indeterminate state",
   ],
+  performance: {
+    bundleSize: "~3kB gzipped",
+    dependencies: ["@ariakit/react", "class-variance-authority"],
+  },
+  status: "stable",
+  version: "1.0.0",
+  preview: () => <Checkbox label="Accept terms" />,
 };

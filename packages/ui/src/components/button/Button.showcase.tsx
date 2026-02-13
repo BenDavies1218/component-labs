@@ -1,4 +1,4 @@
-import { Button, ButtonProps } from "./Button.Primative";
+import { Button, ButtonProps } from "./Button";
 
 // Showcase Configuration
 export default {

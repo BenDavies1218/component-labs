@@ -24,9 +24,21 @@
   },
   "exports": {
     "./base": "./src/styles/base.css",
+    "./alert": {
+      "import": "./dist/alert.js",
+      "types": "./dist/alert.d.ts"
+    },
+    "./badge": {
+      "import": "./dist/badge.js",
+      "types": "./dist/badge.d.ts"
+    },
     "./button": {
       "import": "./dist/button.js",
       "types": "./dist/button.d.ts"
+    },
+    "./card": {
+      "import": "./dist/card.js",
+      "types": "./dist/card.d.ts"
     },
     "./checkbox": {
       "import": "./dist/checkbox.js",
@@ -48,13 +60,41 @@
       "import": "./dist/input.js",
       "types": "./dist/input.d.ts"
     },
+    "./label": {
+      "import": "./dist/label.js",
+      "types": "./dist/label.d.ts"
+    },
     "./menu": {
       "import": "./dist/menu.js",
       "types": "./dist/menu.d.ts"
     },
+    "./radio": {
+      "import": "./dist/radio.js",
+      "types": "./dist/radio.d.ts"
+    },
+    "./select": {
+      "import": "./dist/select.js",
+      "types": "./dist/select.d.ts"
+    },
     "./switch": {
       "import": "./dist/switch.js",
       "types": "./dist/switch.d.ts"
+    },
+    "./tabs": {
+      "import": "./dist/tabs.js",
+      "types": "./dist/tabs.d.ts"
+    },
+    "./textarea": {
+      "import": "./dist/textarea.js",
+      "types": "./dist/textarea.d.ts"
+    },
+    "./toast": {
+      "import": "./dist/toast.js",
+      "types": "./dist/toast.d.ts"
+    },
+    "./tooltip": {
+      "import": "./dist/tooltip.js",
+      "types": "./dist/tooltip.d.ts"
     }
   },
   "files": [

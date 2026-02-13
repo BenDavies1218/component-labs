@@ -22,7 +22,7 @@ export function GettingStarted() {
   };
 
   return (
-    <div className="h-full overflow-y-auto">
+    <div className="h-full w-full overflow-y-auto">
       <div className="max-w-4xl mx-auto px-8 py-12">
         {/* Hero Section */}
         <div className="mb-12">
