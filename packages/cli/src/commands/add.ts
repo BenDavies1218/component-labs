@@ -11,7 +11,7 @@ export async function add(components: string[], options: { cwd?: string; yes?: b
   const cwd = options.cwd || process.cwd();
 
   // Check for components.json
-  const config = await getConfig(cwd);
+  const config = getConfig(cwd);
   if (!config) {
     console.log(pc.red("✗ components.json not found"));
     console.log(pc.dim("  Run: npx @component-labs/cli init"));

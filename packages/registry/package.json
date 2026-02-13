@@ -1,17 +1,18 @@
 {
   "name": "@component-labs/registry",
-  "version": "0.0.2",
+  "version": "0.0.4",
   "description": "Component registry for Component Labs",
   "type": "module",
-  "main": "./src/index.ts",
-  "types": "./src/index.ts",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "files": [
-    "src",
+    "dist",
     "README.md"
   ],
   "scripts": {
-    "build": "echo 'No build step needed - publishing source'",
-    "dev": "echo 'No dev step needed'"
+    "build": "tsup src/index.ts --format esm --dts --clean",
+    "dev": "tsup src/index.ts --format esm --watch",
+    "publish:otp": "../../scripts/publish-with-otp.sh"
   },
   "keywords": [
     "component-labs",
@@ -29,6 +30,7 @@
     "access": "public"
   },
   "devDependencies": {
-    "typescript": "^5.3.3"
+    "typescript": "^5.3.3",
+    "tsup": "^8.0.1"
   }
 }

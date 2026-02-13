@@ -2,7 +2,7 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { forwardRef, type InputHTMLAttributes, type ReactNode, useId } from "react";
 import { cn } from "../../lib/utils";
 
-const inputVariants = cva(
+export const inputVariants = cva(
   [
     "w-full rounded-lg border px-3 py-2",
     "text-sm font-medium",

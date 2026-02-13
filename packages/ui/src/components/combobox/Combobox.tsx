@@ -1,11 +1,3 @@
-import {
-  Combobox as AriaCombobox,
-  ComboboxCancel,
-  ComboboxItem,
-  ComboboxPopover,
-  ComboboxProvider,
-  type ComboboxProps as AriaComboboxProps,
-} from "@ariakit/react";
 import { cva, type VariantProps } from "class-variance-authority";
 import {
   forwardRef,
@@ -15,8 +7,16 @@ import {
   type ReactNode,
 } from "react";
 import { cn } from "../../lib/utils";
+import {
+  ComboboxProviderPrimitive,
+  ComboboxPrimitive,
+  ComboboxCancelPrimitive,
+  ComboboxItemPrimitive,
+  ComboboxPopoverPrimitive,
+  type ComboboxPrimitiveProps,
+} from "./Combobox.primitive";
 
-const comboboxVariants = cva(
+export const comboboxVariants = cva(
   [
     "w-full max-w-md rounded-lg border px-3 py-2",
     "text-sm font-medium",
@@ -54,7 +54,7 @@ const comboboxVariants = cva(
   },
 );
 
-const comboboxItemVariants = cva(
+export const comboboxItemVariants = cva(
   [
     "flex items-center gap-2 px-3 py-2 rounded-md",
     "text-sm cursor-pointer",
@@ -86,7 +86,7 @@ export interface ComboboxOption {
 
 export interface ComboboxProps
   extends
-    Omit<AriaComboboxProps, "size" | "onSelect">,
+    Omit<ComboboxPrimitiveProps, "size" | "onSelect">,
     VariantProps<typeof comboboxVariants> {
   /** Combobox label */
   label?: string;
@@ -149,7 +149,7 @@ export const Combobox = forwardRef<HTMLInputElement, ComboboxProps>(
     }, [options, searchValue, filterFn]);
 
     return (
-      <ComboboxProvider
+      <ComboboxProviderPrimitive
         setValue={(value) => {
           startTransition(() => {
             setSearchValue(value);
@@ -164,14 +164,14 @@ export const Combobox = forwardRef<HTMLInputElement, ComboboxProps>(
             </label>
           )}
           <div className="relative">
-            <AriaCombobox
+            <ComboboxPrimitive
               ref={ref}
               placeholder={placeholder}
               className={cn(comboboxVariants({ variant, size, className }))}
               {...props}
             />
             {showClear && searchValue && (
-              <ComboboxCancel className="absolute right-2 top-1/2 -translate-y-1/2 flex items-center justify-center rounded-md p-1 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors">
+              <ComboboxCancelPrimitive className="absolute right-2 top-1/2 -translate-y-1/2 flex items-center justify-center rounded-md p-1 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors">
                 <svg
                   width="12"
                   height="12"
@@ -183,10 +183,10 @@ export const Combobox = forwardRef<HTMLInputElement, ComboboxProps>(
                 >
                   <path d="M4 4l8 8M12 4l-8 8" />
                 </svg>
-              </ComboboxCancel>
+              </ComboboxCancelPrimitive>
             )}
           </div>
-          <ComboboxPopover
+          <ComboboxPopoverPrimitive
             gutter={8}
             sameWidth
             className={cn(
@@ -198,7 +198,7 @@ export const Combobox = forwardRef<HTMLInputElement, ComboboxProps>(
           >
             {filteredOptions.length > 0 ? (
               filteredOptions.map((option) => (
-                <ComboboxItem
+                <ComboboxItemPrimitive
                   key={option.value}
                   value={option.value}
                   disabled={option.disabled}
@@ -208,16 +208,16 @@ export const Combobox = forwardRef<HTMLInputElement, ComboboxProps>(
                   {renderItem
                     ? renderItem(option)
                     : option.label || option.value}
-                </ComboboxItem>
+                </ComboboxItemPrimitive>
               ))
             ) : (
               <div className="px-3 py-2 text-center text-sm text-gray-500 dark:text-gray-400">
                 {emptyMessage}
               </div>
             )}
-          </ComboboxPopover>
+          </ComboboxPopoverPrimitive>
         </div>
-      </ComboboxProvider>
+      </ComboboxProviderPrimitive>
     );
   },
 );

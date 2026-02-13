@@ -1,6 +1,6 @@
 {
   "name": "@component-labs/cli",
-  "version": "0.0.2",
+  "version": "0.0.6",
   "description": "CLI for installing Component Labs components",
   "type": "module",
   "bin": {
@@ -8,12 +8,15 @@
   },
   "files": [
     "dist",
-    "README.md"
+    "README.md",
+    "scripts"
   ],
   "scripts": {
     "build": "tsup src/index.ts --format esm --dts --minify --clean",
     "dev": "tsup src/index.ts --format esm --watch",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "prepublishOnly": "node scripts/check-workspace-deps.js && pnpm build",
+    "publish:otp": "../../scripts/publish-with-otp.sh"
   },
   "keywords": [
     "component-labs",
@@ -35,7 +38,7 @@
     "url": "https://github.com/BenDavies1218/component-labs/issues"
   },
   "dependencies": {
-    "@component-labs/registry": "workspace:*",
+    "@component-labs/registry": "^0.0.4",
     "commander": "^11.1.0",
     "picocolors": "^1.0.0",
     "prompts": "^2.4.2",

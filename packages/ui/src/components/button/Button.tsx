@@ -1,11 +1,8 @@
-import {
-  Button as AccessibleButton,
-  ButtonProps as AccessibleButtonProps,
-} from "@ariakit/react";
 import { cva, type VariantProps } from "class-variance-authority";
 import { Loader2 } from "lucide-react";
 import { forwardRef, type ReactNode } from "react";
 import { cn } from "../../lib/utils";
+import { ButtonPrimitive, type ButtonPrimitiveProps } from "./Button.primitive";
 
 const buttonVariants = cva(
   [
@@ -74,7 +71,7 @@ const buttonVariants = cva(
 
 export interface ButtonProps
   extends
-    Omit<AccessibleButtonProps, "disabled">,
+    Omit<ButtonPrimitiveProps, "disabled">,
     VariantProps<typeof buttonVariants> {
   /** Whether the button is disabled */
   disabled?: boolean;
@@ -110,7 +107,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     const isDisabled = disabled || loading;
 
     return (
-      <AccessibleButton
+      <ButtonPrimitive
         ref={ref}
         disabled={isDisabled}
         className={cn(
@@ -128,7 +125,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         {!loading && startIcon && <span className="shrink-0">{startIcon}</span>}
         {children}
         {!loading && endIcon && <span className="shrink-0">{endIcon}</span>}
-      </AccessibleButton>
+      </ButtonPrimitive>
     );
   },
 );

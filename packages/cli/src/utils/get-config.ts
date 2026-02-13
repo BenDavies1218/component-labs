@@ -1,4 +1,4 @@
-import { existsSync } from "fs";
+import { existsSync, readFileSync } from "fs";
 import { resolve } from "path";
 
 export interface ComponentsConfig {
@@ -18,7 +18,7 @@ export interface ComponentsConfig {
   };
 }
 
-export async function getConfig(cwd: string): Promise<ComponentsConfig | null> {
+export function getConfig(cwd: string): ComponentsConfig | null {
   const configPath = resolve(cwd, "components.json");
 
   if (!existsSync(configPath)) {
@@ -26,8 +26,8 @@ export async function getConfig(cwd: string): Promise<ComponentsConfig | null> {
   }
 
   try {
-    const config = await import(configPath, { assert: { type: "json" } });
-    return config.default || config;
+    const configContent = readFileSync(configPath, "utf-8");
+    return JSON.parse(configContent);
   } catch (error) {
     return null;
   }

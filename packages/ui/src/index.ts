@@ -1,5 +1,5 @@
 // Export components
-export { Button } from "./components/button/Button";
+export { Button } from "./components/button/Button.Primative";
 export { Checkbox } from "./components/checkbox/Checkbox";
 export { Combobox } from "./components/combobox/Combobox";
 export { DataTable } from "./components/data-table/DataTable";
@@ -9,9 +9,12 @@ export { Menu } from "./components/menu/Menu";
 export { Switch } from "./components/switch/Switch";
 
 // Export types
-export type { ButtonProps } from "./components/button/Button";
+export type { ButtonProps } from "./components/button/Button.Primative";
 export type { CheckboxProps } from "./components/checkbox/Checkbox";
-export type { ComboboxProps, ComboboxOption } from "./components/combobox/Combobox";
+export type {
+  ComboboxProps,
+  ComboboxOption,
+} from "./components/combobox/Combobox";
 export type { TableProps as DataTableProps } from "./components/data-table/DataTable";
 export type { InputProps } from "./components/input/Input";
 export type { SwitchProps } from "./components/switch/Switch";

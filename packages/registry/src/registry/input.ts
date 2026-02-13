@@ -1,8 +1,167 @@
 import type { RegistryEntry } from "../schema";
 
-const componentContent = "import { cva, type VariantProps } from \"class-variance-authority\";\nimport { forwardRef, type InputHTMLAttributes, type ReactNode, useId } from \"react\";\nimport { cn } from \"../../lib/utils\";\n\nconst inputVariants = cva(\n  [\n    \"w-full rounded-lg border px-3 py-2\",\n    \"text-sm font-medium\",\n    \"transition-all duration-200\",\n    \"focus:outline-none focus:ring-2 focus:ring-primary-600 focus:ring-offset-2\",\n    \"disabled:cursor-not-allowed disabled:opacity-50\",\n    \"placeholder:text-gray-400 dark:placeholder:text-gray-500\",\n  ],\n  {\n    variants: {\n      variant: {\n        default: [\n          \"bg-white dark:bg-gray-900\",\n          \"border-gray-300 dark:border-gray-700\",\n          \"text-gray-900 dark:text-gray-100\",\n          \"hover:border-gray-400 dark:hover:border-gray-600\",\n        ],\n        outline: [\n          \"bg-transparent\",\n          \"border-primary-600 dark:border-primary-500\",\n          \"text-gray-900 dark:text-gray-100\",\n          \"hover:bg-primary-50 dark:hover:bg-primary-950\",\n        ],\n        error: [\n          \"bg-white dark:bg-gray-900\",\n          \"border-error-600 dark:border-error-500\",\n          \"text-gray-900 dark:text-gray-100\",\n          \"focus:ring-error-600\",\n        ],\n      },\n      size: {\n        sm: \"h-9 text-sm\",\n        md: \"h-10 text-base\",\n        lg: \"h-11 text-lg\",\n      },\n    },\n    defaultVariants: {\n      variant: \"default\",\n      size: \"md\",\n    },\n  },\n);\n\nexport interface InputProps\n  extends Omit<InputHTMLAttributes<HTMLInputElement>, \"size\">,\n    VariantProps<typeof inputVariants> {\n  /** Label text above the input */\n  label?: ReactNode;\n  /** Helper text below the input */\n  helperText?: ReactNode;\n  /** Error message (sets variant to error automatically) */\n  error?: string;\n  /** Icon to display before the input text */\n  startIcon?: ReactNode;\n  /** Icon to display after the input text */\n  endIcon?: ReactNode;\n}\n\nexport const Input = forwardRef<HTMLInputElement, InputProps>(\n  (\n    {\n      variant,\n      size,\n      label,\n      helperText,\n      error,\n      startIcon,\n      endIcon,\n      className,\n      ...props\n    },\n    ref,\n  ) => {\n    const hasError = Boolean(error);\n    const displayVariant = hasError ? \"error\" : variant;\n    const generatedId = useId();\n    const inputId = props.id || generatedId;\n    const labelId = `${inputId}-label`;\n    const helperTextId = `${inputId}-helper-text`;\n    const errorId = `${inputId}-error`;\n\n    // Build aria-describedby from available helper text or error\n    const describedBy = error ? errorId : helperText ? helperTextId : undefined;\n\n    return (\n      <div className=\"w-full space-y-1.5\">\n        {label && (\n          <label\n            id={labelId}\n            htmlFor={inputId}\n            className=\"text-sm font-medium text-gray-900 dark:text-gray-100\"\n          >\n            {label}\n          </label>\n        )}\n        <div className=\"relative\">\n          {startIcon && (\n            <div className=\"pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 dark:text-gray-500\">\n              {startIcon}\n            </div>\n          )}\n          <input\n            ref={ref}\n            id={inputId}\n            className={cn(\n              inputVariants({ variant: displayVariant, size }),\n              startIcon && \"pl-10\",\n              endIcon && \"pr-10\",\n              className,\n            )}\n            aria-labelledby={label ? labelId : undefined}\n            aria-describedby={describedBy}\n            aria-invalid={hasError ? true : undefined}\n            {...props}\n          />\n          {endIcon && (\n            <div className=\"pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 dark:text-gray-500\">\n              {endIcon}\n            </div>\n          )}\n        </div>\n        {error && (\n          <p\n            id={errorId}\n            role=\"alert\"\n            aria-live=\"polite\"\n            className=\"text-xs text-error-600 dark:text-error-400\"\n          >\n            {error}\n          </p>\n        )}\n        {helperText && !error && (\n          <p\n            id={helperTextId}\n            className=\"text-xs text-gray-500 dark:text-gray-400\"\n          >\n            {helperText}\n          </p>\n        )}\n      </div>\n    );\n  },\n);\n\nInput.displayName = \"Input\";\n";
+const componentContent = `import { cva, type VariantProps } from "class-variance-authority";
+import { forwardRef, type InputHTMLAttributes, type ReactNode, useId } from "react";
+import { cn } from "../../lib/utils";
 
-const utilsContent = "import { clsx, type ClassValue } from 'clsx';\nimport { twMerge } from 'tailwind-merge';\n\n/**\n * Merge Tailwind CSS classes with proper precedence\n */\nexport function cn(...inputs: ClassValue[]) {\n  return twMerge(clsx(inputs));\n}\n";
+export const inputVariants = cva(
+  [
+    "w-full rounded-lg border px-3 py-2",
+    "text-sm font-medium",
+    "transition-all duration-200",
+    "focus:outline-none focus:ring-2 focus:ring-primary-600 focus:ring-offset-2",
+    "disabled:cursor-not-allowed disabled:opacity-50",
+    "placeholder:text-gray-400 dark:placeholder:text-gray-500",
+  ],
+  {
+    variants: {
+      variant: {
+        default: [
+          "bg-white dark:bg-gray-900",
+          "border-gray-300 dark:border-gray-700",
+          "text-gray-900 dark:text-gray-100",
+          "hover:border-gray-400 dark:hover:border-gray-600",
+        ],
+        outline: [
+          "bg-transparent",
+          "border-primary-600 dark:border-primary-500",
+          "text-gray-900 dark:text-gray-100",
+          "hover:bg-primary-50 dark:hover:bg-primary-950",
+        ],
+        error: [
+          "bg-white dark:bg-gray-900",
+          "border-error-600 dark:border-error-500",
+          "text-gray-900 dark:text-gray-100",
+          "focus:ring-error-600",
+        ],
+      },
+      size: {
+        sm: "h-9 text-sm",
+        md: "h-10 text-base",
+        lg: "h-11 text-lg",
+      },
+    },
+    defaultVariants: {
+      variant: "default",
+      size: "md",
+    },
+  },
+);
+
+export interface InputProps
+  extends Omit<InputHTMLAttributes<HTMLInputElement>, "size">,
+    VariantProps<typeof inputVariants> {
+  /** Label text above the input */
+  label?: ReactNode;
+  /** Helper text below the input */
+  helperText?: ReactNode;
+  /** Error message (sets variant to error automatically) */
+  error?: string;
+  /** Icon to display before the input text */
+  startIcon?: ReactNode;
+  /** Icon to display after the input text */
+  endIcon?: ReactNode;
+}
+
+export const Input = forwardRef<HTMLInputElement, InputProps>(
+  (
+    {
+      variant,
+      size,
+      label,
+      helperText,
+      error,
+      startIcon,
+      endIcon,
+      className,
+      ...props
+    },
+    ref,
+  ) => {
+    const hasError = Boolean(error);
+    const displayVariant = hasError ? "error" : variant;
+    const generatedId = useId();
+    const inputId = props.id || generatedId;
+    const labelId = \`\${inputId}-label\`;
+    const helperTextId = \`\${inputId}-helper-text\`;
+    const errorId = \`\${inputId}-error\`;
+
+    // Build aria-describedby from available helper text or error
+    const describedBy = error ? errorId : helperText ? helperTextId : undefined;
+
+    return (
+      <div className="w-full space-y-1.5">
+        {label && (
+          <label
+            id={labelId}
+            htmlFor={inputId}
+            className="text-sm font-medium text-gray-900 dark:text-gray-100"
+          >
+            {label}
+          </label>
+        )}
+        <div className="relative">
+          {startIcon && (
+            <div className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 dark:text-gray-500">
+              {startIcon}
+            </div>
+          )}
+          <input
+            ref={ref}
+            id={inputId}
+            className={cn(
+              inputVariants({ variant: displayVariant, size }),
+              startIcon && "pl-10",
+              endIcon && "pr-10",
+              className,
+            )}
+            aria-labelledby={label ? labelId : undefined}
+            aria-describedby={describedBy}
+            aria-invalid={hasError ? true : undefined}
+            {...props}
+          />
+          {endIcon && (
+            <div className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 dark:text-gray-500">
+              {endIcon}
+            </div>
+          )}
+        </div>
+        {error && (
+          <p
+            id={errorId}
+            role="alert"
+            aria-live="polite"
+            className="text-xs text-error-600 dark:text-error-400"
+          >
+            {error}
+          </p>
+        )}
+        {helperText && !error && (
+          <p
+            id={helperTextId}
+            className="text-xs text-gray-500 dark:text-gray-400"
+          >
+            {helperText}
+          </p>
+        )}
+      </div>
+    );
+  },
+);
+
+Input.displayName = "Input";
+`;
+
+const utilsContent = `import { clsx, type ClassValue } from 'clsx';
+import { twMerge } from 'tailwind-merge';
+
+/**
+ * Merge Tailwind CSS classes with proper precedence
+ */
+export function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs));
+}
+`;
 
 export const input: RegistryEntry = {
   name: "input",

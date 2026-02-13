@@ -24,12 +24,14 @@ npm login
 ```
 
 Enter your:
+
 - Username
 - Password
 - Email
 - 2FA code (if enabled)
 
 Verify with:
+
 ```bash
 npm whoami
 ```
@@ -70,7 +72,7 @@ cd ../..
 First, update `package.json` to use the published registry version:
 
 ```bash
-cd packages/cli
+pnpm --filter @component-labs/cli run build
 # Edit package.json: Change "@component-labs/registry": "workspace:*" to "@component-labs/registry": "^0.0.1"
 npm publish --access public
 cd ../..
@@ -195,12 +197,14 @@ Go to GitHub > Releases > Create new release
 ## Package Details
 
 ### @component-labs/registry
+
 - **Version**: 0.0.1
 - **License**: MIT
 - **Description**: Component registry for Component Labs
 - **Files**: src/
 
 ### @component-labs/cli
+
 - **Version**: 0.0.1
 - **License**: MIT
 - **Description**: CLI for installing Component Labs components
@@ -208,12 +212,14 @@ Go to GitHub > Releases > Create new release
 - **Bin**: componentlabs
 
 ### @component-labs/ui
+
 - **Version**: 0.0.1
 - **License**: MIT
 - **Description**: React UI component library with Ariakit and Tailwind CSS
 - **Files**: dist/, src/styles/
 
 ### @component-labs/react-showcase
+
 - **Version**: 0.5.0
 - **License**: AGPL-3.0
 - **Description**: A lightweight component showcase tool for React components
@@ -221,6 +227,7 @@ Go to GitHub > Releases > Create new release
 - **Bin**: component-showcase, showcase
 
 ### @component-labs/nextjs-showcase
+
 - **Version**: 0.1.0
 - **License**: AGPL-3.0
 - **Description**: A lightweight component showcase tool for Next.js with SSR support

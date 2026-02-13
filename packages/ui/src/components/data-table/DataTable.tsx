@@ -7,7 +7,11 @@ import React, {
   isValidElement,
 } from "react";
 import { IntersectionObserver } from "../../lib/IntersectionObserver";
-import { Composite, useCompositeStore } from "@ariakit/react";
+import { cn } from "../../lib/utils";
+import {
+  CompositePrimitive,
+  useCompositeStorePrimitive,
+} from "./DataTable.primitive";
 
 // ============================================================================
 // Types and Interfaces
@@ -145,7 +149,7 @@ export function DataTable<T>({
   children,
 }: TableProps<T>) {
   const isEmpty = !isLoading && data.length === 0;
-  const store = useCompositeStore({ defaultActiveId: null });
+  const store = useCompositeStorePrimitive({ defaultActiveId: null });
 
   const handleLoadMore = () => {
     if (isError || !hasNextPage || isFetchingNextPage || !fetchNextPage) {
@@ -161,9 +165,9 @@ export function DataTable<T>({
   }
 
   return (
-    <Composite store={store}>
+    <CompositePrimitive store={store}>
       <div
-        className={`overflow-x-auto rounded-lg border border-black/10 ${className}`}
+        className={cn("overflow-x-auto rounded-lg border border-black/10", className)}
         role="region"
         aria-label={label}
         aria-describedby={description ? `${label}-description` : undefined}
@@ -248,7 +252,7 @@ export function DataTable<T>({
           {isEmpty && "No items to display"}
         </div>
       </div>
-    </Composite>
+    </CompositePrimitive>
   );
 }
 

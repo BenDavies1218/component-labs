@@ -1,8 +1,313 @@
 import type { RegistryEntry } from "../schema";
 
-const componentContent = "import {\n  Menu as AriaMenu,\n  MenuButton,\n  MenuButtonArrow,\n  MenuItem,\n  MenuItemCheckbox,\n  MenuItemCheck,\n  MenuProvider,\n  MenuSeparator,\n  type MenuButtonProps,\n  type MenuItemCheckboxProps,\n  type MenuItemProps,\n  type MenuProps as AriaMenuProps,\n  type MenuProviderProps,\n  type MenuSeparatorProps,\n} from \"@ariakit/react\";\nimport { cva, type VariantProps } from \"class-variance-authority\";\nimport { forwardRef, type ReactNode } from \"react\";\nimport { cn } from \"../../lib/utils\";\n\nconst menuButtonVariants = cva(\n  [\n    \"inline-flex items-center justify-center gap-2\",\n    \"font-medium transition-all duration-200\",\n    \"rounded-lg\",\n    \"focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2\",\n    \"disabled:opacity-50 disabled:cursor-not-allowed\",\n  ],\n  {\n    variants: {\n      variant: {\n        default: [\n          \"bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 border border-gray-300 dark:border-gray-700\",\n          \"hover:bg-gray-50 dark:hover:bg-gray-800\",\n          \"focus-visible:ring-primary-600\",\n          \"shadow-sm hover:shadow\",\n        ],\n        primary: [\n          \"bg-primary-600 text-white border border-transparent\",\n          \"hover:bg-primary-700\",\n          \"focus-visible:ring-primary-600\",\n          \"shadow-sm hover:shadow\",\n        ],\n        ghost: [\n          \"text-gray-900 dark:text-gray-100 bg-transparent border-transparent\",\n          \"hover:bg-gray-100 dark:hover:bg-gray-800\",\n          \"focus-visible:ring-primary-600\",\n        ],\n      },\n      size: {\n        sm: \"h-9 px-3 text-sm\",\n        md: \"h-10 px-4 text-base\",\n        lg: \"h-11 px-6 text-lg\",\n      },\n    },\n    defaultVariants: {\n      variant: \"default\",\n      size: \"md\",\n    },\n  },\n);\n\nconst menuVariants = cva([\n  \"z-50 min-w-[200px] rounded-lg border bg-white p-1 shadow-lg\",\n  \"dark:bg-gray-900 dark:border-gray-700\",\n  \"opacity-0 transition-all duration-200 ease-out\",\n  \"data-enter:opacity-100 data-enter:translate-y-0\",\n  \"data-leave:opacity-0 data-leave:-translate-y-1\",\n]);\n\nconst menuItemVariants = cva(\n  [\n    \"flex items-center gap-2 px-3 py-2 rounded-md\",\n    \"text-sm cursor-pointer\",\n    \"transition-colors duration-150\",\n    \"outline-none\",\n    \"text-gray-900 dark:text-gray-100\",\n    \"data-active-item:bg-primary-100 dark:data-active-item:bg-primary-900\",\n    \"data-active-item:text-primary-900 dark:data-active-item:text-primary-100\",\n    \"disabled:opacity-50 disabled:cursor-not-allowed\",\n  ],\n);\n\nconst menuSeparatorVariants = cva([\n  \"my-1 h-px bg-gray-200 dark:bg-gray-700\",\n]);\n\n// Menu Provider wrapper\nexport interface MenuRootProps extends MenuProviderProps {\n  children: ReactNode;\n}\n\nexport function MenuRoot({ children, ...props }: MenuRootProps) {\n  return <MenuProvider {...props}>{children}</MenuProvider>;\n}\n\n// Menu Button\nexport interface MenuTriggerProps\n  extends MenuButtonProps,\n    VariantProps<typeof menuButtonVariants> {\n  /** Show arrow icon */\n  showArrow?: boolean;\n}\n\nexport const MenuTrigger = forwardRef<HTMLButtonElement, MenuTriggerProps>(\n  ({ variant, size, showArrow = true, className, children, ...props }, ref) => {\n    return (\n      <MenuButton\n        ref={ref}\n        className={cn(menuButtonVariants({ variant, size, className }))}\n        {...props}\n      >\n        {children}\n        {showArrow && (\n          <MenuButtonArrow className=\"transition-transform duration-200 group-data-[open]:rotate-180\" />\n        )}\n      </MenuButton>\n    );\n  },\n);\n\nMenuTrigger.displayName = \"MenuTrigger\";\n\n// Menu Content\nexport interface MenuContentProps extends AriaMenuProps {\n  /** Gutter space between trigger and menu */\n  gutter?: number;\n}\n\nexport const MenuContent = forwardRef<HTMLDivElement, MenuContentProps>(\n  ({ gutter = 8, className, children, ...props }, ref) => {\n    return (\n      <AriaMenu\n        ref={ref}\n        gutter={gutter}\n        className={cn(menuVariants(), className)}\n        {...props}\n      >\n        {children}\n      </AriaMenu>\n    );\n  },\n);\n\nMenuContent.displayName = \"MenuContent\";\n\n// Menu Item\nexport interface MenuItemComponentProps extends MenuItemProps {}\n\nexport const MenuItemComponent = forwardRef<\n  HTMLDivElement,\n  MenuItemComponentProps\n>(({ className, children, ...props }, ref) => {\n  return (\n    <MenuItem\n      ref={ref}\n      className={cn(menuItemVariants(), className)}\n      {...props}\n    >\n      {children}\n    </MenuItem>\n  );\n});\n\nMenuItemComponent.displayName = \"MenuItem\";\n\n// Menu Item Checkbox\nexport interface MenuItemCheckboxComponentProps\n  extends MenuItemCheckboxProps {}\n\nexport const MenuItemCheckboxComponent = forwardRef<\n  HTMLDivElement,\n  MenuItemCheckboxComponentProps\n>(({ className, children, ...props }, ref) => {\n  return (\n    <MenuItemCheckbox\n      ref={ref}\n      className={cn(menuItemVariants(), \"pl-8 relative\", className)}\n      {...props}\n    >\n      <MenuItemCheck className=\"absolute left-2 flex items-center justify-center\">\n        <svg\n          width=\"16\"\n          height=\"16\"\n          viewBox=\"0 0 16 16\"\n          fill=\"none\"\n          xmlns=\"http://www.w3.org/2000/svg\"\n          className=\"text-primary-600 dark:text-primary-400\"\n        >\n          <path\n            d=\"M13 4L6 11L3 8\"\n            stroke=\"currentColor\"\n            strokeWidth=\"2\"\n            strokeLinecap=\"round\"\n            strokeLinejoin=\"round\"\n          />\n        </svg>\n      </MenuItemCheck>\n      {children}\n    </MenuItemCheckbox>\n  );\n});\n\nMenuItemCheckboxComponent.displayName = \"MenuItemCheckbox\";\n\n// Menu Separator\nexport interface MenuSeparatorComponentProps extends MenuSeparatorProps {}\n\nexport const MenuSeparatorComponent = forwardRef<\n  HTMLHRElement,\n  MenuSeparatorComponentProps\n>(({ className, ...props }, ref) => {\n  return (\n    <MenuSeparator\n      ref={ref}\n      className={cn(menuSeparatorVariants(), className)}\n      {...props}\n    />\n  );\n});\n\nMenuSeparatorComponent.displayName = \"MenuSeparator\";\n\n// Compound component export\nexport const Menu = {\n  Root: MenuRoot,\n  Trigger: MenuTrigger,\n  Content: MenuContent,\n  Item: MenuItemComponent,\n  ItemCheckbox: MenuItemCheckboxComponent,\n  Separator: MenuSeparatorComponent,\n};\n";
+const primitiveContent = `import {
+  Menu as AriaMenu,
+  MenuButton,
+  MenuButtonArrow,
+  MenuItem,
+  MenuItemCheckbox,
+  MenuItemCheck,
+  MenuProvider,
+  MenuSeparator,
+  type MenuButtonProps,
+  type MenuItemCheckboxProps,
+  type MenuItemProps,
+  type MenuProps as AriaMenuProps,
+  type MenuProviderProps,
+  type MenuSeparatorProps,
+} from "@ariakit/react";
+import { forwardRef } from "react";
 
-const utilsContent = "import { clsx, type ClassValue } from 'clsx';\nimport { twMerge } from 'tailwind-merge';\n\n/**\n * Merge Tailwind CSS classes with proper precedence\n */\nexport function cn(...inputs: ClassValue[]) {\n  return twMerge(clsx(inputs));\n}\n";
+/**
+ * Primitive menu components that wrap Ariakit's menu.
+ * These are used internally - consumers should use the Menu component instead.
+ * @internal
+ */
+
+export const MenuProviderPrimitive = MenuProvider;
+export const MenuButtonPrimitive = forwardRef<HTMLButtonElement, MenuButtonProps>(
+  (props, ref) => <MenuButton ref={ref} {...props} />
+);
+MenuButtonPrimitive.displayName = "MenuButtonPrimitive";
+
+export const MenuButtonArrowPrimitive = MenuButtonArrow;
+
+export const MenuPrimitive = forwardRef<HTMLDivElement, AriaMenuProps>(
+  (props, ref) => <AriaMenu ref={ref} {...props} />
+);
+MenuPrimitive.displayName = "MenuPrimitive";
+
+export const MenuItemPrimitive = forwardRef<HTMLDivElement, MenuItemProps>(
+  (props, ref) => <MenuItem ref={ref} {...props} />
+);
+MenuItemPrimitive.displayName = "MenuItemPrimitive";
+
+export const MenuItemCheckboxPrimitive = forwardRef<HTMLDivElement, MenuItemCheckboxProps>(
+  (props, ref) => <MenuItemCheckbox ref={ref} {...props} />
+);
+MenuItemCheckboxPrimitive.displayName = "MenuItemCheckboxPrimitive";
+
+export const MenuItemCheckPrimitive = MenuItemCheck;
+
+export const MenuSeparatorPrimitive = forwardRef<HTMLHRElement, MenuSeparatorProps>(
+  (props, ref) => <MenuSeparator ref={ref} {...props} />
+);
+MenuSeparatorPrimitive.displayName = "MenuSeparatorPrimitive";
+
+export type {
+  MenuProviderProps,
+  MenuButtonProps,
+  AriaMenuProps as MenuPrimitiveProps,
+  MenuItemProps,
+  MenuItemCheckboxProps,
+  MenuSeparatorProps,
+};
+`;
+
+const componentContent = `import { cva, type VariantProps } from "class-variance-authority";
+import { forwardRef, type ReactNode } from "react";
+import { cn } from "../../lib/utils";
+import {
+  MenuProviderPrimitive,
+  MenuButtonPrimitive,
+  MenuButtonArrowPrimitive,
+  MenuPrimitive,
+  MenuItemPrimitive,
+  MenuItemCheckboxPrimitive,
+  MenuItemCheckPrimitive,
+  MenuSeparatorPrimitive,
+  type MenuProviderProps,
+  type MenuButtonProps,
+  type MenuPrimitiveProps,
+  type MenuItemProps,
+  type MenuItemCheckboxProps,
+  type MenuSeparatorProps,
+} from "./Menu.primitive";
+
+export const menuButtonVariants = cva(
+  [
+    "inline-flex items-center justify-center gap-2",
+    "font-medium transition-all duration-200",
+    "rounded-lg",
+    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2",
+    "disabled:opacity-50 disabled:cursor-not-allowed",
+  ],
+  {
+    variants: {
+      variant: {
+        default: [
+          "bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 border border-gray-300 dark:border-gray-700",
+          "hover:bg-gray-50 dark:hover:bg-gray-800",
+          "focus-visible:ring-primary-600",
+          "shadow-sm hover:shadow",
+        ],
+        primary: [
+          "bg-primary-600 text-white border border-transparent",
+          "hover:bg-primary-700",
+          "focus-visible:ring-primary-600",
+          "shadow-sm hover:shadow",
+        ],
+        ghost: [
+          "text-gray-900 dark:text-gray-100 bg-transparent border-transparent",
+          "hover:bg-gray-100 dark:hover:bg-gray-800",
+          "focus-visible:ring-primary-600",
+        ],
+      },
+      size: {
+        sm: "h-9 px-3 text-sm",
+        md: "h-10 px-4 text-base",
+        lg: "h-11 px-6 text-lg",
+      },
+    },
+    defaultVariants: {
+      variant: "default",
+      size: "md",
+    },
+  },
+);
+
+export const menuVariants = cva([
+  "z-50 min-w-[200px] rounded-lg border bg-white p-1 shadow-lg",
+  "dark:bg-gray-900 dark:border-gray-700",
+  "opacity-0 transition-all duration-200 ease-out",
+  "data-enter:opacity-100 data-enter:translate-y-0",
+  "data-leave:opacity-0 data-leave:-translate-y-1",
+]);
+
+export const menuItemVariants = cva(
+  [
+    "flex items-center gap-2 px-3 py-2 rounded-md",
+    "text-sm cursor-pointer",
+    "transition-colors duration-150",
+    "outline-none",
+    "text-gray-900 dark:text-gray-100",
+    "data-active-item:bg-primary-100 dark:data-active-item:bg-primary-900",
+    "data-active-item:text-primary-900 dark:data-active-item:text-primary-100",
+    "disabled:opacity-50 disabled:cursor-not-allowed",
+  ],
+);
+
+export const menuSeparatorVariants = cva([
+  "my-1 h-px bg-gray-200 dark:bg-gray-700",
+]);
+
+// Menu Provider wrapper
+export interface MenuRootProps extends MenuProviderProps {
+  children: ReactNode;
+}
+
+export function MenuRoot({ children, ...props }: MenuRootProps) {
+  return <MenuProviderPrimitive {...props}>{children}</MenuProviderPrimitive>;
+}
+
+// Menu Button
+export interface MenuTriggerProps
+  extends MenuButtonProps,
+    VariantProps<typeof menuButtonVariants> {
+  /** Show arrow icon */
+  showArrow?: boolean;
+}
+
+export const MenuTrigger = forwardRef<HTMLButtonElement, MenuTriggerProps>(
+  ({ variant, size, showArrow = true, className, children, ...props }, ref) => {
+    return (
+      <MenuButtonPrimitive
+        ref={ref}
+        className={cn(menuButtonVariants({ variant, size, className }))}
+        {...props}
+      >
+        {children}
+        {showArrow && (
+          <MenuButtonArrowPrimitive className="transition-transform duration-200 group-data-[open]:rotate-180" />
+        )}
+      </MenuButtonPrimitive>
+    );
+  },
+);
+
+MenuTrigger.displayName = "MenuTrigger";
+
+// Menu Content
+export interface MenuContentProps extends MenuPrimitiveProps {
+  /** Gutter space between trigger and menu */
+  gutter?: number;
+}
+
+export const MenuContent = forwardRef<HTMLDivElement, MenuContentProps>(
+  ({ gutter = 8, className, children, ...props }, ref) => {
+    return (
+      <MenuPrimitive
+        ref={ref}
+        gutter={gutter}
+        className={cn(menuVariants(), className)}
+        {...props}
+      >
+        {children}
+      </MenuPrimitive>
+    );
+  },
+);
+
+MenuContent.displayName = "MenuContent";
+
+// Menu Item
+export interface MenuItemComponentProps extends MenuItemProps {}
+
+export const MenuItemComponent = forwardRef<
+  HTMLDivElement,
+  MenuItemComponentProps
+>(({ className, children, ...props }, ref) => {
+  return (
+    <MenuItemPrimitive
+      ref={ref}
+      className={cn(menuItemVariants(), className)}
+      {...props}
+    >
+      {children}
+    </MenuItemPrimitive>
+  );
+});
+
+MenuItemComponent.displayName = "MenuItem";
+
+// Menu Item Checkbox
+export interface MenuItemCheckboxComponentProps
+  extends MenuItemCheckboxProps {}
+
+export const MenuItemCheckboxComponent = forwardRef<
+  HTMLDivElement,
+  MenuItemCheckboxComponentProps
+>(({ className, children, ...props }, ref) => {
+  return (
+    <MenuItemCheckboxPrimitive
+      ref={ref}
+      className={cn(menuItemVariants(), "pl-8 relative", className)}
+      {...props}
+    >
+      <MenuItemCheckPrimitive className="absolute left-2 flex items-center justify-center">
+        <svg
+          width="16"
+          height="16"
+          viewBox="0 0 16 16"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+          className="text-primary-600 dark:text-primary-400"
+        >
+          <path
+            d="M13 4L6 11L3 8"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+        </svg>
+      </MenuItemCheckPrimitive>
+      {children}
+    </MenuItemCheckboxPrimitive>
+  );
+});
+
+MenuItemCheckboxComponent.displayName = "MenuItemCheckbox";
+
+// Menu Separator
+export interface MenuSeparatorComponentProps extends MenuSeparatorProps {}
+
+export const MenuSeparatorComponent = forwardRef<
+  HTMLHRElement,
+  MenuSeparatorComponentProps
+>(({ className, ...props }, ref) => {
+  return (
+    <MenuSeparatorPrimitive
+      ref={ref}
+      className={cn(menuSeparatorVariants(), className)}
+      {...props}
+    />
+  );
+});
+
+MenuSeparatorComponent.displayName = "MenuSeparator";
+
+// Compound component export
+export const Menu = {
+  Root: MenuRoot,
+  Trigger: MenuTrigger,
+  Content: MenuContent,
+  Item: MenuItemComponent,
+  ItemCheckbox: MenuItemCheckboxComponent,
+  Separator: MenuSeparatorComponent,
+};
+`;
+
+const utilsContent = `import { clsx, type ClassValue } from 'clsx';
+import { twMerge } from 'tailwind-merge';
+
+/**
+ * Merge Tailwind CSS classes with proper precedence
+ */
+export function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs));
+}
+`;
 
 export const menu: RegistryEntry = {
   name: "menu",
@@ -11,6 +316,12 @@ export const menu: RegistryEntry = {
   dependencies: ["@ariakit/react","class-variance-authority","clsx","tailwind-merge"],
   registryDependencies: [],
   files: [
+    {
+      path: "components/ui/menu.primitive.tsx",
+      content: primitiveContent,
+      type: "registry:ui",
+      target: "components/ui/menu.primitive.tsx"
+    },
     {
       path: "components/ui/menu.tsx",
       content: componentContent,

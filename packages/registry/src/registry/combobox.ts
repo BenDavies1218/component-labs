@@ -1,16 +1,302 @@
 import type { RegistryEntry } from "../schema";
 
-const componentContent = "import {\n  Combobox as AriaCombobox,\n  ComboboxCancel,\n  ComboboxItem,\n  ComboboxPopover,\n  ComboboxProvider,\n  type ComboboxProps as AriaComboboxProps,\n} from \"@ariakit/react\";\nimport { cva, type VariantProps } from \"class-variance-authority\";\nimport {\n  forwardRef,\n  startTransition,\n  useMemo,\n  useState,\n  type ReactNode,\n} from \"react\";\nimport { cn } from \"../../lib/utils\";\n\nconst comboboxVariants = cva(\n  [\n    \"w-full max-w-md rounded-lg border px-3 py-2\",\n    \"text-sm font-medium\",\n    \"transition-all duration-200\",\n    \"focus:outline-none focus:ring-2 focus:ring-primary-600 focus:ring-offset-2\",\n    \"disabled:cursor-not-allowed disabled:opacity-50\",\n    \"placeholder:text-gray-400 dark:placeholder:text-gray-500\",\n  ],\n  {\n    variants: {\n      variant: {\n        default: [\n          \"bg-white dark:bg-gray-900\",\n          \"border-gray-300 dark:border-gray-700\",\n          \"text-gray-900 dark:text-gray-100\",\n          \"hover:border-gray-400 dark:hover:border-gray-600\",\n        ],\n        outline: [\n          \"bg-transparent\",\n          \"border-primary-600 dark:border-primary-500\",\n          \"text-gray-900 dark:text-gray-100\",\n          \"hover:bg-primary-50 dark:hover:bg-primary-950\",\n        ],\n      },\n      size: {\n        sm: \"h-9 text-sm\",\n        md: \"h-10 text-base\",\n        lg: \"h-11 text-lg\",\n      },\n    },\n    defaultVariants: {\n      variant: \"default\",\n      size: \"md\",\n    },\n  },\n);\n\nconst comboboxItemVariants = cva(\n  [\n    \"flex items-center gap-2 px-3 py-2 rounded-md\",\n    \"text-sm cursor-pointer\",\n    \"transition-colors duration-150\",\n    \"outline-none\",\n  ],\n  {\n    variants: {\n      variant: {\n        default: [\n          \"text-gray-900 dark:text-gray-100\",\n          \"hover:bg-gray-100 dark:hover:bg-gray-800\",\n          \"data-[active-item]:bg-primary-100 dark:data-[active-item]:bg-primary-900\",\n          \"data-[active-item]:text-primary-900 dark:data-[active-item]:text-primary-100\",\n        ],\n      },\n    },\n    defaultVariants: {\n      variant: \"default\",\n    },\n  },\n);\n\nexport interface ComboboxOption {\n  value: string;\n  label?: ReactNode;\n  disabled?: boolean;\n}\n\nexport interface ComboboxProps\n  extends\n    Omit<AriaComboboxProps, \"size\" | \"onSelect\">,\n    VariantProps<typeof comboboxVariants> {\n  /** Combobox label */\n  label?: string;\n  /** Options to display in the dropdown */\n  options?: ComboboxOption[];\n  /** Placeholder text */\n  placeholder?: string;\n  /** Show clear button when value is not empty */\n  showClear?: boolean;\n  /** Filter function for options */\n  filterFn?: (\n    options: ComboboxOption[],\n    searchValue: string,\n  ) => ComboboxOption[];\n  /** Callback when value changes */\n  onValueChange?: (value: string) => void;\n  /** Callback when an option is selected */\n  onSelectOption?: (value: string) => void;\n  /** Empty state message */\n  emptyMessage?: string;\n  /** Custom render for items */\n  renderItem?: (option: ComboboxOption) => ReactNode;\n}\n\nexport const Combobox = forwardRef<HTMLInputElement, ComboboxProps>(\n  (\n    {\n      label,\n      options = [],\n      placeholder,\n      showClear = true,\n      filterFn,\n      onValueChange,\n      onSelectOption,\n      emptyMessage = \"No results found\",\n      renderItem,\n      variant,\n      size,\n      className,\n      ...props\n    },\n    ref,\n  ) => {\n    const [searchValue, setSearchValue] = useState(\"\");\n\n    // Default filter function using simple includes\n    const defaultFilterFn = (\n      opts: ComboboxOption[],\n      search: string,\n    ): ComboboxOption[] => {\n      if (!search) return opts;\n      return opts.filter((opt) =>\n        opt.value.toLowerCase().includes(search.toLowerCase()),\n      );\n    };\n\n    const filteredOptions = useMemo(() => {\n      const filterFunc = filterFn || defaultFilterFn;\n      return filterFunc(options, searchValue);\n    }, [options, searchValue, filterFn]);\n\n    return (\n      <ComboboxProvider\n        setValue={(value) => {\n          startTransition(() => {\n            setSearchValue(value);\n            onValueChange?.(value);\n          });\n        }}\n      >\n        <div className=\"w-full space-y-2\">\n          {label && (\n            <label className=\"text-sm font-medium text-gray-900 dark:text-gray-100\">\n              {label}\n            </label>\n          )}\n          <div className=\"relative\">\n            <AriaCombobox\n              ref={ref}\n              placeholder={placeholder}\n              className={cn(comboboxVariants({ variant, size, className }))}\n              {...props}\n            />\n            {showClear && searchValue && (\n              <ComboboxCancel className=\"absolute right-2 top-1/2 -translate-y-1/2 flex items-center justify-center rounded-md p-1 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors\">\n                <svg\n                  width=\"12\"\n                  height=\"12\"\n                  viewBox=\"0 0 12 12\"\n                  fill=\"none\"\n                  stroke=\"currentColor\"\n                  strokeWidth=\"2\"\n                  strokeLinecap=\"round\"\n                >\n                  <path d=\"M4 4l8 8M12 4l-8 8\" />\n                </svg>\n              </ComboboxCancel>\n            )}\n          </div>\n          <ComboboxPopover\n            gutter={8}\n            sameWidth\n            className={cn(\n              \"z-50 max-h-80 overflow-auto rounded-lg border bg-white p-1 shadow-lg dark:bg-gray-900 dark:border-gray-700\",\n              \"opacity-0 transition-all duration-200 ease-out\",\n              \"data-enter:opacity-100 data-enter:translate-y-0\",\n              \"data-leave:opacity-0 data-leave:-translate-y-1\",\n            )}\n          >\n            {filteredOptions.length > 0 ? (\n              filteredOptions.map((option) => (\n                <ComboboxItem\n                  key={option.value}\n                  value={option.value}\n                  disabled={option.disabled}\n                  onClick={() => onSelectOption?.(option.value)}\n                  className={comboboxItemVariants()}\n                >\n                  {renderItem\n                    ? renderItem(option)\n                    : option.label || option.value}\n                </ComboboxItem>\n              ))\n            ) : (\n              <div className=\"px-3 py-2 text-center text-sm text-gray-500 dark:text-gray-400\">\n                {emptyMessage}\n              </div>\n            )}\n          </ComboboxPopover>\n        </div>\n      </ComboboxProvider>\n    );\n  },\n);\n\nCombobox.displayName = \"Combobox\";\n";
+const primitiveContent = `import {
+  Combobox as AriaCombobox,
+  ComboboxCancel,
+  ComboboxItem,
+  ComboboxPopover,
+  ComboboxProvider,
+  type ComboboxProps as AriaComboboxProps,
+  type ComboboxItemProps,
+  type ComboboxPopoverProps,
+  type ComboboxProviderProps,
+} from "@ariakit/react";
+import { forwardRef } from "react";
 
-const utilsContent = "import { clsx, type ClassValue } from 'clsx';\nimport { twMerge } from 'tailwind-merge';\n\n/**\n * Merge Tailwind CSS classes with proper precedence\n */\nexport function cn(...inputs: ClassValue[]) {\n  return twMerge(clsx(inputs));\n}\n";
+/**
+ * Primitive combobox components that wrap Ariakit's combobox.
+ * These are used internally - consumers should use the Combobox component instead.
+ * @internal
+ */
+
+export const ComboboxProviderPrimitive = ComboboxProvider;
+
+export const ComboboxPrimitive = forwardRef<HTMLInputElement, AriaComboboxProps>(
+  (props, ref) => <AriaCombobox ref={ref} {...props} />
+);
+ComboboxPrimitive.displayName = "ComboboxPrimitive";
+
+export const ComboboxCancelPrimitive = ComboboxCancel;
+
+export const ComboboxItemPrimitive = forwardRef<HTMLDivElement, ComboboxItemProps>(
+  (props, ref) => <ComboboxItem ref={ref} {...props} />
+);
+ComboboxItemPrimitive.displayName = "ComboboxItemPrimitive";
+
+export const ComboboxPopoverPrimitive = forwardRef<HTMLDivElement, ComboboxPopoverProps>(
+  (props, ref) => <ComboboxPopover ref={ref} {...props} />
+);
+ComboboxPopoverPrimitive.displayName = "ComboboxPopoverPrimitive";
+
+export type {
+  ComboboxProviderProps,
+  AriaComboboxProps as ComboboxPrimitiveProps,
+  ComboboxItemProps,
+  ComboboxPopoverProps,
+};
+`;
+
+const componentContent = `import { cva, type VariantProps } from "class-variance-authority";
+import {
+  forwardRef,
+  startTransition,
+  useMemo,
+  useState,
+  type ReactNode,
+} from "react";
+import { cn } from "../../lib/utils";
+import {
+  ComboboxProviderPrimitive,
+  ComboboxPrimitive,
+  ComboboxCancelPrimitive,
+  ComboboxItemPrimitive,
+  ComboboxPopoverPrimitive,
+  type ComboboxPrimitiveProps,
+} from "./Combobox.primitive";
+
+export const comboboxVariants = cva(
+  [
+    "w-full max-w-md rounded-lg border px-3 py-2",
+    "text-sm font-medium",
+    "transition-all duration-200",
+    "focus:outline-none focus:ring-2 focus:ring-primary-600 focus:ring-offset-2",
+    "disabled:cursor-not-allowed disabled:opacity-50",
+    "placeholder:text-gray-400 dark:placeholder:text-gray-500",
+  ],
+  {
+    variants: {
+      variant: {
+        default: [
+          "bg-white dark:bg-gray-900",
+          "border-gray-300 dark:border-gray-700",
+          "text-gray-900 dark:text-gray-100",
+          "hover:border-gray-400 dark:hover:border-gray-600",
+        ],
+        outline: [
+          "bg-transparent",
+          "border-primary-600 dark:border-primary-500",
+          "text-gray-900 dark:text-gray-100",
+          "hover:bg-primary-50 dark:hover:bg-primary-950",
+        ],
+      },
+      size: {
+        sm: "h-9 text-sm",
+        md: "h-10 text-base",
+        lg: "h-11 text-lg",
+      },
+    },
+    defaultVariants: {
+      variant: "default",
+      size: "md",
+    },
+  },
+);
+
+export const comboboxItemVariants = cva(
+  [
+    "flex items-center gap-2 px-3 py-2 rounded-md",
+    "text-sm cursor-pointer",
+    "transition-colors duration-150",
+    "outline-none",
+  ],
+  {
+    variants: {
+      variant: {
+        default: [
+          "text-gray-900 dark:text-gray-100",
+          "hover:bg-gray-100 dark:hover:bg-gray-800",
+          "data-[active-item]:bg-primary-100 dark:data-[active-item]:bg-primary-900",
+          "data-[active-item]:text-primary-900 dark:data-[active-item]:text-primary-100",
+        ],
+      },
+    },
+    defaultVariants: {
+      variant: "default",
+    },
+  },
+);
+
+export interface ComboboxOption {
+  value: string;
+  label?: ReactNode;
+  disabled?: boolean;
+}
+
+export interface ComboboxProps
+  extends
+    Omit<ComboboxPrimitiveProps, "size" | "onSelect">,
+    VariantProps<typeof comboboxVariants> {
+  /** Combobox label */
+  label?: string;
+  /** Options to display in the dropdown */
+  options?: ComboboxOption[];
+  /** Placeholder text */
+  placeholder?: string;
+  /** Show clear button when value is not empty */
+  showClear?: boolean;
+  /** Filter function for options */
+  filterFn?: (
+    options: ComboboxOption[],
+    searchValue: string,
+  ) => ComboboxOption[];
+  /** Callback when value changes */
+  onValueChange?: (value: string) => void;
+  /** Callback when an option is selected */
+  onSelectOption?: (value: string) => void;
+  /** Empty state message */
+  emptyMessage?: string;
+  /** Custom render for items */
+  renderItem?: (option: ComboboxOption) => ReactNode;
+}
+
+export const Combobox = forwardRef<HTMLInputElement, ComboboxProps>(
+  (
+    {
+      label,
+      options = [],
+      placeholder,
+      showClear = true,
+      filterFn,
+      onValueChange,
+      onSelectOption,
+      emptyMessage = "No results found",
+      renderItem,
+      variant,
+      size,
+      className,
+      ...props
+    },
+    ref,
+  ) => {
+    const [searchValue, setSearchValue] = useState("");
+
+    // Default filter function using simple includes
+    const defaultFilterFn = (
+      opts: ComboboxOption[],
+      search: string,
+    ): ComboboxOption[] => {
+      if (!search) return opts;
+      return opts.filter((opt) =>
+        opt.value.toLowerCase().includes(search.toLowerCase()),
+      );
+    };
+
+    const filteredOptions = useMemo(() => {
+      const filterFunc = filterFn || defaultFilterFn;
+      return filterFunc(options, searchValue);
+    }, [options, searchValue, filterFn]);
+
+    return (
+      <ComboboxProviderPrimitive
+        setValue={(value) => {
+          startTransition(() => {
+            setSearchValue(value);
+            onValueChange?.(value);
+          });
+        }}
+      >
+        <div className="w-full space-y-2">
+          {label && (
+            <label className="text-sm font-medium text-gray-900 dark:text-gray-100">
+              {label}
+            </label>
+          )}
+          <div className="relative">
+            <ComboboxPrimitive
+              ref={ref}
+              placeholder={placeholder}
+              className={cn(comboboxVariants({ variant, size, className }))}
+              {...props}
+            />
+            {showClear && searchValue && (
+              <ComboboxCancelPrimitive className="absolute right-2 top-1/2 -translate-y-1/2 flex items-center justify-center rounded-md p-1 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors">
+                <svg
+                  width="12"
+                  height="12"
+                  viewBox="0 0 12 12"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                >
+                  <path d="M4 4l8 8M12 4l-8 8" />
+                </svg>
+              </ComboboxCancelPrimitive>
+            )}
+          </div>
+          <ComboboxPopoverPrimitive
+            gutter={8}
+            sameWidth
+            className={cn(
+              "z-50 max-h-80 overflow-auto rounded-lg border bg-white p-1 shadow-lg dark:bg-gray-900 dark:border-gray-700",
+              "opacity-0 transition-all duration-200 ease-out",
+              "data-enter:opacity-100 data-enter:translate-y-0",
+              "data-leave:opacity-0 data-leave:-translate-y-1",
+            )}
+          >
+            {filteredOptions.length > 0 ? (
+              filteredOptions.map((option) => (
+                <ComboboxItemPrimitive
+                  key={option.value}
+                  value={option.value}
+                  disabled={option.disabled}
+                  onClick={() => onSelectOption?.(option.value)}
+                  className={comboboxItemVariants()}
+                >
+                  {renderItem
+                    ? renderItem(option)
+                    : option.label || option.value}
+                </ComboboxItemPrimitive>
+              ))
+            ) : (
+              <div className="px-3 py-2 text-center text-sm text-gray-500 dark:text-gray-400">
+                {emptyMessage}
+              </div>
+            )}
+          </ComboboxPopoverPrimitive>
+        </div>
+      </ComboboxProviderPrimitive>
+    );
+  },
+);
+
+Combobox.displayName = "Combobox";
+`;
+
+const utilsContent = `import { clsx, type ClassValue } from 'clsx';
+import { twMerge } from 'tailwind-merge';
+
+/**
+ * Merge Tailwind CSS classes with proper precedence
+ */
+export function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs));
+}
+`;
 
 export const combobox: RegistryEntry = {
   name: "combobox",
   type: "components:ui",
   description: "Combobox component",
-  dependencies: ["@ariakit/react","class-variance-authority","lucide-react","clsx","tailwind-merge"],
+  dependencies: ["@ariakit/react","class-variance-authority","clsx","tailwind-merge"],
   registryDependencies: [],
   files: [
+    {
+      path: "components/ui/combobox.primitive.tsx",
+      content: primitiveContent,
+      type: "registry:ui",
+      target: "components/ui/combobox.primitive.tsx"
+    },
     {
       path: "components/ui/combobox.tsx",
       content: componentContent,
