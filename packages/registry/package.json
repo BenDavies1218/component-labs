@@ -1,6 +1,6 @@
 {
   "name": "@component-labs/registry",
-  "version": "0.0.4",
+  "version": "0.1.0",
   "description": "Component registry for Component Labs",
   "type": "module",
   "main": "./dist/index.js",

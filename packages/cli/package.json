@@ -1,6 +1,6 @@
 {
   "name": "@component-labs/cli",
-  "version": "0.0.6",
+  "version": "0.1.0",
   "description": "CLI for installing Component Labs components",
   "type": "module",
   "bin": {
@@ -38,7 +38,7 @@
     "url": "https://github.com/BenDavies1218/component-labs/issues"
   },
   "dependencies": {
-    "@component-labs/registry": "^0.0.4",
+    "@component-labs/registry": "^0.1.0",
     "commander": "^11.1.0",
     "picocolors": "^1.0.0",
     "prompts": "^2.4.2",

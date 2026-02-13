@@ -1,6 +1,6 @@
 {
   "name": "@component-labs/ui",
-  "version": "0.0.2",
+  "version": "0.1.0",
   "description": "React UI component library with Ariakit and Tailwind CSS",
   "type": "module",
   "keywords": [

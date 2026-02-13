@@ -19,6 +19,15 @@ import {
   SlidersHorizontal,
   Bell,
   Layers,
+  AlertCircle,
+  Tag,
+  CreditCard,
+  Type,
+  CircleDot,
+  ListFilter,
+  LayoutGrid,
+  AlignLeft,
+  MessageCircle,
 } from "lucide-react";
 
 const componentCategories = [
@@ -36,9 +45,24 @@ const componentCategories = [
         description: "Text input with validation and icon support.",
       },
       {
+        icon: AlignLeft,
+        name: "Textarea",
+        description: "Multi-line text input with auto-resize support.",
+      },
+      {
+        icon: Type,
+        name: "Label",
+        description: "Accessible form label with required indicator.",
+      },
+      {
         icon: Square,
         name: "Checkbox",
         description: "Accessible checkbox with indeterminate state.",
+      },
+      {
+        icon: CircleDot,
+        name: "Radio",
+        description: "Radio button group for single selection.",
       },
       {
         icon: ToggleLeft,
@@ -49,6 +73,11 @@ const componentCategories = [
         icon: Calendar,
         name: "Date Picker",
         description: "Calendar-based date selection component.",
+      },
+      {
+        icon: ListFilter,
+        name: "Select",
+        description: "Dropdown select with search and multi-select.",
       },
       {
         icon: SlidersHorizontal,
@@ -80,6 +109,26 @@ const componentCategories = [
         name: "Carousel",
         description: "Image and content carousel with auto-play.",
       },
+      {
+        icon: CreditCard,
+        name: "Card",
+        description: "Flexible container for grouping related content.",
+      },
+      {
+        icon: Tag,
+        name: "Badge",
+        description: "Small status indicator or label component.",
+      },
+      {
+        icon: LayoutGrid,
+        name: "Tabs",
+        description: "Tabbed interface for organizing content sections.",
+      },
+      {
+        icon: MessageCircle,
+        name: "Tooltip",
+        description: "Contextual information on hover or focus.",
+      },
     ],
   },
   {
@@ -110,6 +159,11 @@ const componentCategories = [
   {
     name: "Feedback",
     components: [
+      {
+        icon: AlertCircle,
+        name: "Alert",
+        description: "Contextual feedback messages for user actions.",
+      },
       {
         icon: Bell,
         name: "Toast",
@@ -180,17 +234,11 @@ export function ComponentShowcase() {
         </Composite>
 
         <div className="mt-16 text-center">
-          <p className="mb-4 text-muted-foreground">
-            Plus many more: Accordion, Alert, Avatar, Badge, Breadcrumb, Card,
-            Collapsible, Context Menu, Hover Card, Popover, Progress, Radio
-            Group, Scroll Area, Select, Separator, Skeleton, Tabs, Textarea,
-            Tooltip...
-          </p>
           <Link
             href="/docs"
             className="inline-flex items-center gap-2 text-accent transition-colors hover:text-accent/80"
           >
-            View all components
+            View full documentation
             <ChevronRight className="h-4 w-4" />
           </Link>
         </div>
