@@ -66,7 +66,8 @@ toast({
       name: "ToastData.duration",
       type: "number",
       default: "5000",
-      description: "Auto-dismiss duration in milliseconds (0 = no auto-dismiss)",
+      description:
+        "Auto-dismiss duration in milliseconds (0 = no auto-dismiss)",
     },
     {
       name: "ToastData.action",
@@ -188,7 +189,12 @@ dismiss(id);`,
   ],
   performance: {
     bundleSize: "~3KB gzipped",
-    dependencies: ["class-variance-authority", "clsx", "tailwind-merge", "lucide-react"],
+    dependencies: [
+      "class-variance-authority",
+      "clsx",
+      "tailwind-merge",
+      "lucide-react",
+    ],
   },
   status: "stable",
   version: "1.0.0",
@@ -197,22 +203,27 @@ dismiss(id);`,
       const { toast, success, error } = useToast();
 
       return (
-        <div className="space-y-2 max-w-md">
+        <div className="space-y-2 max-w-md flex flex-row items-start gap-4">
           <button
-            onClick={() => toast({ title: "Default Toast", description: "This is a notification" })}
-            className="px-4 py-2 bg-black text-white rounded-md text-sm"
+            onClick={() =>
+              toast({
+                title: "Default Toast",
+                description: "This is a notification",
+              })
+            }
+            className="px-4 py-2 bg-black text-white rounded-md text-sm cursor-pointer"
           >
             Show Toast
           </button>
           <button
             onClick={() => success("Success!", "Operation completed")}
-            className="px-4 py-2 bg-green-600 text-white rounded-md text-sm"
+            className="px-4 py-2 bg-green-600 text-white rounded-md text-sm cursor-pointer"
           >
             Show Success
           </button>
           <button
             onClick={() => error("Error", "Something went wrong")}
-            className="px-4 py-2 bg-red-600 text-white rounded-md text-sm"
+            className="px-4 py-2 bg-red-600 text-white rounded-md text-sm cursor-pointer"
           >
             Show Error
           </button>

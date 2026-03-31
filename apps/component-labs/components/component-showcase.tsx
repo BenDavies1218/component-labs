@@ -89,26 +89,26 @@ const componentCategories = [
   {
     name: "Data Display",
     components: [
-      {
-        icon: ChartBar,
-        name: "Charts",
-        description: "Bar, line, pie, and area chart components.",
-      },
-      {
-        icon: ChartLine,
-        name: "Graphs",
-        description: "Interactive data visualization graphs.",
-      },
+      // {
+      //   icon: ChartBar,
+      //   name: "Charts",
+      //   description: "Bar, line, pie, and area chart components.",
+      // },
+      // {
+      //   icon: ChartLine,
+      //   name: "Graphs",
+      //   description: "Interactive data visualization graphs.",
+      // },
       {
         icon: Table,
         name: "Data Table",
         description: "Sortable, filterable data table with pagination.",
       },
-      {
-        icon: GalleryHorizontal,
-        name: "Carousel",
-        description: "Image and content carousel with auto-play.",
-      },
+      // {
+      //   icon: GalleryHorizontal,
+      //   name: "Carousel",
+      //   description: "Image and content carousel with auto-play.",
+      // },
       {
         icon: CreditCard,
         name: "Card",

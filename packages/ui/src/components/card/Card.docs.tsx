@@ -1,4 +1,5 @@
 import type { ComponentDoc } from "../../types/docs";
+import { Button } from "../button/Button";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "./Card";
 
 export const cardDocs: ComponentDoc = {
@@ -190,7 +191,8 @@ npx @component-labs/cli init
           <p className="text-sm">This card has elevation.</p>
         </CardContent>
         <CardFooter>
-          <span className="text-xs text-black/50 dark:text-white/50">With footer</span>
+          <Button size="sm">Save</Button>
+          <Button size="sm" variant="ghost">Cancel</Button>
         </CardFooter>
       </Card>
       <Card variant="outline">

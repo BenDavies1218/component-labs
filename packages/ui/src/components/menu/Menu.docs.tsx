@@ -38,8 +38,28 @@ export const menuDocs: ComponentDoc = {
     {
       name: "gutter",
       type: "number",
-      description: "Space between trigger and menu content (Menu.Content)",
+      description: "Space between trigger and menu content (Menu.Content / Menu.SubContent)",
       default: "8",
+    },
+    {
+      name: "Menu.Item.command",
+      type: "string",
+      description: "Keyboard shortcut displayed on the right side of the item",
+    },
+    {
+      name: "Menu.SubRoot",
+      type: "Component",
+      description: "Wrapper that provides context for a nested submenu",
+    },
+    {
+      name: "Menu.SubTrigger",
+      type: "Component",
+      description: "Menu item that opens a nested submenu on hover/focus",
+    },
+    {
+      name: "Menu.SubContent",
+      type: "Component",
+      description: "The dropdown panel for a nested submenu",
     },
   ],
   examples: [
@@ -104,6 +124,42 @@ export const menuDocs: ComponentDoc = {
 </Menu.Root>`,
       description: "Menu trigger without arrow indicator",
     },
+    {
+      title: "With Commands",
+      code: `<Menu.Root>
+  <Menu.Trigger>Edit</Menu.Trigger>
+  <Menu.Content>
+    <Menu.Item command="⌘Z">Undo</Menu.Item>
+    <Menu.Item command="⌘⇧Z">Redo</Menu.Item>
+    <Menu.Separator />
+    <Menu.Item command="⌘X">Cut</Menu.Item>
+    <Menu.Item command="⌘C">Copy</Menu.Item>
+    <Menu.Item command="⌘V">Paste</Menu.Item>
+  </Menu.Content>
+</Menu.Root>`,
+      description: "Menu items with keyboard shortcut hints",
+    },
+    {
+      title: "Submenu",
+      code: `<Menu.Root>
+  <Menu.Trigger>Options</Menu.Trigger>
+  <Menu.Content>
+    <Menu.Item>New File</Menu.Item>
+    <Menu.Item>Open</Menu.Item>
+    <Menu.SubRoot>
+      <Menu.SubTrigger>Share</Menu.SubTrigger>
+      <Menu.SubContent>
+        <Menu.Item>Email</Menu.Item>
+        <Menu.Item>Copy Link</Menu.Item>
+        <Menu.Item>Export PDF</Menu.Item>
+      </Menu.SubContent>
+    </Menu.SubRoot>
+    <Menu.Separator />
+    <Menu.Item>Delete</Menu.Item>
+  </Menu.Content>
+</Menu.Root>`,
+      description: "Nested submenu triggered on hover or keyboard",
+    },
   ],
   accessibility: [
     "Built on Ariakit's accessible Menu component",
@@ -121,14 +177,36 @@ export const menuDocs: ComponentDoc = {
   status: "stable",
   version: "1.0.0",
   preview: () => (
-    <Menu.Root>
-      <Menu.Trigger>Actions</Menu.Trigger>
-      <Menu.Content>
-        <Menu.Item>Edit</Menu.Item>
-        <Menu.Item>Duplicate</Menu.Item>
-        <Menu.Separator />
-        <Menu.Item>Delete</Menu.Item>
-      </Menu.Content>
-    </Menu.Root>
+    <div className="flex gap-4 flex-wrap">
+      <Menu.Root>
+        <Menu.Trigger>Edit</Menu.Trigger>
+        <Menu.Content>
+          <Menu.Item command="⌘Z">Undo</Menu.Item>
+          <Menu.Item command="⌘⇧Z">Redo</Menu.Item>
+          <Menu.Separator />
+          <Menu.Item command="⌘X">Cut</Menu.Item>
+          <Menu.Item command="⌘C">Copy</Menu.Item>
+          <Menu.Item command="⌘V">Paste</Menu.Item>
+        </Menu.Content>
+      </Menu.Root>
+
+      <Menu.Root>
+        <Menu.Trigger>Options</Menu.Trigger>
+        <Menu.Content>
+          <Menu.Item>New File</Menu.Item>
+          <Menu.Item>Open</Menu.Item>
+          <Menu.SubRoot>
+            <Menu.SubTrigger>Share</Menu.SubTrigger>
+            <Menu.SubContent>
+              <Menu.Item>Email</Menu.Item>
+              <Menu.Item>Copy Link</Menu.Item>
+              <Menu.Item>Export PDF</Menu.Item>
+            </Menu.SubContent>
+          </Menu.SubRoot>
+          <Menu.Separator />
+          <Menu.Item>Delete</Menu.Item>
+        </Menu.Content>
+      </Menu.Root>
+    </div>
   ),
 };

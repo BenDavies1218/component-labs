@@ -23,8 +23,8 @@ export const tooltipVariants = cva(
   {
     variants: {
       variant: {
-        default: "bg-black dark:bg-white text-white dark:text-black",
-        inverse: "bg-white dark:bg-black text-black dark:text-white border border-black/10 dark:border-white/10",
+        default: "bg-white dark:bg-black text-black dark:text-white border border-black/10 dark:border-white/10",
+        inverse: "bg-black dark:bg-white text-white dark:text-black",
       },
     },
     defaultVariants: {

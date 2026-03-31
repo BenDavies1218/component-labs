@@ -7,6 +7,7 @@ import { RainbowButton } from "@/components/ui/rainbow-button";
 import { usePathname } from "next/navigation";
 import { cn } from "../../../packages/ui/src/lib/utils";
 import path from "path";
+import { Button } from "./ui/button";
 
 const pathnames: Record<string, string> = {
   "/react-showcase": "React Showcase",
@@ -29,7 +30,7 @@ export function Header() {
           <span className="font-semibold text-foreground">Component Labs</span>
         </Link>
 
-        <div className="hidden items-center gap-8 md:flex">
+        <div className="hidden items-center gap-8 md:flex cursor-pointer">
           <Link
             href="/"
             className={cn(
@@ -58,7 +59,7 @@ export function Header() {
         </div>
 
         <div className="hidden items-center gap-3 md:flex">
-          <RainbowButton size="sm" asChild variant="default">
+          <Button variant="ghost">
             <Link
               href="https://github.com/BenDavies1218/component-labs"
               target="_blank"
@@ -69,9 +70,9 @@ export function Header() {
                 Star on GitHub
               </span>
             </Link>
-          </RainbowButton>
+          </Button>
 
-          <RainbowButton size="sm" asChild variant="default">
+          <Button variant="ghost">
             <Link
               href="https://buymeacoffee.com/bendavies"
               target="_blank"
@@ -82,7 +83,7 @@ export function Header() {
                 Buy me a coffee
               </span>
             </Link>
-          </RainbowButton>
+          </Button>
         </div>
 
         <button

@@ -52,6 +52,9 @@ export const MenuSeparatorPrimitive = forwardRef<HTMLHRElement, MenuSeparatorPro
 );
 MenuSeparatorPrimitive.displayName = "MenuSeparatorPrimitive";
 
+// Re-exported for submenu composition
+export { MenuProvider as MenuSubProviderPrimitive, MenuButton as MenuSubButtonPrimitive } from "@ariakit/react";
+
 export type {
   MenuProviderProps,
   MenuButtonProps,

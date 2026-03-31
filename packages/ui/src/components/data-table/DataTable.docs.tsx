@@ -1,10 +1,10 @@
-
 import type { ComponentDoc } from "../../types/docs";
 import { DataTable } from "./DataTable";
 
 export const dataTableDocs: ComponentDoc = {
   name: "Data Table",
-  description: "Sortable, filterable data table with infinite scroll and TanStack Query integration, built on Ariakit for accessibility.",
+  description:
+    "Sortable, filterable data table with infinite scroll and TanStack Query integration, built on Ariakit for accessibility.",
   category: "Data Display",
   installation: `pnpm add @component-labs/ui`,
   usage: `import { DataTable } from "@component-labs/ui";
@@ -187,21 +187,67 @@ export const dataTableDocs: ComponentDoc = {
   preview: () => (
     <DataTable
       data={[
-        { id: 1, name: "Product A", price: "$10" },
-        { id: 2, name: "Product B", price: "$20" },
+        {
+          id: 1,
+          name: "Wireless Headphones",
+          category: "Electronics",
+          price: "$129",
+        },
+        { id: 2, name: "Running Shoes", category: "Footwear", price: "$89" },
+        { id: 3, name: "Coffee Maker", category: "Appliances", price: "$54" },
+        { id: 4, name: "Yoga Mat", category: "Fitness", price: "$32" },
       ]}
-      label="Products"
+      label=""
       tableHeader={
-        <tr>
-          <th>Name</th>
-          <th>Price</th>
-        </tr>
+        <div
+          role="row"
+          className="grid grid-cols-3 border-b border-black/10 dark:border-white/10 bg-black/5 dark:bg-white/5"
+        >
+          <div
+            role="columnheader"
+            className="px-4 py-3 text-xs font-semibold uppercase tracking-wide text-black/50 dark:text-white/50"
+          >
+            Name
+          </div>
+          <div
+            role="columnheader"
+            className="px-4 py-3 text-xs font-semibold uppercase tracking-wide text-black/50 dark:text-white/50"
+          >
+            Category
+          </div>
+          <div
+            role="columnheader"
+            className="px-4 py-3 text-xs font-semibold uppercase tracking-wide text-black/50 dark:text-white/50"
+          >
+            Price
+          </div>
+        </div>
       }
       tableRow={(item) => (
-        <tr key={item.id}>
-          <td>{item.name}</td>
-          <td>{item.price}</td>
-        </tr>
+        <div
+          role="row"
+          key={item.id}
+          className="grid grid-cols-3 border-b border-black/5 dark:border-white/5 hover:bg-black/2 dark:hover:bg-white/2 transition-colors"
+        >
+          <div
+            role="cell"
+            className="px-4 py-3 text-sm font-medium text-black dark:text-white"
+          >
+            {item.name}
+          </div>
+          <div
+            role="cell"
+            className="px-4 py-3 text-sm text-black/60 dark:text-white/60"
+          >
+            {item.category}
+          </div>
+          <div
+            role="cell"
+            className="px-4 py-3 text-sm text-black dark:text-white"
+          >
+            {item.price}
+          </div>
+        </div>
       )}
     />
   ),

@@ -1,4 +1,5 @@
 import { cva, type VariantProps } from "class-variance-authority";
+import { ChevronRight } from "lucide-react";
 import { forwardRef, type ReactNode } from "react";
 import { cn } from "../../lib/utils";
 import {
@@ -10,6 +11,8 @@ import {
   MenuItemCheckboxPrimitive,
   MenuItemCheckPrimitive,
   MenuSeparatorPrimitive,
+  MenuSubProviderPrimitive,
+  MenuSubButtonPrimitive,
   type MenuProviderProps,
   type MenuButtonProps,
   type MenuPrimitiveProps,
@@ -30,8 +33,8 @@ export const menuButtonVariants = cva(
     variants: {
       variant: {
         default: [
-          "bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 border border-gray-300 dark:border-gray-700",
-          "hover:bg-gray-50 dark:hover:bg-gray-800",
+          "bg-white dark:bg-black/20 text-black dark:text-white border border-black/20 dark:border-white/20",
+          "hover:bg-black/5 dark:hover:bg-white/5",
           "focus-visible:ring-primary-600",
           "shadow-sm hover:shadow",
         ],
@@ -42,8 +45,8 @@ export const menuButtonVariants = cva(
           "shadow-sm hover:shadow",
         ],
         ghost: [
-          "text-gray-900 dark:text-gray-100 bg-transparent border-transparent",
-          "hover:bg-gray-100 dark:hover:bg-gray-800",
+          "text-black dark:text-white bg-transparent border-transparent",
+          "hover:bg-black/5 dark:hover:bg-white/5",
           "focus-visible:ring-primary-600",
         ],
       },
@@ -62,7 +65,7 @@ export const menuButtonVariants = cva(
 
 export const menuVariants = cva([
   "z-50 min-w-[200px] rounded-lg border bg-white p-1 shadow-lg",
-  "dark:bg-gray-900 dark:border-gray-700",
+  "dark:bg-black dark:border-white/10",
   "opacity-0 transition-all duration-200 ease-out",
   "data-enter:opacity-100 data-enter:translate-y-0",
   "data-leave:opacity-0 data-leave:-translate-y-1",
@@ -74,15 +77,15 @@ export const menuItemVariants = cva(
     "text-sm cursor-pointer",
     "transition-colors duration-150",
     "outline-none",
-    "text-gray-900 dark:text-gray-100",
-    "data-active-item:bg-primary-100 dark:data-active-item:bg-primary-900",
-    "data-active-item:text-primary-900 dark:data-active-item:text-primary-100",
+    "text-black dark:text-white",
+    "data-active-item:bg-black/5 dark:data-active-item:bg-white/10",
+    "data-active-item:text-black dark:data-active-item:text-white",
     "disabled:opacity-50 disabled:cursor-not-allowed",
   ],
 );
 
 export const menuSeparatorVariants = cva([
-  "my-1 h-px bg-gray-200 dark:bg-gray-700",
+  "my-1 h-px bg-black/10 dark:bg-white/10",
 ]);
 
 // Menu Provider wrapper
@@ -145,19 +148,27 @@ export const MenuContent = forwardRef<HTMLDivElement, MenuContentProps>(
 MenuContent.displayName = "MenuContent";
 
 // Menu Item
-export interface MenuItemComponentProps extends MenuItemProps {}
+export interface MenuItemComponentProps extends MenuItemProps {
+  /** Keyboard shortcut displayed on the right */
+  command?: string;
+}
 
 export const MenuItemComponent = forwardRef<
   HTMLDivElement,
   MenuItemComponentProps
->(({ className, children, ...props }, ref) => {
+>(({ className, children, command, ...props }, ref) => {
   return (
     <MenuItemPrimitive
       ref={ref}
-      className={cn(menuItemVariants(), className)}
+      className={cn(menuItemVariants(), command && "justify-between", className)}
       {...props}
     >
-      {children}
+      <span>{children}</span>
+      {command && (
+        <kbd className="ml-auto text-xs opacity-50 font-mono pointer-events-none">
+          {command}
+        </kbd>
+      )}
     </MenuItemPrimitive>
   );
 });
@@ -221,6 +232,65 @@ export const MenuSeparatorComponent = forwardRef<
 
 MenuSeparatorComponent.displayName = "MenuSeparator";
 
+// Submenu Root
+export interface MenuSubRootProps extends MenuProviderProps {
+  children: ReactNode;
+}
+
+export function MenuSubRoot({ children, ...props }: MenuSubRootProps) {
+  return <MenuSubProviderPrimitive {...props}>{children}</MenuSubProviderPrimitive>;
+}
+
+MenuSubRoot.displayName = "MenuSubRoot";
+
+// Submenu Trigger (renders as a MenuItem with a chevron)
+export interface MenuSubTriggerProps extends MenuItemProps {}
+
+export const MenuSubTrigger = forwardRef<HTMLDivElement, MenuSubTriggerProps>(
+  ({ className, children, ...props }, ref) => {
+    return (
+      <MenuSubButtonPrimitive
+        render={
+          <MenuItemPrimitive
+            ref={ref}
+            className={cn(menuItemVariants(), "justify-between", className)}
+          />
+        }
+        {...props}
+      >
+        <span>{children}</span>
+        <ChevronRight className="h-4 w-4 opacity-50 ml-auto shrink-0" />
+      </MenuSubButtonPrimitive>
+    );
+  },
+);
+
+MenuSubTrigger.displayName = "MenuSubTrigger";
+
+// Submenu Content (same as MenuContent, gutter/shift defaults for nested feel)
+export interface MenuSubContentProps extends MenuPrimitiveProps {
+  gutter?: number;
+  shift?: number;
+}
+
+export const MenuSubContent = forwardRef<HTMLDivElement, MenuSubContentProps>(
+  ({ gutter = 4, shift = -4, className, children, ...props }, ref) => {
+    return (
+      <MenuPrimitive
+        ref={ref}
+        gutter={gutter}
+        shift={shift}
+        className={cn(menuVariants(), className)}
+        {...props}
+      >
+        {children}
+      </MenuPrimitive>
+    );
+  },
+);
+
+MenuSubContent.displayName = "MenuSubContent";
+
 // Compound component export
 export const Menu = {
   Root: MenuRoot,
@@ -229,4 +299,7 @@ export const Menu = {
   Item: MenuItemComponent,
   ItemCheckbox: MenuItemCheckboxComponent,
   Separator: MenuSeparatorComponent,
+  SubRoot: MenuSubRoot,
+  SubTrigger: MenuSubTrigger,
+  SubContent: MenuSubContent,
 };

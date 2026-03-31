@@ -6,6 +6,9 @@ export {
   MenuItemComponent,
   MenuItemCheckboxComponent,
   MenuSeparatorComponent,
+  MenuSubRoot,
+  MenuSubTrigger,
+  MenuSubContent,
   menuButtonVariants,
   menuVariants,
   menuItemVariants,
@@ -19,4 +22,7 @@ export type {
   MenuItemComponentProps,
   MenuItemCheckboxComponentProps,
   MenuSeparatorComponentProps,
+  MenuSubRootProps,
+  MenuSubTriggerProps,
+  MenuSubContentProps,
 } from "./Menu";
