@@ -1,25 +1,45 @@
 import {
+  alertDocs,
+  badgeDocs,
   buttonDocs,
+  cardDocs,
   checkboxDocs,
   comboboxDocs,
   dataTableDocs,
   dialogDocs,
   inputDocs,
+  labelDocs,
   menuDocs,
+  radioDocs,
+  selectDocs,
   switchDocs,
+  tabsDocs,
+  textareaDocs,
+  toastDocs,
+  tooltipDocs,
   type ComponentDoc,
 } from "../../../packages/ui/src/index";
 
 // Map of component slugs to their documentation
 export const componentDocsMap: Record<string, ComponentDoc> = {
+  alert: alertDocs,
+  badge: badgeDocs,
   button: buttonDocs,
+  card: cardDocs,
   checkbox: checkboxDocs,
   combobox: comboboxDocs,
   "data-table": dataTableDocs,
   dialog: dialogDocs,
   input: inputDocs,
+  label: labelDocs,
   menu: menuDocs,
+  radio: radioDocs,
+  select: selectDocs,
   switch: switchDocs,
+  tabs: tabsDocs,
+  textarea: textareaDocs,
+  toast: toastDocs,
+  tooltip: tooltipDocs,
 };
 
 // Get all component slugs
