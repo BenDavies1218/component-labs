@@ -1,6 +1,6 @@
 import { cva } from "class-variance-authority";
 import { CalendarIcon, ChevronLeft, ChevronRight } from "lucide-react";
-import { forwardRef, useState, type ReactNode } from "react";
+import { forwardRef, useEffect, useId, useState, type ReactNode } from "react";
 import { cn } from "../../lib/utils";
 import {
   DatePickerPopoverPrimitive,
@@ -120,6 +120,7 @@ export const DatePicker = forwardRef<HTMLButtonElement, DatePickerProps>(
     },
     ref,
   ) => {
+    const triggerId = useId();
     const [internalValue, setInternalValue] = useState<Date | undefined>(
       defaultValue,
     );
@@ -132,6 +133,13 @@ export const DatePicker = forwardRef<HTMLButtonElement, DatePickerProps>(
     const [viewYear, setViewYear] = useState(
       selectedDate?.getFullYear() ?? today.getFullYear(),
     );
+
+    useEffect(() => {
+      if (value) {
+        setViewMonth(value.getMonth());
+        setViewYear(value.getFullYear());
+      }
+    }, [value]);
 
     const popover = useDatePickerStorePrimitive();
 
@@ -163,7 +171,9 @@ export const DatePicker = forwardRef<HTMLButtonElement, DatePickerProps>(
 
     function selectDay(day: number) {
       const date = new Date(viewYear, viewMonth, day);
-      setInternalValue(date);
+      if (value === undefined) {
+        setInternalValue(date);
+      }
       onChange?.(date);
       popover.hide();
     }
@@ -171,15 +181,17 @@ export const DatePicker = forwardRef<HTMLButtonElement, DatePickerProps>(
     return (
       <div className={cn("space-y-2", className)}>
         {label && (
-          <label className="text-sm font-medium text-black dark:text-white">
+          <label htmlFor={triggerId} className="text-sm font-medium text-black dark:text-white">
             {label}
           </label>
         )}
 
         <DatePickerTriggerPrimitive
           ref={ref}
+          id={triggerId}
           store={popover}
           disabled={disabled}
+          aria-label={selectedDate ? `Selected date: ${formatDate(selectedDate)}` : placeholder}
           className={cn(
             datePickerTriggerVariants({ variant: error ? "error" : "default" }),
           )}
@@ -248,6 +260,9 @@ export const DatePicker = forwardRef<HTMLButtonElement, DatePickerProps>(
                   key={day}
                   type="button"
                   onClick={() => selectDay(day)}
+                  aria-label={`${day} ${MONTH_NAMES[viewMonth]} ${viewYear}`}
+                  aria-pressed={isSelected}
+                  aria-current={isTodayCell ? "date" : undefined}
                   className={cn(
                     "h-8 w-8 mx-auto flex items-center justify-center rounded-full text-sm",
                     "transition-colors duration-150",
@@ -266,7 +281,7 @@ export const DatePicker = forwardRef<HTMLButtonElement, DatePickerProps>(
         </DatePickerPopoverPrimitive>
 
         {error && (
-          <p className="text-sm text-error-500 dark:text-error-400" role="alert">
+          <p className="text-sm text-error-500 dark:text-error-400" role="alert" aria-live="polite">
             {error}
           </p>
         )}
