@@ -244,7 +244,7 @@ export function MenuSubRoot({ children, ...props }: MenuSubRootProps) {
 MenuSubRoot.displayName = "MenuSubRoot";
 
 // Submenu Trigger (renders as a MenuItem with a chevron)
-export interface MenuSubTriggerProps extends MenuItemProps {}
+export interface MenuSubTriggerProps extends MenuButtonProps {}
 
 export const MenuSubTrigger = forwardRef<HTMLDivElement, MenuSubTriggerProps>(
   ({ className, children, ...props }, ref) => {
@@ -274,7 +274,7 @@ export interface MenuSubContentProps extends MenuPrimitiveProps {
 }
 
 export const MenuSubContent = forwardRef<HTMLDivElement, MenuSubContentProps>(
-  ({ gutter = 4, shift = -4, className, children, ...props }, ref) => {
+  ({ gutter = 8, shift = -4, className, children, ...props }, ref) => {
     return (
       <MenuPrimitive
         ref={ref}

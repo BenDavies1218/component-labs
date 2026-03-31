@@ -132,18 +132,14 @@ export const dialogDocs: ComponentDoc = {
   version: "1.0.0",
   preview: () => (
     <Dialog.Root>
-      <Dialog.Trigger>
-        <button>Open Dialog</button>
-      </Dialog.Trigger>
+      <Dialog.Trigger>Open Dialog</Dialog.Trigger>
       <Dialog.Content>
         <Dialog.Header>
           <Dialog.Title>Dialog Title</Dialog.Title>
           <Dialog.Description>This is a dialog description</Dialog.Description>
         </Dialog.Header>
         <Dialog.Footer>
-          <Dialog.Close>
-            <button>Close</button>
-          </Dialog.Close>
+          <Dialog.Close>Close</Dialog.Close>
         </Dialog.Footer>
       </Dialog.Content>
     </Dialog.Root>

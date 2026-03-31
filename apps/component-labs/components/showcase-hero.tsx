@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Check, Copy } from "lucide-react";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { cn } from "../../../packages/ui/src/lib/utils";
 
 const frameworks = [
   {
@@ -58,7 +59,7 @@ export function ShowcaseHero() {
         </h1>
 
         {/* Framework Tabs */}
-        <div className="mb-10 flex justify-center">
+        <div className="mb-10 flex justify-center cursor-pointer">
           <Tabs value={selectedFramework} onValueChange={setSelectedFramework}>
             <TabsList className="gap-2">
               {frameworks.map((framework) => (
@@ -66,7 +67,10 @@ export function ShowcaseHero() {
                   key={framework.id}
                   value={framework.id}
                   disabled={framework.comingSoon}
-                  className="py-2 px-4"
+                  className={cn(
+                    "py-2 px-4",
+                    framework.comingSoon ? "" : "cursor-pointer",
+                  )}
                 >
                   {framework.name}
                   {framework.comingSoon && (

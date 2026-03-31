@@ -52,6 +52,10 @@
       "import": "./dist/data-table.js",
       "types": "./dist/data-table.d.ts"
     },
+    "./date-picker": {
+      "import": "./dist/date-picker.js",
+      "types": "./dist/date-picker.d.ts"
+    },
     "./dialog": {
       "import": "./dist/dialog.js",
       "types": "./dist/dialog.d.ts"
@@ -75,6 +79,10 @@
     "./select": {
       "import": "./dist/select.js",
       "types": "./dist/select.d.ts"
+    },
+    "./slider": {
+      "import": "./dist/slider.js",
+      "types": "./dist/slider.d.ts"
     },
     "./switch": {
       "import": "./dist/switch.js",

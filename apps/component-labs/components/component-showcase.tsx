@@ -140,19 +140,9 @@ const componentCategories = [
         description: "Dropdown menu with keyboard navigation.",
       },
       {
-        icon: ChevronRight,
-        name: "SubMenu",
-        description: "Nested menu with hover and click triggers.",
-      },
-      {
         icon: Search,
         name: "Combobox",
         description: "Searchable select with autocomplete.",
-      },
-      {
-        icon: Terminal,
-        name: "Command",
-        description: "Command palette with fuzzy search.",
       },
     ],
   },
@@ -169,11 +159,11 @@ const componentCategories = [
         name: "Toast",
         description: "Non-blocking notification messages.",
       },
-      {
-        icon: Layers,
-        name: "Dialog",
-        description: "Modal dialog with focus trap.",
-      },
+      // {
+      //   icon: Layers,
+      //   name: "Dialog",
+      //   description: "Modal dialog with focus trap.",
+      // },
     ],
   },
 ];

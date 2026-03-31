@@ -169,7 +169,7 @@ export const menuDocs: ComponentDoc = {
     "Screen reader announcements",
     "Automatic focus return to trigger on close",
   ],
-  relatedComponents: ["Combobox", "Command"],
+  relatedComponents: ["Combobox"],
   performance: {
     bundleSize: "~5kB gzipped",
     dependencies: ["@ariakit/react", "class-variance-authority"],

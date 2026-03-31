@@ -33,7 +33,7 @@ SliderPrimitive.displayName = "SliderPrimitive";
 `;
 
 const componentContent = `import { cva } from "class-variance-authority";
-import { forwardRef, useState, type ReactNode } from "react";
+import { forwardRef, useId, useState, type ReactNode } from "react";
 import { cn } from "../../lib/utils";
 import { SliderPrimitive, type SliderPrimitiveProps } from "./Slider.primitive";
 
@@ -122,6 +122,7 @@ export const Slider = forwardRef<HTMLInputElement, SliderProps>(
     },
     ref,
   ) => {
+    const sliderId = useId();
     const [internalValue, setInternalValue] = useState(defaultValue);
     const currentValue = value ?? internalValue;
 
@@ -139,7 +140,7 @@ export const Slider = forwardRef<HTMLInputElement, SliderProps>(
         {(label || showValue) && (
           <div className="flex items-center justify-between">
             {label && (
-              <label className="text-sm font-medium text-black dark:text-white">
+              <label htmlFor={sliderId} className="text-sm font-medium text-black dark:text-white">
                 {label}
               </label>
             )}
@@ -163,6 +164,7 @@ export const Slider = forwardRef<HTMLInputElement, SliderProps>(
 
           <SliderPrimitive
             ref={ref}
+            id={sliderId}
             min={min}
             max={max}
             step={step}

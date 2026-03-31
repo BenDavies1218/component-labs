@@ -1,5 +1,6 @@
 import {
   Dialog as AriaDialog,
+  DialogDisclosure,
   DialogDismiss,
   DialogHeading,
   DialogDescription as AriaDialogDescription,
@@ -8,7 +9,7 @@ import {
   type DialogStore,
 } from "@ariakit/react";
 import { cva } from "class-variance-authority";
-import { forwardRef, type ReactNode } from "react";
+import { forwardRef, isValidElement, type ReactNode } from "react";
 import { cn } from "../../lib/utils";
 
 const overlayVariants = cva([
@@ -71,14 +72,14 @@ export interface DialogTriggerProps {
 export function DialogTrigger({ children, className }: DialogTriggerProps) {
   const dialog = useDialog();
 
+  if (isValidElement(children)) {
+    return <DialogDisclosure store={dialog} render={children} />;
+  }
+
   return (
-    <button
-      onClick={() => dialog.setOpen(true)}
-      className={className}
-      type="button"
-    >
+    <DialogDisclosure store={dialog} className={className}>
       {children}
-    </button>
+    </DialogDisclosure>
   );
 }
 
@@ -93,22 +94,15 @@ export const DialogContent = forwardRef<HTMLDivElement, DialogContentProps>(
     const dialog = useDialog();
 
     return (
-      <>
-        {backdrop && (
-          <div
-            className={overlayVariants()}
-            onClick={() => dialog.setOpen(false)}
-          />
-        )}
-        <AriaDialog
-          ref={ref}
-          store={dialog}
-          className={cn(dialogVariants(), className)}
-          {...props}
-        >
-          {children}
-        </AriaDialog>
-      </>
+      <AriaDialog
+        ref={ref}
+        store={dialog}
+        backdrop={backdrop ? <div className={overlayVariants()} /> : false}
+        className={cn(dialogVariants(), className)}
+        {...props}
+      >
+        {children}
+      </AriaDialog>
     );
   },
 );
@@ -197,6 +191,9 @@ export interface DialogCloseProps {
 
 export const DialogClose = forwardRef<HTMLButtonElement, DialogCloseProps>(
   ({ children, className }, ref) => {
+    if (isValidElement(children)) {
+      return <DialogDismiss ref={ref} render={children} />;
+    }
     return (
       <DialogDismiss ref={ref} className={className}>
         {children}
