@@ -1,7 +1,17 @@
 "use client"
 
 import React, { FC, useEffect, useRef, useState } from "react"
-import { motion, useSpring } from "motion/react"
+import { motion, useSpring, useMotionValueEvent, AnimatePresence } from "motion/react"
+
+interface Particle {
+  id: number
+  x: number
+  y: number
+  size: number
+  color: string
+}
+
+const PARTICLE_COLORS = ["#ff6b00", "#ff9500", "#ffcc00", "#ff4400", "#ffffff"]
 
 interface Position {
   x: number
@@ -102,6 +112,9 @@ export function SmoothCursor({
   const accumulatedRotation = useRef(0)
   const [isEnabled, setIsEnabled] = useState(false)
   const [isVisible, setIsVisible] = useState(false)
+  const [particles, setParticles] = useState<Particle[]>([])
+  const particleCounter = useRef(0)
+  const lastParticlePos = useRef({ x: 0, y: 0 })
 
   const cursorX = useSpring(0, springConfig)
   const cursorY = useSpring(0, springConfig)
@@ -114,6 +127,26 @@ export function SmoothCursor({
     ...springConfig,
     stiffness: 500,
     damping: 35,
+  })
+
+  useMotionValueEvent(cursorX, "change", (x) => {
+    const y = cursorY.get()
+    const dx = x - lastParticlePos.current.x
+    const dy = y - lastParticlePos.current.y
+    const speed = Math.sqrt(dx * dx + dy * dy)
+    if (speed > 2) {
+      setParticles(prev => [
+        ...prev.slice(-30),
+        {
+          id: particleCounter.current++,
+          x: x + (Math.random() - 0.5) * 8,
+          y: y + (Math.random() - 0.5) * 8,
+          size: Math.random() * 6 + 3,
+          color: PARTICLE_COLORS[Math.floor(Math.random() * PARTICLE_COLORS.length)],
+        },
+      ])
+      lastParticlePos.current = { x, y }
+    }
   })
 
   useEffect(() => {
@@ -233,27 +266,56 @@ export function SmoothCursor({
   }
 
   return (
-    <motion.div
-      style={{
-        position: "fixed",
-        left: cursorX,
-        top: cursorY,
-        translateX: "-50%",
-        translateY: "-50%",
-        rotate: rotation,
-        scale: scale,
-        zIndex: 100,
-        pointerEvents: "none",
-        willChange: "transform",
-        opacity: isVisible ? 1 : 0,
-      }}
-      initial={false}
-      animate={{ opacity: isVisible ? 1 : 0 }}
-      transition={{
-        duration: 0.15,
-      }}
-    >
-      {cursor}
-    </motion.div>
+    <>
+      <AnimatePresence>
+        {particles.map(p => (
+          <motion.div
+            key={p.id}
+            style={{
+              position: "fixed",
+              left: p.x,
+              top: p.y,
+              width: p.size,
+              height: p.size,
+              borderRadius: "50%",
+              backgroundColor: p.color,
+              pointerEvents: "none",
+              zIndex: 99,
+              translateX: "-50%",
+              translateY: "-50%",
+            }}
+            initial={{ opacity: 0.9, scale: 1 }}
+            animate={{ opacity: 0, scale: 0, y: -15 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.5, ease: "easeOut" }}
+            onAnimationComplete={() =>
+              setParticles(prev => prev.filter(particle => particle.id !== p.id))
+            }
+          />
+        ))}
+      </AnimatePresence>
+      <motion.div
+        style={{
+          position: "fixed",
+          left: cursorX,
+          top: cursorY,
+          translateX: "-50%",
+          translateY: "-50%",
+          rotate: rotation,
+          scale: scale,
+          zIndex: 100,
+          pointerEvents: "none",
+          willChange: "transform",
+          opacity: isVisible ? 1 : 0,
+        }}
+        initial={false}
+        animate={{ opacity: isVisible ? 1 : 0 }}
+        transition={{
+          duration: 0.15,
+        }}
+      >
+        {cursor}
+      </motion.div>
+    </>
   )
 }
