@@ -17,6 +17,8 @@ import { badge } from "./registry/badge";
 import { card } from "./registry/card";
 import { tabs } from "./registry/tabs";
 import { tooltip } from "./registry/tooltip";
+import { datePicker } from "./registry/date-picker";
+import { slider } from "./registry/slider";
 
 export const registry: Registry = {
   button,
@@ -37,6 +39,8 @@ export const registry: Registry = {
   card,
   tabs,
   tooltip,
+  "date-picker": datePicker,
+  slider,
 };
 
 export * from "./schema";
