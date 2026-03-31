@@ -3,6 +3,7 @@ import type { Metadata } from 'next'
 import { Geist, Geist_Mono } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
 import { SmoothCursor } from '@/components/ui/smooth-cursor'
+import { CursorParticles } from '@/components/ui/cursor-particles'
 import './globals.css'
 
 const _geist = Geist({ subsets: ["latin"] });
@@ -39,6 +40,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`font-sans antialiased`}>
+        <CursorParticles />
         <SmoothCursor cursor={<img src="/rocket.svg" width={48} height={48} alt="" style={{ transform: "rotate(-45deg)" }} />} />
         {children}
         <Analytics />
