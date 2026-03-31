@@ -75,7 +75,7 @@ export function CursorParticles() {
             translateY: "-50%",
           }}
           initial={{ opacity: 0.9, scale: 1 }}
-          animate={{ opacity: 0, scale: 0, y: 15 }}
+          animate={{ opacity: 0, scale: 0, y: -15 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.5, ease: "easeOut" }}
           onAnimationComplete={() =>
