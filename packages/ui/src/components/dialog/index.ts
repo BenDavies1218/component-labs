@@ -20,3 +20,5 @@ export type {
   DialogFooterProps,
   DialogCloseProps,
 } from "./Dialog";
+
+export { dialogDocs } from "./Dialog.docs";
