@@ -20,6 +20,7 @@ interface Position {
 
 export interface SmoothCursorProps {
   cursor?: React.ReactNode
+  stillCursor?: React.ReactNode
   springConfig?: {
     damping: number
     stiffness: number
@@ -98,6 +99,7 @@ const DefaultCursorSVG: FC = () => {
 
 export function SmoothCursor({
   cursor = <DefaultCursorSVG />,
+  stillCursor,
   springConfig = {
     damping: 45,
     stiffness: 400,
@@ -112,9 +114,11 @@ export function SmoothCursor({
   const accumulatedRotation = useRef(0)
   const [isEnabled, setIsEnabled] = useState(false)
   const [isVisible, setIsVisible] = useState(false)
+  const [isMoving, setIsMoving] = useState(false)
   const [particles, setParticles] = useState<Particle[]>([])
   const particleCounter = useRef(0)
   const lastParticlePos = useRef({ x: 0, y: 0 })
+  const stillTimeout = useRef<ReturnType<typeof setTimeout> | null>(null)
 
   const cursorX = useSpring(0, springConfig)
   const cursorY = useSpring(0, springConfig)
@@ -135,6 +139,10 @@ export function SmoothCursor({
     const dy = y - lastParticlePos.current.y
     const speed = Math.sqrt(dx * dx + dy * dy)
     if (speed > 2) {
+      setIsMoving(true)
+      if (stillTimeout.current !== null) clearTimeout(stillTimeout.current)
+      stillTimeout.current = setTimeout(() => setIsMoving(false), 150)
+
       setParticles(prev => [
         ...prev.slice(-30),
         {
@@ -314,7 +322,7 @@ export function SmoothCursor({
           duration: 0.15,
         }}
       >
-        {cursor}
+        {stillCursor && !isMoving ? stillCursor : cursor}
       </motion.div>
     </>
   )
