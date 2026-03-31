@@ -36,6 +36,14 @@ export interface MethodDoc {
   };
 }
 
+export interface BestPracticeDoc {
+  title: string;
+  description: string;
+  example?: string;
+  doExample?: string;
+  dontExample?: string;
+}
+
 export interface ComponentDoc {
   name: string;
   description: string;

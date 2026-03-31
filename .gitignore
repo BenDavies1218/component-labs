@@ -1,6 +1,10 @@
 # Claude Code
 .claude/commands/*.md
 .claude/*.json
+.claude
+
+docs/
+guide/
 
 # Dependencies
 node_modules/

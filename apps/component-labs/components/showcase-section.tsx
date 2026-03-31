@@ -49,10 +49,6 @@ export function ShowcaseSection() {
     <section id="showcase" className="border-t border-border px-6 pt-20">
       <div className="mx-auto max-w-7xl">
         <div className="mb-16 text-center">
-          <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-accent/30 bg-accent/10 px-4 py-1.5 text-sm text-accent">
-            <Zap className="h-4 w-4" />
-            Storybook Alternative
-          </div>
           <h2 className="mb-4 text-balance text-3xl font-bold tracking-tight text-foreground md:text-4xl">
             React Showcase
           </h2>

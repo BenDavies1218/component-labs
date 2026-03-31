@@ -228,16 +228,6 @@ export function ComponentShowcase() {
             </div>
           ))}
         </Composite>
-
-        <div className="mt-16 text-center">
-          <Link
-            href="/docs"
-            className="inline-flex items-center gap-2 text-accent transition-colors hover:text-accent/80"
-          >
-            View full documentation
-            <ChevronRight className="h-4 w-4" />
-          </Link>
-        </div>
       </div>
     </section>
   );

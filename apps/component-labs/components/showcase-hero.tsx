@@ -51,29 +51,22 @@ export function ShowcaseHero() {
       </div>
 
       <div className="relative z-10 mx-auto max-w-4xl text-center">
-        <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-border bg-secondary px-4 py-1.5 text-sm text-muted-foreground">
-          <span className="h-2 w-2 rounded-full bg-accent" />
-          Storybook Alternative
-        </div>
-
         <h1 className="mb-6 text-balance text-4xl font-bold tracking-tight text-foreground sm:text-5xl md:text-6xl lg:text-7xl">
-          Component
+          React
           <br />
           <span className="text-accent">Showcase</span>
         </h1>
 
         {/* Framework Tabs */}
         <div className="mb-10 flex justify-center">
-          <Tabs
-            value={selectedFramework}
-            onValueChange={setSelectedFramework}
-          >
-            <TabsList>
+          <Tabs value={selectedFramework} onValueChange={setSelectedFramework}>
+            <TabsList className="gap-2">
               {frameworks.map((framework) => (
                 <TabsTrigger
                   key={framework.id}
                   value={framework.id}
                   disabled={framework.comingSoon}
+                  className="py-2 px-4"
                 >
                   {framework.name}
                   {framework.comingSoon && (

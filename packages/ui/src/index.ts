@@ -113,4 +113,4 @@ export { toastDocs } from "./components/toast/Toast.docs";
 export { tooltipDocs } from "./components/tooltip/Tooltip.docs";
 
 // Export doc types
-export type { ComponentDoc, PropDoc, ExampleDoc } from "./types/docs";
+export type { ComponentDoc, PropDoc, ExampleDoc, BestPracticeDoc } from "./types/docs";

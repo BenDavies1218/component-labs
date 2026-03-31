@@ -150,9 +150,8 @@ export const Select = forwardRef<HTMLButtonElement, SelectRootProps>(
       setValue: onChange,
     });
 
-    const selectedOption = options.find(
-      (opt) => opt.value === select.useState("value"),
-    );
+    const currentValue = select.useState("value");
+    const selectedOption = options.find((opt) => opt.value === currentValue);
 
     return (
       <div className={cn("space-y-2", className)}>
@@ -189,7 +188,7 @@ export const Select = forwardRef<HTMLButtonElement, SelectRootProps>(
           className={cn(selectPopoverVariants())}
         >
           {options.map((option) => {
-            const isSelected = option.value === select.useState("value");
+            const isSelected = option.value === currentValue;
             return (
               <SelectItemPrimitive
                 key={option.value}

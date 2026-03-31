@@ -16,7 +16,7 @@ import {
 
 export const radioVariants = cva(
   [
-    "peer relative inline-flex h-5 w-5 shrink-0 items-center justify-center",
+    "peer h-5 w-5 appearance-none",
     "rounded-full border-2 transition-all duration-200",
     "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2",
     "disabled:cursor-not-allowed disabled:opacity-50",
@@ -43,9 +43,9 @@ export const radioVariants = cva(
 
 export const radioIndicatorVariants = cva(
   [
-    "absolute inset-0 flex items-center justify-center",
+    "pointer-events-none absolute inset-0 flex items-center justify-center",
     "scale-0 transition-transform duration-200",
-    "data-[active-item]:scale-100",
+    "peer-data-[active-item]:scale-100",
   ],
   {
     variants: {
@@ -82,16 +82,17 @@ export const Radio = forwardRef<HTMLInputElement, RadioProps>(
   ) => {
     return (
       <label className="flex items-start gap-3 cursor-pointer group">
-        <RadioPrimitive
-          ref={ref}
-          className={cn(
-            radioVariants({
-              variant: error ? "error" : variant,
-              className,
-            }),
-          )}
-          {...props}
-        >
+        <div className="relative inline-flex h-5 w-5 shrink-0 items-center justify-center">
+          <RadioPrimitive
+            ref={ref}
+            className={cn(
+              radioVariants({
+                variant: error ? "error" : variant,
+                className,
+              }),
+            )}
+            {...props}
+          />
           <span
             className={cn(
               radioIndicatorVariants({
@@ -101,7 +102,7 @@ export const Radio = forwardRef<HTMLInputElement, RadioProps>(
           >
             <Circle className="h-2.5 w-2.5 fill-current" />
           </span>
-        </RadioPrimitive>
+        </div>
 
         {(label || description) && (
           <div className="flex flex-col gap-1">

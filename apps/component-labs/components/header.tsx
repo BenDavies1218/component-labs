@@ -4,9 +4,18 @@ import Link from "next/link";
 import { useState } from "react";
 import { Coffee, Menu, Star, X } from "lucide-react";
 import { RainbowButton } from "@/components/ui/rainbow-button";
+import { usePathname } from "next/navigation";
+import { cn } from "../../../packages/ui/src/lib/utils";
+import path from "path";
+
+const pathnames: Record<string, string> = {
+  "/react-showcase": "React Showcase",
+  "/": "Components",
+};
 
 export function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const currentPath = usePathname();
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 border-b border-border bg-background/80 backdrop-blur-md">
@@ -22,14 +31,20 @@ export function Header() {
 
         <div className="hidden items-center gap-8 md:flex">
           <Link
-            href="#components"
-            className="text-sm text-muted-foreground transition-colors hover:text-foreground"
+            href="/"
+            className={cn(
+              "text-sm text-muted-foreground transition-colors hover:text-foreground",
+              pathnames[currentPath] === "Components" && "text-foreground",
+            )}
           >
             Components
           </Link>
           <Link
             href="/react-showcase"
-            className="text-sm text-muted-foreground transition-colors hover:text-foreground"
+            className={cn(
+              "text-sm text-muted-foreground transition-colors hover:text-foreground",
+              pathnames[currentPath] === "React Showcase" && "text-foreground",
+            )}
           >
             React Showcase
           </Link>

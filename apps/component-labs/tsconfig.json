@@ -25,6 +25,12 @@
     "paths": {
       "@/*": [
         "./*"
+      ],
+      "@component-labs/ui": [
+        "../../packages/ui/src/index.ts"
+      ],
+      "@component-labs/ui/types/docs": [
+        "../../packages/ui/src/types/docs.ts"
       ]
     }
   },
