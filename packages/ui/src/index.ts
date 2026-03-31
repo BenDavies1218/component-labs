@@ -24,6 +24,8 @@ export { Tabs, TabList, Tab, TabPanel } from "./components/tabs/Tabs";
 export { Textarea } from "./components/textarea/Textarea";
 export { Toast, ToastProvider, useToast } from "./components/toast/Toast";
 export { Tooltip } from "./components/tooltip/Tooltip";
+export { DatePicker } from "./components/date-picker/DatePicker";
+export { Slider } from "./components/slider/Slider";
 
 // Export types
 export type { AlertProps } from "./components/alert/Alert";
@@ -67,6 +69,8 @@ export type {
   ToastData,
 } from "./components/toast/Toast";
 export type { TooltipRootProps } from "./components/tooltip/Tooltip";
+export type { DatePickerProps } from "./components/date-picker/DatePicker";
+export type { SliderProps } from "./components/slider/Slider";
 
 // Export Menu sub-components and types
 export type {
@@ -111,6 +115,8 @@ export { tabsDocs } from "./components/tabs/Tabs.docs";
 export { textareaDocs } from "./components/textarea/Textarea.docs";
 export { toastDocs } from "./components/toast/Toast.docs";
 export { tooltipDocs } from "./components/tooltip/Tooltip.docs";
+export { datePickerDocs } from "./components/date-picker/DatePicker.docs";
+export { sliderDocs } from "./components/slider/Slider.docs";
 
 // Export doc types
 export type { ComponentDoc, PropDoc, ExampleDoc, BestPracticeDoc } from "./types/docs";
