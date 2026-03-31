@@ -39,7 +39,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`font-sans antialiased`}>
-        <SmoothCursor cursor={<img src="/rocket.svg" width={48} height={48} alt="" />} />
+        <SmoothCursor cursor={<img src="/rocket.svg" width={48} height={48} alt="" style={{ transform: "rotate(-45deg)" }} />} />
         {children}
         <Analytics />
       </body>
