@@ -19,6 +19,7 @@ import {
   tooltipDocs,
   type ComponentDoc,
 } from "../../../packages/ui/src/index";
+import { smoothCursorDocs } from "./smooth-cursor-docs";
 
 // Map of component slugs to their documentation
 export const componentDocsMap: Record<string, ComponentDoc> = {
@@ -40,6 +41,7 @@ export const componentDocsMap: Record<string, ComponentDoc> = {
   textarea: textareaDocs,
   toast: toastDocs,
   tooltip: tooltipDocs,
+  "smooth-cursor": smoothCursorDocs,
 };
 
 // Get all component slugs
